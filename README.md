@@ -6,7 +6,7 @@
 - University of Naples Federico II: Francesco Palumbo, Alfonso Iodice D'Enza, Maria Iannario, Antonio Pescapè
 - Active period: From M4 to M48.
 - Activity type: Research.
-- Early Stage Researchers involved: 9, 16 & 17.
+- Early Stage Researchers involved: 1, 9, 16 & 17.
 
 
 ## Objectives
