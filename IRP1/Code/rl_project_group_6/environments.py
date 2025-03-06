@@ -1,7 +1,7 @@
 import numpy as np
 
 class PortfolioEnvironment:
-    def __init__(self, generator, agent, n=100, initial_cash=500, initial_stock_value=500, start_price=10):
+    def __init__(self, generator, agent, initial_cash=500, initial_stock_value=500, start_price=10):
         """
         Initialize the trading environment.
 
@@ -15,7 +15,6 @@ class PortfolioEnvironment:
         """
         self.generator = generator  # Price generator instance
         self.agent = agent  # Agent instance
-        self.n = n  # Number of time steps per episode
 
         # Initialize portfolio
         self.initial_cash = initial_cash
@@ -43,8 +42,6 @@ class PortfolioEnvironment:
 
     def step(self):
         """ Run one iteration of the environment (one time step). """
-        if self.current_step >= self.n:
-            return None, 0, True  # Episode done
 
         self.current_step += 1
 
@@ -90,8 +87,7 @@ class PortfolioEnvironment:
         next_state = 1 if np.random.rand() > 0.5 else 0  # Random future state
         self.agent.learn(state, action, reward, next_state)
 
-        done = self.current_step >= self.n
-        return state, reward, done
+        return state, reward
 
     def _get_state(self):
         """ Returns the initial state (price movement direction). """
