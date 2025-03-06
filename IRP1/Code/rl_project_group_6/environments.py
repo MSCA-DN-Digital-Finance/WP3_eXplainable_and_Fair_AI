@@ -66,10 +66,10 @@ class PortfolioEnvironment:
         action = self.agent.act(state)
         self.actions.append(action)
 
-        # Convert action into allocation change
-        if action == 1 and self.allocation < 1:
+        # Convert action into allocation change, 0 is hold, 1 is buy, 2 is sell,
+        if action == 1 and self.allocation < 0.9:
             target_allocation = self.allocation + 0.1  # Buy more stock
-        elif action == -1 and self.allocation > 0:
+        elif action == 2 and self.allocation > 0.1:
             target_allocation = self.allocation - 0.1  # Sell stock
         else:
             target_allocation = self.allocation  # Hold
