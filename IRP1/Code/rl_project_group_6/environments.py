@@ -3,6 +3,7 @@ import pandas as pd
 from tabulate import tabulate
 import gym
 from gym import spaces
+from gym.utils import seeding
 from stable_baselines3.common.vec_env import DummyVecEnv
 
 class PortfolioEnvironment:
@@ -282,6 +283,17 @@ class StockPortfolioEnv(gym.Env):
         numerator = np.exp(actions)
         denominator = np.sum(np.exp(actions))
         return numerator / denominator
+    
+    def normalize_actions(self, actions):
+        actions = np.array(actions, dtype=np.float64)  
+        
+        if np.all(actions == actions[0]):  # If all values are the same (e.g., [0,0] or [1,1])
+            norm_actions = np.ones_like(actions) / len(actions)  # Equal allocation
+        else:
+            min_adjusted = actions - actions.min()  # Shift to make the smallest value zero
+            norm_actions = min_adjusted / min_adjusted.sum()  # Normalize to sum to 1
+
+        return norm_actions
 
     def step(self, actions):
         """Executes a step in the environment.
@@ -301,14 +313,8 @@ class StockPortfolioEnv(gym.Env):
         if self.day == -1:
             actions = [0.5, 0.5]
 
-        # Normalize actions to sum to 1
-        if (np.array(actions) - np.array(actions).min()).sum() != 0:
-            norm_actions = (np.array(actions) - np.array(actions).min()) / \
-                            (np.array(actions) - np.array(actions).min()).sum()
-        else:
-            norm_actions = np.array(actions)
-
-        weights = norm_actions
+        # Normalize actions 
+        weights = self.normalize_actions(actions)
 
         # Compute transaction cost
         if len(self.actions_memory) > 0:
@@ -318,19 +324,24 @@ class StockPortfolioEnv(gym.Env):
 
         # Store action
         self.actions_memory.append(weights)
-        last_day_memory = self.data
 
         # Update time step
         self.day += 1
+
+        # Check if it is the end of episode
         self.terminal = self.day >= len(self.df["date"].unique()) - 1
+
+        # Filter the dataframe for the correct date
         self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
+
+        # Get state
         self.state = self._get_state()
 
-        # Calculate portfolio return
+        # Calculate portfolio return from stock return
         stock_returns = self.data["return_t-1"].values
         portfolio_return = sum(stock_returns * weights)
 
-        # Update portfolio value
+        # Calculate new portfolio value
         new_portfolio_value = self.portfolio_value * (1 + portfolio_return) - transaction_cost
         
         # Calculate reward
@@ -341,22 +352,50 @@ class StockPortfolioEnv(gym.Env):
         else:
             raise ValueError("Invalid reward function. Choose 'final_portfolio_value' or 'time_step_return'.")
 
-        # Store episode log
+        if self.timestep_log == True:
+            # Convert NumPy arrays to lists and format values
+            table= [
+                ["Episode", self.episode],
+                ["Day", self.day],
+                ["Actions (weights before normalization)", 
+                ", ".join([f"{x:.2f}" for x in actions.tolist()]) if isinstance(actions, np.ndarray) else actions],
+                ["Allocation weights", 
+                ", ".join([f"{x:.2f}" for x in weights.tolist()]) if isinstance(weights, np.ndarray) else weights],
+                ["Transaction Cost", f"{transaction_cost:.2f}"],
+                ["Stock Returns", 
+                ", ".join([f"{x:.2%}" for x in stock_returns.tolist()]) if isinstance(stock_returns, np.ndarray) else stock_returns],
+                ["Portfolio Return", f"{portfolio_return:.2%}"],
+                ["Reward", f"{self.reward:.2f}"],
+                ["Old Portfolio Value", f"{self.portfolio_value:,.0f}"],  
+                ["New Portfolio Value", f"{(self.portfolio_value * (1 + portfolio_return) - transaction_cost):,.0f}"]
+            ]
+
+            # Print a separator line before each table for better readability
+            print("\n" + "=" * 53)  # Separator line
+            print(tabulate(table, tablefmt="grid"))  # Print table without headers
+            print("=" * 53 + "\n")  # Separator line after table
+
+        # Store historical data
+        self.portfolio_return_memory.append(portfolio_return)
+        self.date_memory.append(self.data.date.unique()[0])
+        self.asset_memory.append(new_portfolio_value)
+        
         self.episode_log.append({
             "episode": self.episode,
             "day": self.day,
-            "actions": weights.tolist(),
-            "transaction_cost": round(transaction_cost, 2),
-            "stock_returns": [round(x, 4) for x in stock_returns],
-            "portfolio_return": round(portfolio_return, 4),
-            "reward": round(self.reward, 2),
-            "old_portfolio_value": round(self.portfolio_value, 2),
-            "new_portfolio_value": round(new_portfolio_value, 2)
+            "actions": ", ".join([f"{x:.2f}" for x in actions.tolist()]) if isinstance(actions, np.ndarray) else actions,
+            "allocation_weights": ", ".join([f"{x:.2f}" for x in weights.tolist()]) if isinstance(weights, np.ndarray) else weights,
+            "transaction_cost": f"{transaction_cost:.2f}",
+            "stock_returns": ", ".join([f"{x:.2%}" for x in stock_returns.tolist()]) if isinstance(stock_returns, np.ndarray) else stock_returns,
+            "portfolio_return": f"{portfolio_return:.2%}",
+            "reward": f"{self.reward:.2f}",
+            "old_portfolio_value": f"{self.portfolio_value:,.0f}",
+            "new_portfolio_value": f"{(self.portfolio_value * (1 + portfolio_return) - transaction_cost):,.0f}"
         })
-
-        self.portfolio_value = new_portfolio_value
+        self.portfolio_value =new_portfolio_value
 
         return self.state, self.reward, self.terminal, {}
+       
 
     def reset(self):
         """Resets the environment for a new episode."""
@@ -373,3 +412,20 @@ class StockPortfolioEnv(gym.Env):
         self.date_memory = [self.data.date.unique()[0]]
     
         return self.state
+    
+    def save_episode_log(self, filename="episode_log.csv"):
+        """Save episode logs to a CSV file."""
+        df_log = pd.DataFrame(self.episode_log)
+        df_log.to_csv(filename, index=False)
+        print(f"Saved episode log to {filename}")
+
+
+    def _seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
+    def get_sb_env(self):
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset()
+        print("EPISODE: ", self.episode)
+        return e, obs
