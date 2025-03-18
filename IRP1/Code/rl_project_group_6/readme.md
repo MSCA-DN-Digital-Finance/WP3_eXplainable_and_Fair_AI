@@ -14,7 +14,7 @@ This repository implements and experiments with reinforcement learning (RL) stra
 
 - **Notebooks**:  These Jupyter notebooks are used to run experiments, analyze results, and compare the performance of different agents and strategies under various market scenarios.
   
-    -> **`date_train_experiments.ipynb*`**: This notebook is used to train all the experiments.
+    -> **`date_train_experiments.ipynb`**: This notebook is used to train all the experiments.
   
     -> **`date_plot_experiments_result.ipynb`**: This notebook is used to plot the results of all the experiments
 
