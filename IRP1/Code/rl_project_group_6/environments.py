@@ -5,6 +5,7 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 from stable_baselines3.common.vec_env import DummyVecEnv
+from sklearn.preprocessing import normalize
 
 class PortfolioEnvironment:
     def __init__(self, generator, agent, initial_cash=500, initial_stock_value=500, start_price=10):
@@ -285,15 +286,11 @@ class StockPortfolioEnv(gym.Env):
         return numerator / denominator
     
     def normalize_actions(self, actions):
-        actions = np.array(actions, dtype=np.float64)  
-        
-        if np.all(actions == actions[0]):  # If all values are the same (e.g., [0,0] or [1,1])
-            norm_actions = np.ones_like(actions) / len(actions)  # Equal allocation
-        else:
-            min_adjusted = actions - actions.min()  # Shift to make the smallest value zero
-            norm_actions = min_adjusted / min_adjusted.sum()  # Normalize to sum to 1
-
-        return norm_actions
+        actions = np.array(actions, dtype=np.float64).reshape(1, -1) 
+        if np.sum(actions) == 0:
+            return np.array([0.5, 0.5])
+        normalized_actions = normalize(actions, norm="l1").flatten()
+        return normalized_actions
 
     def step(self, actions):
         """Executes a step in the environment.
@@ -311,7 +308,7 @@ class StockPortfolioEnv(gym.Env):
         """
         # Initial step: Allocate 50-50 if starting fresh
         if self.day == -1:
-            actions = [0.5, 0.5]
+            actions = np.array([0.5, 0.5])
 
         # Normalize actions 
         weights = self.normalize_actions(actions)
