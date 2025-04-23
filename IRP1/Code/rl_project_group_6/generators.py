@@ -26,21 +26,26 @@ class NormalPriceGenerator:
 class LinearTrendPriceGenerator:
     def __init__(self, start_price=10, up=True):
         """
-        Initialize the price generator which creates a linear price series starting from 10.
+        Initialize the price generator which creates a linear price series starting from `start_price`.
         """
         self.current_price = start_price
         self.up = up
 
-
-    def generate_price(self):
+    def generate_price(self, last_price):
         """
         Generate next price in series.
+        Parameters:
+        last_price (float, optional): This parameter is required to match the interface expected by the simulator,
+                                      but it is not used for the linear trend price generation.
         """
+        # Since the price is linear, we just increment or decrement based on `up`
         if self.up:
             self.current_price += 1
         else:
             self.current_price -= 1
+        
         return self.current_price
+
     
 
 class CashPriceGenerator:
@@ -103,19 +108,20 @@ class PeriodicTrendPriceGenerator:
         self.amplitude = amplitude
         self.frequency = frequency
         self.t = 0
-
-    def generate(self):
+        
+    def generate_price(self, last_price=None):
         """
-        Generates the next value in the sequence using a sine function
-        scaled by amplitude, modulated by frequency, and added to the base value.
+        Generates the next price using a sine wave and the current time step.
 
+        Parameters:
+            last_price (float, optional): This parameter is required to match the interface expected by the simulator,
+                                          but it is not used for the linear trend price generation.
         Returns:
             float: The value at time t based on the sine wave and base value.
         """
         value = self.amplitude * np.sin(self.frequency * self.t) + self.start
         self.t += 1
         return value
-    
 
 class NoisyPeriodicTrendPriceGenerator:
     """
@@ -150,11 +156,13 @@ class NoisyPeriodicTrendPriceGenerator:
         self.mu = mu
         self.sigma = sigma
 
-    def generate(self):
+    def generate(self, last_price=None):
         """
         Generates the next value in the sequence using a sine function
         scaled by amplitude, modulated by frequency, and added to the base value and noise.
-
+        Parameters:
+        last_price (float, optional): This parameter is required to match the interface expected by the simulator,
+                                      but it is not used for the linear trend price generation.
         Returns:
             float: The value at time t based on the sine wave, base value, and noise.
         """
@@ -162,7 +170,50 @@ class NoisyPeriodicTrendPriceGenerator:
         value = self.amplitude * np.sin(self.frequency * self.t) + self.start + noise
         self.t += 1
         return value
+    
+class LinearPriceGenerator:
+    def __init__(self, start_price=10):
+        """
+        Initialize the price generator which creates a linear price series starting from 1.
+        """
+        self.current_price = start_price
 
+
+    def generate_price(self):
+        """
+        Generate next price in series.
+        """
+        self.current_price += 1
+        return self.current_price
+    
+class UpwardTrendPriceGenerator:
+    """Upward trend price generator using log returns sampled from a normal distribution."""
+
+    def __init__(self, mean=0.001, variance=0.001):
+        """
+        Initialize the generator with a mean and variance for log returns.
+
+        Parameters:
+        - mean: Mean of the log return distribution (default 0.001).
+        - variance: Variance of the log return distribution (default 0.001).
+        """
+        self.mean = mean
+        self.variance = variance
+
+    def generate_price(self, last_price):
+        """
+        Generate the next price using log returns from N(mean, variance).
+
+        Parameters:
+        - last_price: Previous stock price.
+
+        Returns:
+        - new_price: Updated stock price after applying the log return.
+        """
+        log_return = np.random.normal(self.mean, self.variance)  # Sample log return
+        new_price = last_price * np.exp(log_return)  # Apply log return
+        return new_price  # Prevent negative prices
+    
 # Example usage
 # generator = NoisyPeriodicTrendPriceGenerator(start=10.0, amplitude=2.0, frequency=0.5, mu=0.0, sigma=0.2)
 # for _ in range(5):

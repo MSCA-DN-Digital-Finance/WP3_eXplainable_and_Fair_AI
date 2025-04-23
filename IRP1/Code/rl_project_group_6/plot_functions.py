@@ -20,23 +20,24 @@ def preprocess_df(df):
     # Convert string representations of lists into actual lists
     df["actions"] = df["actions"].apply(lambda x: [float(i) for i in x.strip("[]").split(",")])
     df["allocation_weights"] = df["allocation_weights"].apply(lambda x: [float(i) for i in x.strip("[]").split(",")])
-    df["stock_returns"] = df["stock_returns"].apply(lambda x: [float(i.strip('%')) / 100 for i in x.split(",")])
+    if "stock_returns" in df.columns:
+        df["stock_returns"] = df["stock_returns"].apply(lambda x: [float(i.strip('%')) / 100 for i in x.split(",")])
 
     # Convert portfolio values from strings with commas to numeric format
     if pd.api.types.is_object_dtype(df["new_portfolio_value"]):  
         df["new_portfolio_value"] = df["new_portfolio_value"].str.replace(",", "").astype(float)
-    if pd.api.types.is_object_dtype(df["old_portfolio_value"]): 
-        df["old_portfolio_value"] = df["old_portfolio_value"].str.replace(",", "").astype(float)
+    if "old_portfolio_value" in df.columns:
+        if pd.api.types.is_object_dtype(df["old_portfolio_value"]): 
+            df["old_portfolio_value"] = df["old_portfolio_value"].str.replace(",", "").astype(float)
 
     return df
+
+
 
 def plot_dual_line_per_episode(df, metric1, metric2, ylabel, title, filename, legend1, legend2):
     """
     Plots two time series per episode in separate subplots.
-
-    Handles cases where `metric1` and `metric2` are:
-    - Lists (e.g., actions, allocation weights, stock returns).
-    - Numeric values (e.g., old and new portfolio values).
+    Selects only 5 episodes if more than 5 exist, evenly spaced across the full range.
 
     Parameters:
     - df (pd.DataFrame): Dataframe containing the data.
@@ -48,38 +49,52 @@ def plot_dual_line_per_episode(df, metric1, metric2, ylabel, title, filename, le
     - legend1 (str): Legend label for the first metric.
     - legend2 (str): Legend label for the second metric.
     """
-    episodes = df["episode"].unique()
+    episodes = sorted(df["episode"].unique())
     num_episodes = len(episodes)
 
-    fig, axes = plt.subplots(1, num_episodes, figsize=(5 * num_episodes, 4), sharey=True)
+    # Select a subset of episodes if more than 5
+    if num_episodes <= 5:
+        selected_episodes = episodes
+    else:
+        mid = num_episodes // 2
+        first = 0
+        last = num_episodes - 1
+        between_first_mid = (first + mid) // 2
+        between_mid_last = (mid + last) // 2
+        selected_indices = [first, between_first_mid, mid, between_mid_last, last]
+        selected_episodes = [episodes[i] for i in selected_indices]
 
-    if num_episodes == 1:
-        axes = [axes]  # Ensure axes is iterable for a single episode
+    fig, axes = plt.subplots(1, len(selected_episodes), figsize=(5 * len(selected_episodes), 4), sharey=True)
 
-    for idx, episode in enumerate(episodes):
+    if len(selected_episodes) == 1:
+        axes = [axes]  # Ensure axes is iterable
+
+    for idx, episode in enumerate(selected_episodes):
         df_episode = df[df["episode"] == episode]
         days = df_episode["day"]
 
         # Detect if the columns are lists or numeric
         if isinstance(df_episode[metric1].iloc[0], list):
-            line1 = df_episode[metric1].apply(lambda x: x[0])  # Extract first component if list
+            line1 = df_episode[metric1].apply(lambda x: x[0])  # Adjust this index as needed
             line2 = df_episode[metric2].apply(lambda x: x[1])
         else:
-            line1 = df_episode[metric1]  # Directly use the column if numeric
+            line1 = df_episode[metric1]
             line2 = df_episode[metric2]
 
-        axes[idx].plot(days, line1, label=legend1, color="#00CC00")  # Green
-        axes[idx].plot(days, line2, label=legend2, color="#BF40BF")  # Purple
+        axes[idx].plot(days, line1, label=legend1, color="#00CC00")
+        axes[idx].plot(days, line2, label=legend2, color="#BF40BF")
 
         axes[idx].set_xlabel("Day")
-        axes[idx].set_ylabel(ylabel)  # Set Y-axis label 
+        axes[idx].set_ylabel(ylabel)
         axes[idx].set_title(f"Ep {episode}")
         axes[idx].legend()
+        axes[idx].tick_params(axis='x', rotation=45)
 
-    fig.suptitle(title, fontsize=14)  # Global title
+    fig.suptitle(title, fontsize=14)
     plt.tight_layout()
     plt.savefig(filename)
     plt.show()
+
 
 
 def plot_per_episode_row(df, metric, ylabel, title, filename):
@@ -91,41 +106,50 @@ def plot_per_episode_row(df, metric, ylabel, title, filename):
     - metric (str): Column name of the metric to plot.
     - ylabel (str): Y-axis label.
     - title (str): Plot title.
-    - filename (str): Path to save the plot.
     - reward (str): Name of the reward function (for file naming).
-    - yticks (int): Number of y-ticks.
+    - filename (str): Path to save the plot.
     """
+
     # Convert percentage strings to numeric if needed
     if "%" in str(df[metric].iloc[0]):  
         df[metric] = df[metric].str.replace("%", "").astype(float) / 100
 
     # Get unique episodes
-    episodes = df["episode"].unique()
+    episodes = sorted(df["episode"].unique())
     num_episodes = len(episodes)
 
-    # Create subplots
-    fig, axes = plt.subplots(1, num_episodes, figsize=(5 * num_episodes, 4), sharey=True)
+    # Select episodes to plot
+    if num_episodes <= 5:
+        selected_episodes = episodes
+    else:
+        mid = num_episodes // 2
+        first = 0
+        last = num_episodes - 1
+        between_first_mid = (first + mid) // 2
+        between_mid_last = (mid + last) // 2
+        selected_indices = [first, between_first_mid, mid, between_mid_last, last]
+        selected_episodes = [episodes[i] for i in selected_indices]
 
-    # Ensure axes is iterable for a single episode
-    if num_episodes == 1:
+    # Create subplots
+    fig, axes = plt.subplots(1, len(selected_episodes), figsize=(5 * len(selected_episodes), 4), sharey=True)
+
+    # Ensure axes is iterable
+    if len(selected_episodes) == 1:
         axes = [axes]
 
-    for idx, episode in enumerate(episodes):
+    for idx, episode in enumerate(selected_episodes):
         df_episode = df[df["episode"] == episode]
         axes[idx].plot(df_episode["day"], df_episode[metric], label=f"Episode {episode}", color="#B7410E")
 
         # Set labels and titles
         axes[idx].set_xlabel("Day")
-        axes[idx].set_ylabel(ylabel)  # Set Y-axis label 
+        axes[idx].set_ylabel(ylabel)
         axes[idx].set_title(f"Ep {episode}")
         axes[idx].legend()
+        axes[idx].set_xticks(df_episode["day"][::50])
+        axes[idx].tick_params(axis='x', rotation=45)
 
-        # Reduce the number of x-axis ticks
-        axes[idx].set_xticks(df_episode["day"][::50])  
-        axes[idx].tick_params(axis='x', rotation=45)  
-
-
-    fig.suptitle(title, fontsize=14)  
+    fig.suptitle(title, fontsize=14)
     plt.tight_layout()
     plt.savefig(filename)
     plt.show()

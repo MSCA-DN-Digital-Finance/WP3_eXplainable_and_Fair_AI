@@ -426,3 +426,225 @@ class StockPortfolioEnv(gym.Env):
         obs = e.reset()
         print("EPISODE: ", self.episode)
         return e, obs
+    
+class StockPortfolioEnvOriginal(gym.Env):
+    """A single stock trading environment for OpenAI gym
+
+    Attributes
+    ----------
+        df: DataFrame
+            input data
+        stock_dim : int
+            number of unique stocks
+        hmax : int
+            maximum number of shares to trade
+        initial_amount : int
+            start money
+        transaction_cost_pct: float
+            transaction cost percentage per trade
+        reward_scaling: float
+            scaling factor for reward, good for training
+        state_space: int
+            the dimension of input features
+        action_space: int
+            equals stock dimension
+        tech_indicator_list: list
+            a list of technical indicator names
+        turbulence_threshold: int
+            a threshold to control risk aversion
+        day: int
+            an increment number to control date
+
+    Methods
+    -------
+    _sell_stock()
+        perform sell action based on the sign of the action
+    _buy_stock()
+        perform buy action based on the sign of the action
+    step()
+        at each step the agent will return actions, then 
+        we will calculate the reward, and return the next observation.
+    reset()
+        reset the environment
+    render()
+        use render to return other functions
+    save_asset_memory()
+        return account value at each time step
+    save_action_memory()
+        return actions/positions at each time step
+        
+
+    """
+    metadata = {'render.modes': ['human']}
+
+    def __init__(self, 
+                df,
+                stock_dim,
+                hmax,
+                initial_amount,
+                transaction_cost_pct,
+                reward_scaling,
+                state_space,
+                action_space,
+                turbulence_threshold=None,
+                lookback=252,
+                day = 0):
+        #super(StockEnv, self).__init__()
+        #money = 10 , scope = 1
+        self.episode = -1 
+        self.day = day
+        self.lookback=lookback
+        self.df = df
+        self.stock_dim = stock_dim
+        self.hmax = hmax
+        self.initial_amount = initial_amount
+        self.transaction_cost_pct =transaction_cost_pct
+        self.reward_scaling = reward_scaling
+        self.state_space = state_space
+        self.action_space = action_space
+        
+       # Define action and observation spaces
+        self.action_space = spaces.Box(low=0, high=1, shape=(self.action_space,))
+        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, 
+                                            shape=(self.state_space, self.state_space))
+      
+        # Initialize logs
+        self.episode_log = []  
+
+        # Load first day's data
+        self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
+        self.state = self._get_state()  
+        self.terminal = False
+        self.portfolio_value = self.initial_amount
+        self.asset_memory = [self.initial_amount]
+        self.portfolio_return_memory = [0]
+        self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
+        self.date_memory = [self.data.date.unique()[0]]
+
+    def _get_state(self):
+        """Retrieves the current state based on stock prices and past returns."""
+        data_sorted = self.data.sort_values("tic")  
+        
+        state_columns = ["close"] 
+        state_array = data_sorted[state_columns].to_numpy()  
+     
+        return state_array.flatten()
+    
+    def step(self, actions):
+      
+        self.terminal = self.day >= len(self.df["date"].unique()) - 1
+        # print(actions)
+
+        if self.terminal:
+
+            return self.state, self.reward, self.terminal,{}
+
+        else:
+            #print("Model actions: ",actions)
+            # actions are the portfolio weight
+            # normalize to sum of 1
+            #if (np.array(actions) - np.array(actions).min()).sum() != 0:
+            #  norm_actions = (np.array(actions) - np.array(actions).min()) / (np.array(actions) - np.array(actions).min()).sum()
+            #else:
+            #  norm_actions = actions
+            weights = self.softmax_normalization(actions) 
+            #print("Normalized actions: ", weights)
+            self.actions_memory.append(weights)
+            last_day_memory = self.data
+
+            #load next state
+            self.day += 1
+            self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
+            self.state =  self._get_state()
+            #print(self.state)
+            # calcualte portfolio return
+            # individual stocks' return * weight
+            portfolio_return = sum(((self.data.close.values / last_day_memory.close.values)-1)*weights)
+            # update portfolio value
+            new_portfolio_value = self.portfolio_value*(1+portfolio_return)
+            self.portfolio_value = new_portfolio_value
+
+            # save into memory
+            self.portfolio_return_memory.append(portfolio_return)
+            self.date_memory.append(self.data.date.unique()[0])            
+            self.asset_memory.append(new_portfolio_value)
+
+            # the reward is the new portfolio value or end portfolo value
+            self.reward = new_portfolio_value 
+            #print("Step reward: ", self.reward)
+            #self.reward = self.reward*self.reward_scaling
+
+        self.episode_log.append({
+        "episode": self.episode,
+        "day": self.day,
+        "actions": ", ".join([f"{x:.2f}" for x in actions.tolist()]) if isinstance(actions, np.ndarray) else actions,
+        "allocation_weights": ", ".join([f"{x:.2f}" for x in weights.tolist()]) if isinstance(weights, np.ndarray) else weights,
+        "portfolio_return": f"{portfolio_return:.2%}",
+        "reward": f"{self.reward:.2f}",
+        "new_portfolio_value": f"{new_portfolio_value:,.0f}"
+        })
+        return self.state, self.reward, self.terminal, {}
+
+    def reset(self):
+        self.episode += 1  
+        print("EPISODE: ", self.episode)
+        self.asset_memory = [self.initial_amount]
+
+        self.day = -1
+        self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
+        # load states
+        self.state =  self._get_state()  
+        self.portfolio_value = self.initial_amount
+        #self.cost = 0
+        #self.trades = 0
+        self.terminal = False 
+        self.portfolio_return_memory = [0]
+        self.actions_memory=[[1/self.stock_dim]*self.stock_dim]
+        self.date_memory=[self.data.date.unique()[0]] 
+        return self.state
+    
+    def render(self, mode='human'):
+        return self.state
+        
+    def softmax_normalization(self, actions):
+        numerator = np.exp(actions)
+        denominator = np.sum(np.exp(actions))
+        softmax_output = numerator/denominator
+        return softmax_output
+
+    
+    def save_asset_memory(self):
+        date_list = self.date_memory
+        portfolio_return = self.portfolio_return_memory
+        #print(len(date_list))
+        #print(len(asset_list))
+        df_account_value = pd.DataFrame({'date':date_list,'daily_return':portfolio_return})
+        return df_account_value
+
+    def save_action_memory(self):
+        # date and close price length must match actions length
+        date_list = self.date_memory
+        df_date = pd.DataFrame(date_list)
+        df_date.columns = ['date']
+        
+        action_list = self.actions_memory
+        df_actions = pd.DataFrame(action_list)
+        df_actions.columns = self.data.tic.values
+        df_actions.index = df_date.date
+        #df_actions = pd.DataFrame({'date':date_list,'actions':action_list})
+        return df_actions
+
+    def _seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
+    def get_sb_env(self):
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset()
+        return e, obs
+    
+    def save_episode_log(self, filename="episode_log.csv"):
+        """Save episode logs to a CSV file."""
+        df_log = pd.DataFrame(self.episode_log)
+        df_log.to_csv(filename, index=False)
+        print(f"Saved episode log to {filename}")
