@@ -32,9 +32,6 @@ num_df = train[['close']] #, 'return_t-1', 'return_t-2', 'return_t-3', 'return_t
 inf_rows = num_df[np.isinf(num_df).any(axis=1)]
 print("Rows containing `inf` values:\n", inf_rows)
 
-train.shape
-
-
 
 # Define the full path for the image
 folder_path = "Results/Experiment_4"
@@ -84,25 +81,19 @@ env_train, _ = e_train_gym.get_sb_env()
 
 # initialize the agent
 agent = DRLAgent(env = env_train)
-SAC_PARAMS = {
-    "batch_size": 128,
-    "buffer_size": 100000,
-    "learning_rate": 0.0003,
-    "learning_starts": 100,
-    "ent_coef": "auto_0.1",
-}
 
-model_sac = agent.get_model("sac",model_kwargs = SAC_PARAMS)
+A2C_PARAMS = {"n_steps": 5, "ent_coef": 0.005, "learning_rate": 0.0002}
+model_a2c = agent.get_model(model_name="a2c",model_kwargs = A2C_PARAMS)
 
 # Define the number of episodes and days and train for episodes*day timesteps
 
 
 episodes = 500
 days = 1000
-trained_sac = agent.train_model(model=model_sac, 
-                             tb_log_name='sac',
+trained_a2c = agent.train_model(model=model_a2c, 
+                                tb_log_name='a2c',
                              total_timesteps=episodes*days)
-algorithm = ""
-e_train_gym.save_episode_log("Results/Experiment_4/training_logs_4_1_sac_upward.csv")
+
+e_train_gym.save_episode_log("Results/Experiment_4/training_logs_4_1_a2c_upward.csv")
 
 print("Saved successfully")

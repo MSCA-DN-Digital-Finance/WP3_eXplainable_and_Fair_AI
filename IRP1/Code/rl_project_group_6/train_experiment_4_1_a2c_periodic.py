@@ -7,7 +7,7 @@ from finrl.agents.stablebaselines3.models import DRLAgent
 import gym
 from gym import spaces
 from stable_baselines3.common.vec_env import DummyVecEnv
-from generators import LinearTrendPriceGenerator, CashPriceGenerator
+from generators import PeriodicTrendPriceGenerator, CashPriceGenerator
 from environments import  StockPriceSimulator, StockPortfolioEnvOriginal
 import os
 from tabulate import tabulate
@@ -16,9 +16,10 @@ initial_prices = {"UPWARD": 100, "CASH": 100}
 
 # Define different price behaviors for each stock
 generators = {
-"UPWARD": LinearTrendPriceGenerator(start_price=100, up=True),  #
+"UPWARD": PeriodicTrendPriceGenerator(10,1,1), #
 "CASH": CashPriceGenerator()  # Cash remains constant
 }
+
 
 # Create the simulator
 simulator = StockPriceSimulator(days=1000, initial_prices=initial_prices, generators=generators)
@@ -31,34 +32,6 @@ train.loc[train['tic'] == 'UPWARD']
 num_df = train[['close']] #, 'return_t-1', 'return_t-2', 'return_t-3', 'return_t-4', 'return_t-5']]
 inf_rows = num_df[np.isinf(num_df).any(axis=1)]
 print("Rows containing `inf` values:\n", inf_rows)
-
-train.shape
-
-
-
-# Define the full path for the image
-folder_path = "Results/Experiment_4"
-image_path = os.path.join(folder_path, "4_1_upward_price_trend.png")
-
-# Create the folder and sub-folder if they do not exist
-os.makedirs(folder_path, exist_ok=True)
-
-# Plot stock price
-plt.figure(figsize=(12, 6))
-for stock in train["tic"].unique():
-    if stock != "CASH":
-      stock_data = train[train["tic"] == stock]
-      plt.plot(stock_data["date"], stock_data["close"], label=stock)
-
-# Formatting the plot
-plt.xlabel("Date")
-plt.ylabel("Stock Price (Close)")
-plt.title("Stock Price Trend")
-plt.legend()
-plt.grid(True)
-
-# Plot the stock upward trend:
-plt.savefig(image_path)
 
 
 stock_dimension = len(train["tic"].unique())  # Count unique stocks
@@ -84,25 +57,19 @@ env_train, _ = e_train_gym.get_sb_env()
 
 # initialize the agent
 agent = DRLAgent(env = env_train)
-SAC_PARAMS = {
-    "batch_size": 128,
-    "buffer_size": 100000,
-    "learning_rate": 0.0003,
-    "learning_starts": 100,
-    "ent_coef": "auto_0.1",
-}
 
-model_sac = agent.get_model("sac",model_kwargs = SAC_PARAMS)
+A2C_PARAMS = {"n_steps": 5, "ent_coef": 0.005, "learning_rate": 0.0002}
+model_a2c = agent.get_model(model_name="a2c",model_kwargs = A2C_PARAMS)
 
 # Define the number of episodes and days and train for episodes*day timesteps
 
 
 episodes = 500
 days = 1000
-trained_sac = agent.train_model(model=model_sac, 
-                             tb_log_name='sac',
+trained_a2c = agent.train_model(model=model_a2c, 
+                                tb_log_name='a2c',
                              total_timesteps=episodes*days)
-algorithm = ""
-e_train_gym.save_episode_log("Results/Experiment_4/training_logs_4_1_sac_upward.csv")
+
+e_train_gym.save_episode_log("Results/Experiment_4/training_logs_4_1_a2c_periodic.csv")
 
 print("Saved successfully")

@@ -64,7 +64,7 @@ SAC_PARAMS = {
     "ent_coef": "auto_0.1",
 }
 
-model_sac = agent.get_model("sac",model_kwargs = SAC_PARAMS, policy_kwargs={"device": "cuda"})
+model_sac = agent.get_model("sac",model_kwargs = SAC_PARAMS)
 
 # Define the number of episodes and days and train for episodes*day timesteps
 
