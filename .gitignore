@@ -1,0 +1,9 @@
+.DS_Store
+# Bytecode cache
+__pycache__/
+
+# Specific compiled Python files
+*.pyc
+
+# Output log
+nohup.out
