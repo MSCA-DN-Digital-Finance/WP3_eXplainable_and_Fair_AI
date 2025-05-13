@@ -4,6 +4,8 @@ This project investigates whether state-of-the-art reinforcement learning (RL) a
 
 Every experiment is self‑contained—it ships the exact generators, environment definition, configuration, and the results it produces—so you can reproduce or extend any part of the study without touching the rest.
 
+N.B.: Experiment 4_1 and 4_2 correspond to Experiment 1 and Experiment 2 in our paper. 
+
 ---
 
 ## Repository layout
@@ -29,6 +31,7 @@ rl_project_group_6/
 | `environments.py`  | OpenAI Gym‑style portfolio environment for Experiment 4    |
 | `plot_functions.py` | Helper plots (returns, allocations, rewards) |
 | `generate_timeseries.py` | Generate synthetic price **CSV & PNG** files under `Data/` |
+| `generate_allocation_plots_across_runs.py` | It generates 10×5 grid plots of allocation weights over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
 | `Data/`            | Synthetic price CSVs + PNG previews for each trend         |
 | `Results/`         | CSV logs and PNG plots produced by each run                |
  CSV logs and PNG plots produced by each run        |
