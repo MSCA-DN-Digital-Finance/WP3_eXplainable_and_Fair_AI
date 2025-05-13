@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Define constants
 TRENDS = {
-    "4_1": ["upward", "downward", "periodic"],
+     "4_1": ["upward", "downward", "periodic"],
     "4_2": ["upward_noise", "downward_noise", "periodic_noise"]
 }
 AGENTS = ["ddpg", "sac", "a2c"]
@@ -46,19 +46,19 @@ def plot_dual_line_per_episode_on_axes(df, metric1, metric2, legend1, legend2,
         ax.plot(days, line2, label=legend2, color="#ff7f0e", linewidth=1.5)
 
         if show_titles:
-            ax.set_title(f"Ep {episode}", fontsize=9)
+            ax.set_title(f"Ep {episode}", fontsize=12)
         else:
             ax.set_title("")
 
         if show_xticks:
             ax.set_xlabel("Day")
-            ax.tick_params(axis='x', labelbottom=True, rotation=45)
+            ax.tick_params(axis='x', labelbottom=True, rotation=45, size=12)
         else:
             ax.set_xlabel("")
-            ax.tick_params(axis='x', labelbottom=False)
+            ax.tick_params(axis='x', labelbottom=False, size=12)
 
         if run_label and idx == 0:
-            ax.set_ylabel(run_label, fontsize=9)
+            ax.set_ylabel(run_label, fontsize=12)
         else:
             ax.set_ylabel("")
 
@@ -97,10 +97,11 @@ def plot_10x5_grid_for_config(exp, trend, agent):
         )
 
     handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc='upper right', bbox_to_anchor=(1, 1), fontsize='large')
     fig.suptitle(f"Allocation Weights Over Time –  Experiment {exp[-1]} | Agent: {agent.upper()} | Trend: {trend.replace('_', ' ').title()}", fontsize=16, y=0.97)
     fig.tight_layout()
-    fig.subplots_adjust(top=0.93, right=0.85)
+    fig.subplots_adjust(top=0.93)#, right=0.99)
+    fig.legend(handles, labels, loc='upper right', bbox_to_anchor=(0.99, 0.98), fontsize='large')
+
 
     output_path = BASE_PATH /  f"allocation_plots_across_runs/{exp}_{agent}_{trend}_allocation_plot.png"
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
