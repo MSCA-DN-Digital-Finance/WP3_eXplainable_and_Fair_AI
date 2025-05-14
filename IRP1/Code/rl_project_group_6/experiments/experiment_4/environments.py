@@ -4,7 +4,7 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 from stable_baselines3.common.vec_env import DummyVecEnv
-from sklearn.preprocessing import normalize
+
 
 class StockPriceSimulator:
     """
@@ -154,7 +154,7 @@ class StockPortfolioEnv(gym.Env):
             if self.day == 0:
                 actions = [0.5, 0.5]
               
-            weights = self.softmax_normalization(actions) 
+            weights = self.normalize_allocation(actions) 
 
             self.actions_memory.append(weights)
             last_day_memory = self.data
@@ -163,7 +163,7 @@ class StockPortfolioEnv(gym.Env):
             self.day += 1
             self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
             self.state =  self._get_state()
-   
+        
             portfolio_return = sum(((self.data.close.values / last_day_memory.close.values)-1)*weights)
             # update portfolio value
             new_portfolio_value = self.portfolio_value*(1+portfolio_return)
@@ -181,7 +181,7 @@ class StockPortfolioEnv(gym.Env):
         self.episode_log.append({
         "episode": self.episode,
         "day": self.day,
-        "actions": ", ".join([f"{x:.2f}" for x in actions.tolist()]) if isinstance(actions, np.ndarray) else actions,
+        "actions": ", ".join([f"{x:.2f}" for x in actions.tolist()]) if (isinstance(actions, np.ndarray) or isinstance(actions, list))  else actions,
         "allocation_weights": ", ".join([f"{x:.2f}" for x in weights.tolist()]) if isinstance(weights, np.ndarray) else weights,
         "portfolio_return": f"{portfolio_return:.2%}",
         "reward": f"{self.reward:.2f}",
@@ -207,11 +207,14 @@ class StockPortfolioEnv(gym.Env):
         self.date_memory=[self.data.date.unique()[0]] 
         return self.state
         
-    def softmax_normalization(self, actions):
-        numerator = np.exp(actions)
-        denominator = np.sum(np.exp(actions))
-        softmax_output = numerator/denominator
-        return softmax_output
+    def normalize_allocation(actions):
+        # Convert arbitrary agent outputs to non-negative values
+        actions = np.maximum(actions, 0)  # Ensure no negative allocations
+        total = np.sum(actions)
+
+        if total == 0:
+            return np.array([0.5, 0.5])
+        return actions / total
 
     def _seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
