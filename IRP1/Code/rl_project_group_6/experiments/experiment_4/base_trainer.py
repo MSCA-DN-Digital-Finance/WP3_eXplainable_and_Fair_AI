@@ -34,21 +34,21 @@ def get_hyper(agent: str) -> dict:
     table = {
         "ddpg": {
             "batch_size": 128,
-            "buffer_size": 50_000,
+            "buffer_size": 50000,
             "learning_rate": 0.001,
         },
         "sac": {
             "batch_size": 128,
-            "buffer_size": 1_000_000,
-            "learning_rate": 0.0001,
+            "buffer_size": 100000,
+            "learning_rate": 0.0003,
             "learning_starts": 100,
             "ent_coef": "auto_0.1",
         },
         "a2c": {
             "n_steps": 5,
-            "ent_coef": 0.01,
-            "learning_rate": 0.0007,
-        },
+            "ent_coef": 0.005,
+            "learning_rate": 0.0002,
+        }
     }
     return table[agent]
 
