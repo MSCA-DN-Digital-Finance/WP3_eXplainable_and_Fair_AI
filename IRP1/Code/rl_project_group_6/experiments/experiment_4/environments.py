@@ -181,7 +181,7 @@ class StockPortfolioEnv(gym.Env):
         self.episode_log.append({
         "episode": self.episode,
         "day": self.day,
-        "actions": ", ".join([f"{x:.2f}" for x in actions.tolist()]) if (isinstance(actions, np.ndarray) or isinstance(actions, list))  else actions,
+        "actions": ", ".join([f"{x:.2f}" for x in actions]) if isinstance(actions, (np.ndarray, list)) else actions,
         "allocation_weights": ", ".join([f"{x:.2f}" for x in weights.tolist()]) if isinstance(weights, np.ndarray) else weights,
         "portfolio_return": f"{portfolio_return:.2%}",
         "reward": f"{self.reward:.2f}",
@@ -207,7 +207,7 @@ class StockPortfolioEnv(gym.Env):
         self.date_memory=[self.data.date.unique()[0]] 
         return self.state
         
-    def normalize_allocation(actions):
+    def normalize_allocation(self, actions):
         # Convert arbitrary agent outputs to non-negative values
         actions = np.maximum(actions, 0)  # Ensure no negative allocations
         total = np.sum(actions)
