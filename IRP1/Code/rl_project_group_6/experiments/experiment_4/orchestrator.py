@@ -47,17 +47,16 @@ TRENDS = {
     "4_1": ["upward", "downward", "periodic"],
     "4_2": ["upward_noise", "downward_noise","periodic_noise"],
 }
-
 AGENTS: List[str] = ["ddpg", "sac", "a2c"]
 RUN_NUMBERS: List[str] = [f"{i:02d}" for i in range(1, 11)]  # "01" .. "10"
-
 PROJECT_ROOT = Path.cwd()  # assume cwd == repo root
+EPISODES =[500]
 
 # ----------------------------------------------------------------------------
 # Helper
 # ----------------------------------------------------------------------------
 
-def run_one(exp: str, trend: str, agent: str, run: str, dry_run: bool = False) -> Tuple[str, int]:
+def run_one(exp: str, trend: str, agent: str, run: str, episode, dry_run: bool = False) -> Tuple[str, int]:
     """Launch a single repetition. Returns (run_id, exit_code)."""
     run_id = f"{exp}_{trend}_{agent}_{run}"
 
@@ -75,6 +74,7 @@ def run_one(exp: str, trend: str, agent: str, run: str, dry_run: bool = False) -
         "--trend", trend,
         "--agent", agent,
         "--run", run,
+        "--episodes", str(episode)
     ]
 
     if dry_run:
@@ -110,11 +110,12 @@ def main(argv: List[str] | None = None) -> None:
 
     # build (exp, trend, agent, run) tuples
     job_list = [
-        (exp, trend, agent, run)
+        (exp, trend, agent, run, episode)
         for exp in TRENDS
         for trend in TRENDS[exp]
         for agent in AGENTS
         for run in RUN_NUMBERS
+        for episode in EPISODES
     ]
 
     print(f"Submitting {len(job_list)} runs across {args.jobs} worker(s)…\n")
@@ -123,15 +124,15 @@ def main(argv: List[str] | None = None) -> None:
     failures = 0
 
     if args.dry_run:
-        for exp, trend, agent, run in job_list:
-            run_one(exp, trend, agent, run, dry_run=True)
+        for exp, trend, agent, run,episode in job_list:
+            run_one(exp, trend, agent, run,episode, dry_run=True)
         return
 
     with ProcessPoolExecutor(max_workers=args.jobs) as pool:
         fut_to_id = {
-            pool.submit(run_one, exp, trend, agent, run, False):
-            f"{exp}-{trend}-{agent}-{run}"
-            for exp, trend, agent, run in job_list
+            pool.submit(run_one, exp, trend, agent, run, episode, False):
+            f"{exp}-{trend}-{agent}-{run}-{episode}"
+            for exp, trend, agent, run, episode in job_list
         }
 
         for fut in as_completed(fut_to_id):
