@@ -1,0 +1,29 @@
+C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\common\vec_env\patch_gym.py:49: UserWarning: You provided an OpenAI Gym environment. We strongly recommend transitioning to Gymnasium environments. Stable-Baselines3 is automatically wrapping your environments in a compatibility layer, which could potentially cause issues.
+  warnings.warn(
+Traceback (most recent call last):
+  File "C:\Users\JanderM\OneDrive - University of Twente\Documents\Github Repos\WP3_eXplainable_and_Fair_AI\IRP1\Code\rl_project_group_6\experiments\experimentation_mj\base_trainer_binary.py", line 176, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\JanderM\OneDrive - University of Twente\Documents\Github Repos\WP3_eXplainable_and_Fair_AI\IRP1\Code\rl_project_group_6\experiments\experimentation_mj\base_trainer_binary.py", line 117, in main
+    agent.train_model(model=model, tb_log_name=args.agent, total_timesteps=total_steps)
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\finrl\agents\stablebaselines3\models.py", line 117, in train_model
+    model = model.learn(
+            ^^^^^^^^^^^^
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\ddpg\ddpg.py", line 123, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\td3\td3.py", line 222, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\common\off_policy_algorithm.py", line 347, in learn
+    self.train(batch_size=self.batch_size, gradient_steps=gradient_steps)
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\td3\td3.py", line 199, in train
+    actor_loss.backward()
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\torch\_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\torch\autograd\__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\torch\autograd\graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

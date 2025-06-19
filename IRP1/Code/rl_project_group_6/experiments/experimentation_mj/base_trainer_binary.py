@@ -48,6 +48,12 @@ def get_hyper(agent: str) -> dict:
             "n_steps": 5,
             "ent_coef": 0.005,
             "learning_rate": 0.0002,
+        },
+        "ppo": {
+            "n_steps": 2048,
+            "batch_size": 64,
+            "learning_rate": 3e-4,
+            "ent_coef": 0.0,
         }
     }
     return table[agent]
@@ -60,7 +66,7 @@ def parse_args(argv=None):
     p = argparse.ArgumentParser("Train a single RL run")
     p.add_argument("--experiment", required=True, help="4_1 or 4_2")
     p.add_argument("--trend", required=True, help="trend name e.g. upward_noise")
-    p.add_argument("--agent", required=True, choices=["ddpg", "sac", "a2c"], help="agent type")
+    p.add_argument("--agent", required=True, choices=["ddpg", "sac", "a2c", "ppo"], help="agent type")
     p.add_argument("--run", required=True, help="run id, e.g. 01")
     p.add_argument("--episodes", type=int, default=500)
     p.add_argument("--days", type=int, default=1000)

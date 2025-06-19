@@ -1,0 +1,23 @@
+EPISODE:  0
+{'batch_size': 128, 'buffer_size': 50000, 'learning_rate': 0.001}
+Using cpu device
+EPISODE:  1
+EPISODE:  2
+EPISODE:  3
+EPISODE:  4
+EPISODE:  5
+--------------------------------------
+| time/              |               |
+|    episodes        | 4             |
+|    fps             | 52            |
+|    time_elapsed    | 75            |
+|    total_timesteps | 3964          |
+| train/             |               |
+|    actor_loss      | -2.25         |
+|    critic_loss     | 0.000279      |
+|    learning_rate   | 0.001         |
+|    n_updates       | 3863          |
+|    reward          | -0.0009107468 |
+--------------------------------------
+EPISODE:  6
+EPISODE:  7

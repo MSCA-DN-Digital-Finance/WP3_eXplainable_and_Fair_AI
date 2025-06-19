@@ -44,13 +44,13 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 TRENDS = {
-    "250619_a2c_hc_binary_udp": ["upward", "downward", "periodic"],
-    "250619_a2c_hc_binary_udp_noise": ["upward_noise", "downward_noise","periodic_noise"]
+    "250619_hc_binary_udp": ["upward", "downward", "periodic"],
+    "250619_hc_binary_udp_noise": ["upward_noise", "downward_noise","periodic_noise"]
 }
-AGENTS: List[str] = ["a2c"]
+AGENTS: List[str] = ["ddpg", "a2c", "ppo"]
 RUN_NUMBERS: List[str] = [f"{i:02d}" for i in range(1, 2)]  # "01"
 PROJECT_ROOT = Path.cwd()  # assume cwd == repo root
-EPISODES =[100]
+EPISODES =[50]
 
 # ----------------------------------------------------------------------------
 # Helper
@@ -59,7 +59,7 @@ EPISODES =[100]
 def run_one(exp: str, trend: str, agent: str, run: str, episode, dry_run: bool = False) -> Tuple[str, int]:
     """Launch a single repetition. Returns (run_id, exit_code)."""
     run_id = f"{exp}_{trend}_{agent}_{run}"
-
+    print(f"▶ Running: {run_id}")
     # where to store raw stdout/stderr
     out_dir = PROJECT_ROOT / "Results" / exp / agent / trend / "logs" / run
     out_dir.mkdir(parents=True, exist_ok=True)
