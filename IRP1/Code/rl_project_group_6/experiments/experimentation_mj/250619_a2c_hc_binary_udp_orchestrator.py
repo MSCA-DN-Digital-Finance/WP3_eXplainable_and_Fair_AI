@@ -44,7 +44,8 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 TRENDS = {
-    "250619_a2c_hc_binary_udp": ["upward", "downward", "periodic"]
+    "250619_a2c_hc_binary_udp": ["upward", "downward", "periodic"],
+    "250619_a2c_hc_binary_udp_noise": ["upward_noise", "downward_noise","periodic_noise"]
 }
 AGENTS: List[str] = ["a2c"]
 RUN_NUMBERS: List[str] = [f"{i:02d}" for i in range(1, 2)]  # "01"
