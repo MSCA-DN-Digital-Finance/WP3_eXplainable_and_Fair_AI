@@ -1,0 +1,8 @@
+C:\Users\JanderM\AppData\Local\anaconda3\envs\rl_project_py311\Lib\site-packages\stable_baselines3\common\vec_env\patch_gym.py:49: UserWarning: You provided an OpenAI Gym environment. We strongly recommend transitioning to Gymnasium environments. Stable-Baselines3 is automatically wrapping your environments in a compatibility layer, which could potentially cause issues.
+  warnings.warn(
+C:\Users\JanderM\OneDrive - University of Twente\Documents\Github Repos\WP3_eXplainable_and_Fair_AI\IRP1\Code\rl_project_group_6\experiments\experimentation_mj\plot_functions.py:155: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+C:\Users\JanderM\OneDrive - University of Twente\Documents\Github Repos\WP3_eXplainable_and_Fair_AI\IRP1\Code\rl_project_group_6\experiments\experimentation_mj\plot_functions.py:155: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+C:\Users\JanderM\OneDrive - University of Twente\Documents\Github Repos\WP3_eXplainable_and_Fair_AI\IRP1\Code\rl_project_group_6\experiments\experimentation_mj\plot_functions.py:96: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()

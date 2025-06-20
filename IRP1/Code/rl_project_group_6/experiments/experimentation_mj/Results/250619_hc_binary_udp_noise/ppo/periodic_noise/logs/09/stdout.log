@@ -1,0 +1,545 @@
+EPISODE:  0
+{'n_steps': 2048, 'batch_size': 64, 'learning_rate': 0.0003, 'ent_coef': 0.0}
+Using cpu device
+EPISODE:  1
+EPISODE:  2
+EPISODE:  3
+-----------------------------------
+| time/              |            |
+|    fps             | 228        |
+|    iterations      | 1          |
+|    time_elapsed    | 8          |
+|    total_timesteps | 2048       |
+| train/             |            |
+|    reward          | 0.08937853 |
+-----------------------------------
+EPISODE:  4
+EPISODE:  5
+------------------------------------------
+| time/                   |              |
+|    fps                  | 205          |
+|    iterations           | 2            |
+|    time_elapsed         | 19           |
+|    total_timesteps      | 4096         |
+| train/                  |              |
+|    approx_kl            | 0.0021258146 |
+|    clip_fraction        | 0.0262       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.84        |
+|    explained_variance   | -1.09        |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.00723      |
+|    n_updates            | 10           |
+|    policy_gradient_loss | -0.0017      |
+|    reward               | -0.020557929 |
+|    std                  | 1            |
+|    value_loss           | 0.0107       |
+------------------------------------------
+EPISODE:  6
+EPISODE:  7
+------------------------------------------
+| time/                   |              |
+|    fps                  | 204          |
+|    iterations           | 3            |
+|    time_elapsed         | 29           |
+|    total_timesteps      | 6144         |
+| train/                  |              |
+|    approx_kl            | 0.0060244775 |
+|    clip_fraction        | 0.0219       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.86        |
+|    explained_variance   | -0.00223     |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.0363       |
+|    n_updates            | 20           |
+|    policy_gradient_loss | -0.00164     |
+|    reward               | 0.04513703   |
+|    std                  | 1.01         |
+|    value_loss           | 0.00956      |
+------------------------------------------
+EPISODE:  8
+EPISODE:  9
+------------------------------------------
+| time/                   |              |
+|    fps                  | 206          |
+|    iterations           | 4            |
+|    time_elapsed         | 39           |
+|    total_timesteps      | 8192         |
+| train/                  |              |
+|    approx_kl            | 0.002404951  |
+|    clip_fraction        | 0.0184       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.87        |
+|    explained_variance   | 0.000703     |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.00716      |
+|    n_updates            | 30           |
+|    policy_gradient_loss | 2.57e-05     |
+|    reward               | -0.037460472 |
+|    std                  | 1.02         |
+|    value_loss           | 0.00865      |
+------------------------------------------
+EPISODE:  10
+EPISODE:  11
+------------------------------------------
+| time/                   |              |
+|    fps                  | 209          |
+|    iterations           | 5            |
+|    time_elapsed         | 48           |
+|    total_timesteps      | 10240        |
+| train/                  |              |
+|    approx_kl            | 0.006948774  |
+|    clip_fraction        | 0.0321       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.89        |
+|    explained_variance   | -0.000841    |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.0179       |
+|    n_updates            | 40           |
+|    policy_gradient_loss | -0.00237     |
+|    reward               | -0.028105926 |
+|    std                  | 1.03         |
+|    value_loss           | 0.00907      |
+------------------------------------------
+EPISODE:  12
+EPISODE:  13
+------------------------------------------
+| time/                   |              |
+|    fps                  | 212          |
+|    iterations           | 6            |
+|    time_elapsed         | 57           |
+|    total_timesteps      | 12288        |
+| train/                  |              |
+|    approx_kl            | 0.0035878206 |
+|    clip_fraction        | 0.04         |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.9         |
+|    explained_variance   | 3.7e-06      |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.0242       |
+|    n_updates            | 50           |
+|    policy_gradient_loss | -0.00117     |
+|    reward               | 0.021459892  |
+|    std                  | 1.04         |
+|    value_loss           | 0.00923      |
+------------------------------------------
+EPISODE:  14
+EPISODE:  15
+------------------------------------------
+| time/                   |              |
+|    fps                  | 215          |
+|    iterations           | 7            |
+|    time_elapsed         | 66           |
+|    total_timesteps      | 14336        |
+| train/                  |              |
+|    approx_kl            | 0.0058285873 |
+|    clip_fraction        | 0.0661       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.9         |
+|    explained_variance   | 3.45e-05     |
+|    learning_rate        | 0.0003       |
+|    loss                 | -0.0191      |
+|    n_updates            | 60           |
+|    policy_gradient_loss | -0.00457     |
+|    reward               | 0.009123684  |
+|    std                  | 1.03         |
+|    value_loss           | 0.00727      |
+------------------------------------------
+EPISODE:  16
+EPISODE:  17
+------------------------------------------
+| time/                   |              |
+|    fps                  | 219          |
+|    iterations           | 8            |
+|    time_elapsed         | 74           |
+|    total_timesteps      | 16384        |
+| train/                  |              |
+|    approx_kl            | 0.0071157464 |
+|    clip_fraction        | 0.0734       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.89        |
+|    explained_variance   | -0.000719    |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.0234       |
+|    n_updates            | 70           |
+|    policy_gradient_loss | -0.00418     |
+|    reward               | 0.016595745  |
+|    std                  | 1.03         |
+|    value_loss           | 0.00886      |
+------------------------------------------
+EPISODE:  18
+EPISODE:  19
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 224         |
+|    iterations           | 9           |
+|    time_elapsed         | 82          |
+|    total_timesteps      | 18432       |
+| train/                  |             |
+|    approx_kl            | 0.006592154 |
+|    clip_fraction        | 0.0598      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.89       |
+|    explained_variance   | -0.000183   |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.0243      |
+|    n_updates            | 80          |
+|    policy_gradient_loss | -0.000105   |
+|    reward               | -0.02473611 |
+|    std                  | 1.03        |
+|    value_loss           | 0.00765     |
+-----------------------------------------
+EPISODE:  20
+EPISODE:  21
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 228         |
+|    iterations           | 10          |
+|    time_elapsed         | 89          |
+|    total_timesteps      | 20480       |
+| train/                  |             |
+|    approx_kl            | 0.00844252  |
+|    clip_fraction        | 0.0591      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.89       |
+|    explained_variance   | 3.55e-05    |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.00991    |
+|    n_updates            | 90          |
+|    policy_gradient_loss | -0.001      |
+|    reward               | -0.07047184 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00864     |
+-----------------------------------------
+EPISODE:  22
+EPISODE:  23
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 232         |
+|    iterations           | 11          |
+|    time_elapsed         | 97          |
+|    total_timesteps      | 22528       |
+| train/                  |             |
+|    approx_kl            | 0.006098437 |
+|    clip_fraction        | 0.0904      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | -0.000228   |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.000724    |
+|    n_updates            | 100         |
+|    policy_gradient_loss | -0.00451    |
+|    reward               | -0.04105933 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00817     |
+-----------------------------------------
+EPISODE:  24
+EPISODE:  25
+------------------------------------------
+| time/                   |              |
+|    fps                  | 235          |
+|    iterations           | 12           |
+|    time_elapsed         | 104          |
+|    total_timesteps      | 24576        |
+| train/                  |              |
+|    approx_kl            | 0.011357418  |
+|    clip_fraction        | 0.0894       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.88        |
+|    explained_variance   | 0.000114     |
+|    learning_rate        | 0.0003       |
+|    loss                 | -0.0149      |
+|    n_updates            | 110          |
+|    policy_gradient_loss | -0.00199     |
+|    reward               | -0.029631268 |
+|    std                  | 1.02         |
+|    value_loss           | 0.00946      |
+------------------------------------------
+EPISODE:  26
+EPISODE:  27
+------------------------------------------
+| time/                   |              |
+|    fps                  | 238          |
+|    iterations           | 13           |
+|    time_elapsed         | 111          |
+|    total_timesteps      | 26624        |
+| train/                  |              |
+|    approx_kl            | 0.0041593574 |
+|    clip_fraction        | 0.0497       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.87        |
+|    explained_variance   | 0.000706     |
+|    learning_rate        | 0.0003       |
+|    loss                 | -0.000375    |
+|    n_updates            | 120          |
+|    policy_gradient_loss | 0.000256     |
+|    reward               | -0.006172418 |
+|    std                  | 1.02         |
+|    value_loss           | 0.00707      |
+------------------------------------------
+EPISODE:  28
+EPISODE:  29
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 240         |
+|    iterations           | 14          |
+|    time_elapsed         | 118         |
+|    total_timesteps      | 28672       |
+| train/                  |             |
+|    approx_kl            | 0.009481808 |
+|    clip_fraction        | 0.0996      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.87       |
+|    explained_variance   | -0.000344   |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0056     |
+|    n_updates            | 130         |
+|    policy_gradient_loss | 0.00238     |
+|    reward               | 0.057587523 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00664     |
+-----------------------------------------
+EPISODE:  30
+EPISODE:  31
+------------------------------------------
+| time/                   |              |
+|    fps                  | 242          |
+|    iterations           | 15           |
+|    time_elapsed         | 126          |
+|    total_timesteps      | 30720        |
+| train/                  |              |
+|    approx_kl            | 0.012103124  |
+|    clip_fraction        | 0.11         |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.87        |
+|    explained_variance   | 3.7e-06      |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.00341      |
+|    n_updates            | 140          |
+|    policy_gradient_loss | 0.00579      |
+|    reward               | -0.020057736 |
+|    std                  | 1.01         |
+|    value_loss           | 0.00728      |
+------------------------------------------
+EPISODE:  32
+EPISODE:  33
+EPISODE:  34
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 244         |
+|    iterations           | 16          |
+|    time_elapsed         | 133         |
+|    total_timesteps      | 32768       |
+| train/                  |             |
+|    approx_kl            | 0.007965348 |
+|    clip_fraction        | 0.104       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.87       |
+|    explained_variance   | 6.56e-07    |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.00222     |
+|    n_updates            | 150         |
+|    policy_gradient_loss | 0.00405     |
+|    reward               | 0.03351885  |
+|    std                  | 1.02        |
+|    value_loss           | 0.00856     |
+-----------------------------------------
+EPISODE:  35
+EPISODE:  36
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 247         |
+|    iterations           | 17          |
+|    time_elapsed         | 140         |
+|    total_timesteps      | 34816       |
+| train/                  |             |
+|    approx_kl            | 0.013844609 |
+|    clip_fraction        | 0.12        |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.87       |
+|    explained_variance   | 2.74e-06    |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.031       |
+|    n_updates            | 160         |
+|    policy_gradient_loss | 0.00194     |
+|    reward               | 0.041434955 |
+|    std                  | 1.02        |
+|    value_loss           | 0.0076      |
+-----------------------------------------
+EPISODE:  37
+EPISODE:  38
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 248         |
+|    iterations           | 18          |
+|    time_elapsed         | 148         |
+|    total_timesteps      | 36864       |
+| train/                  |             |
+|    approx_kl            | 0.017914627 |
+|    clip_fraction        | 0.105       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | 5.3e-06     |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.0171     |
+|    n_updates            | 170         |
+|    policy_gradient_loss | 0.00433     |
+|    reward               | 0.022069735 |
+|    std                  | 1.03        |
+|    value_loss           | 0.00724     |
+-----------------------------------------
+EPISODE:  39
+EPISODE:  40
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 250         |
+|    iterations           | 19          |
+|    time_elapsed         | 155         |
+|    total_timesteps      | 38912       |
+| train/                  |             |
+|    approx_kl            | 0.022540651 |
+|    clip_fraction        | 0.0761      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | 9.83e-06    |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.0165      |
+|    n_updates            | 180         |
+|    policy_gradient_loss | 0.00632     |
+|    reward               | 0.067783855 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00792     |
+-----------------------------------------
+EPISODE:  41
+EPISODE:  42
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 252         |
+|    iterations           | 20          |
+|    time_elapsed         | 162         |
+|    total_timesteps      | 40960       |
+| train/                  |             |
+|    approx_kl            | 0.00763462  |
+|    clip_fraction        | 0.0765      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | 6.2e-06     |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.0167      |
+|    n_updates            | 190         |
+|    policy_gradient_loss | 0.00313     |
+|    reward               | -0.02481735 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00796     |
+-----------------------------------------
+EPISODE:  43
+EPISODE:  44
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 254         |
+|    iterations           | 21          |
+|    time_elapsed         | 169         |
+|    total_timesteps      | 43008       |
+| train/                  |             |
+|    approx_kl            | 0.014156346 |
+|    clip_fraction        | 0.0842      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | 2.15e-06    |
+|    learning_rate        | 0.0003      |
+|    loss                 | 0.00167     |
+|    n_updates            | 200         |
+|    policy_gradient_loss | 0.00597     |
+|    reward               | 0.011426261 |
+|    std                  | 1.02        |
+|    value_loss           | 0.00636     |
+-----------------------------------------
+EPISODE:  45
+EPISODE:  46
+------------------------------------------
+| time/                   |              |
+|    fps                  | 255          |
+|    iterations           | 22           |
+|    time_elapsed         | 176          |
+|    total_timesteps      | 45056        |
+| train/                  |              |
+|    approx_kl            | 0.024429511  |
+|    clip_fraction        | 0.106        |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.88        |
+|    explained_variance   | 6.56e-07     |
+|    learning_rate        | 0.0003       |
+|    loss                 | -0.0113      |
+|    n_updates            | 210          |
+|    policy_gradient_loss | 0.00332      |
+|    reward               | 0.0047119847 |
+|    std                  | 1.02         |
+|    value_loss           | 0.00641      |
+------------------------------------------
+EPISODE:  47
+EPISODE:  48
+-----------------------------------------
+| time/                   |             |
+|    fps                  | 257         |
+|    iterations           | 23          |
+|    time_elapsed         | 183         |
+|    total_timesteps      | 47104       |
+| train/                  |             |
+|    approx_kl            | 0.010955915 |
+|    clip_fraction        | 0.0984      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.88       |
+|    explained_variance   | 1.07e-06    |
+|    learning_rate        | 0.0003      |
+|    loss                 | -0.00434    |
+|    n_updates            | 220         |
+|    policy_gradient_loss | 0.0111      |
+|    reward               | 0.016853955 |
+|    std                  | 1.03        |
+|    value_loss           | 0.0053      |
+-----------------------------------------
+EPISODE:  49
+EPISODE:  50
+------------------------------------------
+| time/                   |              |
+|    fps                  | 258          |
+|    iterations           | 24           |
+|    time_elapsed         | 190          |
+|    total_timesteps      | 49152        |
+| train/                  |              |
+|    approx_kl            | 0.0121313725 |
+|    clip_fraction        | 0.102        |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.88        |
+|    explained_variance   | 0            |
+|    learning_rate        | 0.0003       |
+|    loss                 | 0.00866      |
+|    n_updates            | 230          |
+|    policy_gradient_loss | 0.00392      |
+|    reward               | 0.03737564   |
+|    std                  | 1.02         |
+|    value_loss           | 0.0072       |
+------------------------------------------
+EPISODE:  51
+EPISODE:  52
+----------------------------------------
+| time/                   |            |
+|    fps                  | 259        |
+|    iterations           | 25         |
+|    time_elapsed         | 197        |
+|    total_timesteps      | 51200      |
+| train/                  |            |
+|    approx_kl            | 0.03493277 |
+|    clip_fraction        | 0.101      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.87      |
+|    explained_variance   | -1.19e-07  |
+|    learning_rate        | 0.0003     |
+|    loss                 | 0.0211     |
+|    n_updates            | 240        |
+|    policy_gradient_loss | 0.0152     |
+|    reward               | 0.05118915 |
+|    std                  | 1.01       |
+|    value_loss           | 0.00744    |
+----------------------------------------
+Saved episode log to Results\250619_hc_binary_udp_noise\ppo\periodic_noise\training_logs\09.csv

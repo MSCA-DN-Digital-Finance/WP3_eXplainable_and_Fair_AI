@@ -48,7 +48,7 @@ TRENDS = {
     "250619_hc_binary_udp_noise": ["upward_noise", "downward_noise","periodic_noise"]
 }
 AGENTS: List[str] = ["ddpg", "a2c", "ppo"]
-RUN_NUMBERS: List[str] = [f"{i:02d}" for i in range(1, 2)]  # "01"
+RUN_NUMBERS: List[str] = [f"{i:02d}" for i in range(1, 11)]  # "01"
 PROJECT_ROOT = Path.cwd()  # assume cwd == repo root
 EPISODES =[50]
 
