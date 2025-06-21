@@ -9,12 +9,12 @@ EPISODE:  5
 ------------------------------------
 | time/              |             |
 |    episodes        | 4           |
-|    fps             | 21          |
-|    time_elapsed    | 187         |
+|    fps             | 19          |
+|    time_elapsed    | 203         |
 |    total_timesteps | 3964        |
 | train/             |             |
-|    actor_loss      | 3.6         |
-|    critic_loss     | 0.0173      |
+|    actor_loss      | -4.37       |
+|    critic_loss     | 0.803       |
 |    learning_rate   | 0.001       |
 |    n_updates       | 3863        |
 |    reward          | 0.010369442 |
@@ -26,12 +26,12 @@ EPISODE:  9
 ------------------------------------
 | time/              |             |
 |    episodes        | 8           |
-|    fps             | 20          |
-|    time_elapsed    | 395         |
+|    fps             | 17          |
+|    time_elapsed    | 444         |
 |    total_timesteps | 7928        |
 | train/             |             |
-|    actor_loss      | 2.64        |
-|    critic_loss     | 0.00239     |
+|    actor_loss      | -3.85       |
+|    critic_loss     | 0.0202      |
 |    learning_rate   | 0.001       |
 |    n_updates       | 7827        |
 |    reward          | 0.010369442 |
@@ -43,12 +43,12 @@ EPISODE:  13
 ------------------------------------
 | time/              |             |
 |    episodes        | 12          |
-|    fps             | 19          |
-|    time_elapsed    | 603         |
+|    fps             | 17          |
+|    time_elapsed    | 677         |
 |    total_timesteps | 11892       |
 | train/             |             |
-|    actor_loss      | 2.25        |
-|    critic_loss     | 0.0329      |
+|    actor_loss      | -2.85       |
+|    critic_loss     | 0.00408     |
 |    learning_rate   | 0.001       |
 |    n_updates       | 11791       |
 |    reward          | 0.010369442 |
@@ -60,12 +60,12 @@ EPISODE:  17
 ------------------------------------
 | time/              |             |
 |    episodes        | 16          |
-|    fps             | 19          |
-|    time_elapsed    | 815         |
+|    fps             | 17          |
+|    time_elapsed    | 912         |
 |    total_timesteps | 15856       |
 | train/             |             |
-|    actor_loss      | 1.78        |
-|    critic_loss     | 0.00845     |
+|    actor_loss      | -2.42       |
+|    critic_loss     | 0.00271     |
 |    learning_rate   | 0.001       |
 |    n_updates       | 15755       |
 |    reward          | 0.010369442 |
@@ -77,12 +77,12 @@ EPISODE:  21
 ------------------------------------
 | time/              |             |
 |    episodes        | 20          |
-|    fps             | 19          |
-|    time_elapsed    | 1023        |
+|    fps             | 17          |
+|    time_elapsed    | 1150        |
 |    total_timesteps | 19820       |
 | train/             |             |
-|    actor_loss      | 1.41        |
-|    critic_loss     | 0.000768    |
+|    actor_loss      | -1.87       |
+|    critic_loss     | 0.0193      |
 |    learning_rate   | 0.001       |
 |    n_updates       | 19719       |
 |    reward          | 0.010369442 |
@@ -94,12 +94,12 @@ EPISODE:  25
 ------------------------------------
 | time/              |             |
 |    episodes        | 24          |
-|    fps             | 19          |
-|    time_elapsed    | 1218        |
+|    fps             | 17          |
+|    time_elapsed    | 1373        |
 |    total_timesteps | 23784       |
 | train/             |             |
-|    actor_loss      | 1.13        |
-|    critic_loss     | 0.000477    |
+|    actor_loss      | -1.52       |
+|    critic_loss     | 0.00671     |
 |    learning_rate   | 0.001       |
 |    n_updates       | 23683       |
 |    reward          | 0.010369442 |
@@ -111,12 +111,12 @@ EPISODE:  29
 ------------------------------------
 | time/              |             |
 |    episodes        | 28          |
-|    fps             | 19          |
-|    time_elapsed    | 1414        |
+|    fps             | 17          |
+|    time_elapsed    | 1607        |
 |    total_timesteps | 27748       |
 | train/             |             |
-|    actor_loss      | 1           |
-|    critic_loss     | 0.000512    |
+|    actor_loss      | -1.18       |
+|    critic_loss     | 0.000374    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 27647       |
 |    reward          | 0.010369442 |
@@ -128,12 +128,12 @@ EPISODE:  33
 ------------------------------------
 | time/              |             |
 |    episodes        | 32          |
-|    fps             | 19          |
-|    time_elapsed    | 1611        |
+|    fps             | 17          |
+|    time_elapsed    | 1841        |
 |    total_timesteps | 31712       |
 | train/             |             |
-|    actor_loss      | 0.791       |
-|    critic_loss     | 0.000719    |
+|    actor_loss      | -0.889      |
+|    critic_loss     | 0.000483    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 31611       |
 |    reward          | 0.010369442 |
@@ -145,12 +145,12 @@ EPISODE:  37
 ------------------------------------
 | time/              |             |
 |    episodes        | 36          |
-|    fps             | 19          |
-|    time_elapsed    | 1809        |
+|    fps             | 17          |
+|    time_elapsed    | 2062        |
 |    total_timesteps | 35676       |
 | train/             |             |
-|    actor_loss      | 0.691       |
-|    critic_loss     | 0.000563    |
+|    actor_loss      | -0.701      |
+|    critic_loss     | 0.000164    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 35575       |
 |    reward          | 0.010369442 |
@@ -162,12 +162,12 @@ EPISODE:  41
 ------------------------------------
 | time/              |             |
 |    episodes        | 40          |
-|    fps             | 19          |
-|    time_elapsed    | 2023        |
+|    fps             | 17          |
+|    time_elapsed    | 2270        |
 |    total_timesteps | 39640       |
 | train/             |             |
-|    actor_loss      | 0.55        |
-|    critic_loss     | 0.000289    |
+|    actor_loss      | -0.556      |
+|    critic_loss     | 0.000583    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 39539       |
 |    reward          | 0.010369442 |
@@ -179,12 +179,12 @@ EPISODE:  45
 ------------------------------------
 | time/              |             |
 |    episodes        | 44          |
-|    fps             | 19          |
-|    time_elapsed    | 2242        |
+|    fps             | 17          |
+|    time_elapsed    | 2451        |
 |    total_timesteps | 43604       |
 | train/             |             |
-|    actor_loss      | 0.483       |
-|    critic_loss     | 0.000222    |
+|    actor_loss      | -0.412      |
+|    critic_loss     | 0.000269    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 43503       |
 |    reward          | 0.010369442 |
@@ -196,12 +196,12 @@ EPISODE:  49
 ------------------------------------
 | time/              |             |
 |    episodes        | 48          |
-|    fps             | 19          |
-|    time_elapsed    | 2427        |
+|    fps             | 18          |
+|    time_elapsed    | 2626        |
 |    total_timesteps | 47568       |
 | train/             |             |
-|    actor_loss      | 0.411       |
-|    critic_loss     | 0.000336    |
+|    actor_loss      | -0.317      |
+|    critic_loss     | 0.000256    |
 |    learning_rate   | 0.001       |
 |    n_updates       | 47467       |
 |    reward          | 0.010369442 |

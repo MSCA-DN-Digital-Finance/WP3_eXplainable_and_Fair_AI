@@ -433,7 +433,11 @@ class StockPortfolioEnvBinary(gym.Env):
             self.reward = self.position * price_change
 
             # Update portfolio value (for logging / visualizations)
-            new_portfolio_value = self.portfolio_value * (1 + self.reward)
+            if self.position == 1:  # Holding asset
+                new_portfolio_value = self.portfolio_value * (1 + price_change)
+            else: # Holding cash
+                new_portfolio_value = self.portfolio_value
+                
             self.portfolio_value = new_portfolio_value
             # --- POSITION-BASED REWARD LOGIC ENDS HERE ---
 
