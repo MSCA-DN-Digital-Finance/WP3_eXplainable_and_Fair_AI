@@ -11,7 +11,7 @@ class StockPriceSimulator:
     Simulates stock prices over a specified time period using different price generators.
 
     This class allows users to simulate stock price movements using various price generation 
-    models (e.g., upward trend, downward trend, etc). The generated prices are stored and 
+    models (e.g., log-normal returns, random walks, etc). The generated prices are stored and 
     processed into a structured pandas DataFrame for further analysis.
 
     Attributes:
@@ -47,11 +47,11 @@ class StockPriceSimulator:
     """
     def __init__(self, days, initial_prices, generators, seed=42):
         np.random.seed(seed)
-        self.days = days 
+        self.days = days + 5
         self.initial_prices = initial_prices
         self.generators = generators
         self.stock_prices = {stock: [initial_prices[stock]] for stock in initial_prices.keys()}
-
+        
     def generate_prices(self):
         """Simulate stock prices over the given time period."""
         for _ in range(1, self.days):
@@ -70,7 +70,23 @@ class StockPriceSimulator:
         df_melted = df.melt(id_vars=["date"], var_name="tic", value_name="close")
         df_melted.sort_values(by=["tic", "date"], inplace=True)
 
+        grouped = df_melted.groupby("tic")
+
+        # 1. Lagged returns (already present)
+        for t in range(1, 6):
+            df_melted[f"return_t-{t}"] = grouped["close"].pct_change(t)
+        # Momentum at 1, 3, 5, 10 days
+        df_melted["momentum_1"] = grouped["close"].diff(1)
+        df_melted["momentum_3"] = grouped["close"].diff(3)
+        df_melted["momentum_5"] = grouped["close"].diff(5)
+        df_melted["momentum_10"] = grouped["close"].diff(10)
+
+        # Rate of change
+        df_melted["roc_3"] = grouped["close"].pct_change(3)
+        df_melted["roc_10"] = grouped["close"].pct_change(10)
+
         return df_melted.dropna().reset_index(drop=True)
+    
     
 class StockPortfolioEnv(gym.Env):
     """A single stock trading environment for OpenAI gym
@@ -114,12 +130,18 @@ class StockPortfolioEnv(gym.Env):
         self.initial_amount = initial_amount
         self.state_space = state_space
         self.action_space = action_space
-        
+        self.reward = 0
        # Define action and observation spaces
         self.action_space = spaces.Box(low=0, high=1, shape=(self.action_space,))
-        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, 
-                                            shape=(self.state_space, self.state_space))
-      
+        #added from here
+        self.data = self.df[self.df['date'] == self.df['date'].unique()[self.day]].sort_values("tic")
+        self.state = self._get_state()
+        self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=self.state.shape, dtype=np.float32)
+        # to here
+        self.reward_mean = 0
+        self.reward_var = 1
+        self.alpha = 0.01  # smoothing
+
         # Initialize logs
         self.episode_log = []  
 
@@ -136,12 +158,18 @@ class StockPortfolioEnv(gym.Env):
     def _get_state(self):
         """Retrieves the current state based on stock prices and past returns."""
         data_sorted = self.data.sort_values("tic")  
-        
-        state_columns = ["close"] 
+
+        state_columns = ['close', 'return_t-1', 'return_t-2', 'return_t-3', 'return_t-4', 'return_t-5', 'momentum_1', 'momentum_3', 'momentum_5', 'momentum_10', 'roc_3', 'roc_10'] 
         state_array = data_sorted[state_columns].to_numpy()  
-     
+
         return state_array.flatten()
-    
+    def update_reward_stats(self, reward):
+        self.reward_mean = (1 - self.alpha) * self.reward_mean + self.alpha * reward
+        self.reward_var = (1 - self.alpha) * self.reward_var + self.alpha * (reward - self.reward_mean) ** 2
+
+    def normalize_reward(self, reward):
+        return (reward - self.reward_mean) / (self.reward_var ** 0.5 + 1e-8)
+
     def step(self, actions):
      
         self.terminal = self.day >= len(self.df["date"].unique()) - 1
@@ -155,7 +183,8 @@ class StockPortfolioEnv(gym.Env):
                 actions = [0.5, 0.5]
               
             weights = self.normalize_allocation(actions) 
-
+            print("raw actions ", actions)
+            print("weights: ", weights)
             self.actions_memory.append(weights)
             last_day_memory = self.data
 
@@ -163,7 +192,6 @@ class StockPortfolioEnv(gym.Env):
             self.day += 1
             self.data = self.df[self.df["date"] == self.df["date"].unique()[self.day]]
             self.state =  self._get_state()
-        
             portfolio_return = sum(((self.data.close.values / last_day_memory.close.values)-1)*weights)
             # update portfolio value
             new_portfolio_value = self.portfolio_value*(1+portfolio_return)
@@ -173,10 +201,17 @@ class StockPortfolioEnv(gym.Env):
             self.portfolio_return_memory.append(portfolio_return)
             self.date_memory.append(self.data.date.unique()[0])            
             self.asset_memory.append(new_portfolio_value)
+            
+        
+            price_today = self.data.close.values[1]  # stock
+            price_yesterday = last_day_memory.close.values[1]
 
-            # the reward is the new portfolio value or end portfolo value
-            self.reward = new_portfolio_value 
-     
+            # Upward momentum → buy stock; downward → move to cash
+            momentum = price_today - price_yesterday
+            self.reward = weights[1] * momentum
+
+
+            print("reward", self.reward)
 
         self.episode_log.append({
         "episode": self.episode,
@@ -203,7 +238,7 @@ class StockPortfolioEnv(gym.Env):
         self.terminal = False 
         self.portfolio_return_memory = [0]
         self.actions_memory=[[1/self.stock_dim]*self.stock_dim]
-
+        self.reward = 0
         self.date_memory=[self.data.date.unique()[0]] 
         return self.state
         

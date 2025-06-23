@@ -4,8 +4,8 @@ from pathlib import Path
 
 # Define constants
 TRENDS = {
-     "4_1": ["upward", "downward", "periodic"],
-    "4_2": ["upward_noise", "downward_noise", "periodic_noise"]
+     "250619_hc_binary_udp": ["upward", "downward", "periodic"],
+    "250619_hc_binary_udp_noise": ["upward_noise", "downward_noise", "periodic_noise"]
 }
 AGENTS = ["ddpg", "sac", "a2c"]
 RUNS = [f"{i:02d}" for i in range(1, 11)]
@@ -103,7 +103,7 @@ def plot_10x5_grid_for_config(exp, trend, agent):
     fig.legend(handles, labels, loc='upper right', bbox_to_anchor=(0.99, 0.98), fontsize='large')
 
 
-    output_path = BASE_PATH /  f"allocation_plots_across_runs/{exp}_{agent}_{trend}_allocation_plot.png"
+    output_path = BASE_PATH /  f"250623_allocation_plots_across_runs_hc_binary_udp/{exp}_{agent}_{trend}_allocation_plot.png"
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
 
