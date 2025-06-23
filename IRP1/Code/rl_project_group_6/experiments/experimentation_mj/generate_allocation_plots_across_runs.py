@@ -7,7 +7,7 @@ TRENDS = {
      "250619_hc_binary_udp": ["upward", "downward", "periodic"],
     "250619_hc_binary_udp_noise": ["upward_noise", "downward_noise", "periodic_noise"]
 }
-AGENTS = ["ddpg", "sac", "a2c"]
+AGENTS = ["ddpg", "ppo", "a2c"]
 RUNS = [f"{i:02d}" for i in range(1, 11)]
 BASE_PATH = Path("Results")
 
