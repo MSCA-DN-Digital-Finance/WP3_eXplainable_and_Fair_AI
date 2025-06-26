@@ -74,6 +74,7 @@ def plot_10x5_grid_for_config(exp, trend, agent):
             continue
 
         df = pd.read_csv(file_path)
+        df = df[df['episode'] <= 50].copy()
         episodes = sorted(df["episode"].unique())
         if len(episodes) <= 5:
             selected_episodes = episodes

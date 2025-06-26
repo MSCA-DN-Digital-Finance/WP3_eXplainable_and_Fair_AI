@@ -24,7 +24,7 @@ def plot_10x5_grid_for_config(exp, trend, agent):
             continue
 
         df = pd.read_csv(file_path)
-        df = df[df['episode'] <= 50].copy()
+        
 
         # Clean 'new_portfolio_value' column
         df['new_portfolio_value'] = df['new_portfolio_value'].astype(str).str.replace(",", "", regex=False).astype(float).round(2)
