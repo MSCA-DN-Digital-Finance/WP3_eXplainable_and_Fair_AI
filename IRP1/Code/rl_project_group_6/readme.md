@@ -22,7 +22,7 @@ rl_project_group_6/
 
 ```
 
-**Key files inside `experiments/experiment_4/`:**
+**Key files inside `experiments/experiment_4/` and `experiments/experimentation_mj/` (with some minor changes) :**
 
 | File / folder      | Purpose                                                    |
 | ------------------ | ---------------------------------------------------------- |
@@ -33,6 +33,8 @@ rl_project_group_6/
 | `plot_functions.py` | Helper plots (returns, allocations, rewards) |
 | `generate_timeseries.py` | Generate synthetic price **CSV & PNG** files under `Data/` |
 | `generate_allocation_plots_across_runs.py` | It generates 10×5 grid plots of allocation weights over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
+| `generate_portfolio_values_plots_across_runs.py` | It generates 10×5 grid plots of portfolio values over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
+| `calculate_evaluation_metrics.ipynb` | Computes the average allocation error and the difference (ΔV) between the agent's final portfolio value and the optimal portfolio value across multiple runs |
 | `Data/`            | Synthetic price CSVs + PNG previews for each trend         |
 | `Results/`         | CSV logs and PNG plots produced by each run                |
  CSV logs and PNG plots produced by each run        |
