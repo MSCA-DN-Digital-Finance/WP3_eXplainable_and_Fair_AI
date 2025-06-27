@@ -18,7 +18,7 @@ jobs:
           git fetch origin main
           CHANGED=$(git diff --name-only origin/main...HEAD)
 
-          if echo "$CHANGED" | grep '^irp17/' && [ "$GITHUB_ACTOR" != "your-username" ]; then
+          if echo "$CHANGED" | grep '^IRP17/' && [ "$GITHUB_ACTOR" != "your-username" ]; then
             echo "Only @rebecca-di-francesco-bfh is allowed to modify the irp17/ folder."
             exit 1
           fi
