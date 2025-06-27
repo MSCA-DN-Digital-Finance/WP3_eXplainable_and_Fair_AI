@@ -1,4 +1,4 @@
-name: Protect irp17 folder
+name: Folder check for irp17 (ownership)
 
 on:
   push:
@@ -13,12 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Fetch main for diff
+        run: git fetch origin main
+
       - name: Block unauthorized irp17 changes
         run: |
-          git fetch origin main
           CHANGED=$(git diff --name-only origin/main...HEAD)
 
-          if echo "$CHANGED" | grep '^IRP17/' && [ "$GITHUB_ACTOR" != "your-username" ]; then
-            echo "Only @rebecca-di-francesco-bfh is allowed to modify the irp17/ folder."
+          echo "🔍 Files changed:"
+          echo "$CHANGED"
+          echo ""
+
+          if echo "$CHANGED" | grep -i '^irp17/' && [ "$GITHUB_ACTOR" != "your-github-username" ]; then
+            echo "❌ Only @your-github-username is allowed to modify the irp17/ folder."
             exit 1
+          else
+            echo "✅ No unauthorized irp17/ changes detected."
           fi
