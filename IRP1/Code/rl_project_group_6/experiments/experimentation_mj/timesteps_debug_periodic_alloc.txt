@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # binary 
 
 # this does not get written:
@@ -50,3 +51,42 @@ stock_value = 500
 stock_value_yesterday= 500
 portofolio_value = 1000
 allocation = 0,1
+=======
+## Binary allocation only experiment
+
+# this entire day does not get written in the training_log csv files:
+day = 0
+stock_value = 546.60
+stock_value_yesterday = ? # does not matter to know because the first allocation is fixed
+portofolio_value = 1000 # initial portofolio_value
+allocation = 1,0 # no choice, initial allocation fixed
+
+day = 1
+allocation = 1,0 # old allocation, this get written in the training_log for this day 
+stock_value = 548.78
+stock_value_yesterday = 546.60
+portofolio_value = 1000 # stays 1000 because there was no wealth allocated to stock
+allocation = 0,1 -> choice to be made based on day 1 stock prices, but will be written in the training_log for the day after 
+
+day = 2
+allocation_old = 0,1 # old allocation, this get written in the training_log for this day 
+stock_value = 549.87
+stock_value_yesterday =  548.78
+portofolio_value = 1001.99
+allocation = 0,1 -> choice to be made based on day 2 stock prices, but will be written in the training_log for the day after 
+
+day = 3
+allocation_old = 0, 1  # old allocation, this get written in the training_log for this day 
+stock_value = 549.84
+stock_value_yesterday = 549.87
+portofolio_value = 1001.43
+allocation = 1,0 -> choice to be made based on day 3 stock prices, but will be written in the training_log for the day after 
+
+day = 4
+allocation_old = 1,0  # old allocation, this get written in the training_log for this day 
+stock_value = 548.69
+stock_value_yesterday = 549.84
+portofolio_value = 1000
+allocation = 1,0 -> choice to be made based on day 4 stock prices, but will be written in the training_log for the day after 
+
+>>>>>>> da94381b6da086ea3be39090a8243a3303556d8a

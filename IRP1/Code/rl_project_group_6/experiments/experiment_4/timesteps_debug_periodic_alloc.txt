@@ -1,0 +1,25 @@
+# Experiment 4 - with continuous allocation
+
+# this entire day does not get written in the training_log csv files:
+day = 0
+stock_value = 500
+stock_value_yesterday= ? # does not matter to know because the first allocation is fixed
+portofolio_value = 1000 # initial portofolio_value
+allocation = 0.5, 0.5 # no choice, initial allocation fixed
+
+day = 1
+allocation_old = 0.5, 0.5 # old allocation, this get written in the training_log for this day 
+stock_value = 500
+stock_value_yesterday= 500
+portofolio_value = 1000 # stays 1000 because there was no change in stock value
+allocation = 0,1 -> choice to be made based on day 1 stock prices, but will be written in the training_log for the day after 
+(in this special case the stock price does not neither increase or decrease but we know that the timeseries will increase after
+so the agent should learn that after many episodes, so we put everything in stock)
+
+day = 2
+allocation_old = 0,1 # old allocation, this get written in the training_log for this day 
+stock_value = 507.47
+stock_value_yesterday= 500
+portofolio_value = 1014.943 
+allocation = 0,1 -> choice to be made based on day 2 stock prices, but will be written in the training_log for the day after 
+
