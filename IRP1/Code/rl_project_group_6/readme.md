@@ -56,11 +56,11 @@ pip install -r requirements.txt
 |-------|-----------|------------------|
 | `NormalPriceGenerator`             | i.i.d. draws from **N(μ, σ)** | `first_implementations` (250306_hold_vs_normal.ipynb notebook; 250306_qlearning_vs_normal.ipynb notebook) |
 | `LinearPriceGenerator`             | Strict **+1** increment per step (monotonic ↑) | `first_implementations` (250306_hold_vs_linear.ipynb notebook;  250306_qlearning_vs_linear.ipynb notebook) |
-| `LinearTrendPriceGenerator`        | Deterministic ↑ or ↓ trend (±1 each step) | `experiment_1` (4.1)|
+| `LinearTrendPriceGenerator`        | Deterministic ↑ or ↓ trend (±1 each step) | `experiment_4` (4.1) & `experimentation_mj` (250619_hc_binary_udp)|
+| `PeriodicTrendPriceGenerator`      | Clean sine wave               | `experiment_4` (4.2) & `experimentation_mj` (250619_hc_binary_udp)|
+| `NoisyTrendPriceGenerator`         | Geometric Brownian motion     | `experiment_4` (4.1) & `experimentation_mj` (250619_hc_binary_udp_noise)|
+| `NoisyPeriodicTrendPriceGenerator` | Sine wave + Gaussian noise    | `experiment_4` (4.2) & `experimentation_mj` (250619_hc_binary_udp_noise)|
 | `CashPriceGenerator`               | Flat price (zero volatility)  | all experiments |
-| `NoisyTrendPriceGenerator`         | Geometric Brownian motion     | `experiment_4` (4.1) |
-| `PeriodicTrendPriceGenerator`      | Clean sine wave               | `experiment_4` (4.2) |
-| `NoisyPeriodicTrendPriceGenerator` | Sine wave + Gaussian noise    | `experiment_4` (4.2) |
 
 Each experiment imports only the generators it needs.
 
