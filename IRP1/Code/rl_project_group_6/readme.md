@@ -21,8 +21,82 @@ rl_project_group_6/
 └── README.md  ← you are here
 
 ```
+---
+## Quick Start
+### Environment setup
 
-**Key files inside `experiments/experiment_4/`:**
+```bash
+conda create -n rl-group-6 python=3.10
+conda activate rl-group-6
+pip install -r requirements.txt
+```
+
+### Generate data
+
+To generate the data for Experiment 1 and 2 in the paper, run:
+
+```bash
+cd experiments/experiment_4
+python generate_timeseries.py.py  
+```
+
+To generate the data for Experiment 3 in the paper, run:
+
+```bash
+cd experiments/experimentation_mj
+python generate_extended_timeseries.py
+```
+### Run experiments
+
+```bash
+cd experiments/experiment_4
+python orchestrator.py -j 4   # limit workers with -j N
+```
+
+```bash
+cd experiments/experimentation_mj
+python 250619_hc_binary_udp_orchestrator.py -j 4  # use -j N to control parallelism
+```
+
+### Evaluate results
+
+Use the following notebook in the respective repository
+
+```bash
+experiment_4\calculate_best_final_portfolio_value.ipynb
+experimentation_mj\calculate_best_final_portfolio_value.ipynb
+```
+
+### Create plots
+
+Allocation plots:
+
+```bash
+cd experiments/experiment_4
+python generate_allocation_plots_across_runs.py
+```
+
+```bash
+cd experiments/experimentation_mj
+python generate_allocation_plots_across_runs.py
+```
+
+Portfolio value plots:
+
+```bash
+cd experiments/experiment_4
+python generate_portfolio_value_plots_across_runs.py
+```
+
+```bash
+cd experiments/experimentation_mj
+python generate_portfolio_value_plots_across_runs.py
+```
+
+IRP1\Code\rl_project_group_6\experiments\experimentation_mj\generate_allocation_plots_across_runs.py
+---
+
+**Key files inside `experiments/experiment_4/` and `experiments/experimentation_mj/`:**
 
 | File / folder      | Purpose                                                    |
 | ------------------ | ---------------------------------------------------------- |
@@ -35,17 +109,8 @@ rl_project_group_6/
 | `generate_allocation_plots_across_runs.py` | It generates 10×5 grid plots of allocation weights over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
 | `Data/`            | Synthetic price CSVs + PNG previews for each trend         |
 | `Results/`         | CSV logs and PNG plots produced by each run                |
- CSV logs and PNG plots produced by each run        |
 
----
 
-## Environment setup
-
-```bash
-conda create -n rl-group-6
-conda activate rl-group-6
-pip install -r requirements.txt
-```
 
 ---
 
