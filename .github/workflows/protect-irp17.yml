@@ -1,0 +1,24 @@
+name: Protect irp17 folder
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  protect-irp17:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Block unauthorized irp17 changes
+        run: |
+          git fetch origin main
+          CHANGED=$(git diff --name-only origin/main...HEAD)
+
+          if echo "$CHANGED" | grep '^irp17/' && [ "$GITHUB_ACTOR" != "your-username" ]; then
+            echo "Only @rebecca-di-francesco-bfh is allowed to modify the irp17/ folder."
+            exit 1
+          fi
