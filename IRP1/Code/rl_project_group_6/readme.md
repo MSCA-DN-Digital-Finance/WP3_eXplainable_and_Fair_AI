@@ -92,11 +92,9 @@ python generate_portfolio_value_plots_across_runs.py
 cd experiments/experimentation_mj
 python generate_portfolio_value_plots_across_runs.py
 ```
-
-IRP1\Code\rl_project_group_6\experiments\experimentation_mj\generate_allocation_plots_across_runs.py
 ---
 
-**Key files inside `experiments/experiment_4/` and `experiments/experimentation_mj/`:**
+**Key files inside `experiments/experiment_4/` and `experiments/experimentation_mj/` (with some minor changes) :**
 
 | File / folder      | Purpose                                                    |
 | ------------------ | ---------------------------------------------------------- |
@@ -107,6 +105,8 @@ IRP1\Code\rl_project_group_6\experiments\experimentation_mj\generate_allocation_
 | `plot_functions.py` | Helper plots (returns, allocations, rewards) |
 | `generate_timeseries.py` | Generate synthetic price **CSV & PNG** files under `Data/` |
 | `generate_allocation_plots_across_runs.py` | It generates 10×5 grid plots of allocation weights over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
+| `generate_portfolio_values_plots_across_runs.py` | It generates 10×5 grid plots of portfolio values over episodes for each (experiment, trend, agent) configuration, saving one plot per config |
+| `calculate_evaluation_metrics.ipynb` | Computes the average allocation error and the difference (ΔV) between the agent's final portfolio value and the optimal portfolio value across multiple runs |
 | `Data/`            | Synthetic price CSVs + PNG previews for each trend         |
 | `Results/`         | CSV logs and PNG plots produced by each run                |
 
@@ -120,11 +120,11 @@ IRP1\Code\rl_project_group_6\experiments\experimentation_mj\generate_allocation_
 |-------|-----------|------------------|
 | `NormalPriceGenerator`             | i.i.d. draws from **N(μ, σ)** | `first_implementations` (250306_hold_vs_normal.ipynb notebook; 250306_qlearning_vs_normal.ipynb notebook) |
 | `LinearPriceGenerator`             | Strict **+1** increment per step (monotonic ↑) | `first_implementations` (250306_hold_vs_linear.ipynb notebook;  250306_qlearning_vs_linear.ipynb notebook) |
-| `LinearTrendPriceGenerator`        | Deterministic ↑ or ↓ trend (±1 each step) | `experiment_1` (4.1)|
+| `LinearTrendPriceGenerator`        | Deterministic ↑ or ↓ trend (±1 each step) | `experiment_4` (4.1) & `experimentation_mj` (250619_hc_binary_udp)|
+| `PeriodicTrendPriceGenerator`      | Clean sine wave               | `experiment_4` (4.2) & `experimentation_mj` (250619_hc_binary_udp)|
+| `NoisyTrendPriceGenerator`         | Geometric Brownian motion     | `experiment_4` (4.1) & `experimentation_mj` (250619_hc_binary_udp_noise)|
+| `NoisyPeriodicTrendPriceGenerator` | Sine wave + Gaussian noise    | `experiment_4` (4.2) & `experimentation_mj` (250619_hc_binary_udp_noise)|
 | `CashPriceGenerator`               | Flat price (zero volatility)  | all experiments |
-| `NoisyTrendPriceGenerator`         | Geometric Brownian motion     | `experiment_4` (4.1) |
-| `PeriodicTrendPriceGenerator`      | Clean sine wave               | `experiment_4` (4.2) |
-| `NoisyPeriodicTrendPriceGenerator` | Sine wave + Gaussian noise    | `experiment_4` (4.2) |
 
 Each experiment imports only the generators it needs.
 
