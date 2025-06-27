@@ -74,7 +74,7 @@ variants, each tuned for its experiment’s scope:
 | `PortfolioEnvironment` | **Toy loop** for Q‑table / DQN prototypes.<br> • 1 stock + cash<br> • Action ∈ {buy, sell, hold} translated into ±10 % allocation steps<br> • Reward = Δ portfolio − Tx cost | `experiments/first_implementations` |
 | `StockPortfolioEnv`<br>(experiment 1) | **Gym‑compatible** env (Stable‑Baselines 3).<br> • State = current price (t) + 5 past returns<br> • Two reward modes: *sparse* vs *dense* Tx‑cost<br> • Writes per‑timestep CSV/PNG for analysis | `experiments/experiment_1` |
 | `StockPortfolioEnv`<br>(experiment 4) | **Gym‑compatible** env (Stable‑Baselines 3)<br> • State = current price only (lag features removed)<br> • Reward = Δ portfolio value (no Tx cost) | `experiments/experiment_4` |
-| `StockPortfolioEnvBinary` |**Gym‑compatible** env (Stable‑Baselines 3)<br> • Action ∈ [0, 1]² → mapped to either cash or asset<br> • State = engineered features: past returns, MAs, volatility, etc.<br> • Reward = price change × position <br> • Includes logging & episode tracking | `experiments/experimentation_mj` |
+| `StockPortfolioEnvBinary` |**Gym‑compatible** env (Stable‑Baselines 3)<br> • Action ∈ [0, 1]² → mapped to either cash or asset<br> • State = engineered features: past returns, MAs, volatility, etc.<br> • Reward = price change × position <br> • Includes logging & episode tracking | `experiments/experimentation_mj` |
 
 
 *`StockPriceSimulator`* is a helper class (found in both experiment 1 and 4)
