@@ -4,7 +4,7 @@ This project investigates whether state-of-the-art reinforcement learning (RL) a
 
 Every experiment is self‑contained—it ships the exact generators, environment definition, configuration, and the results it produces—so you can reproduce or extend any part of the study without touching the rest.
 
-N.B.: Experiment 4_1 and 4_2 correspond to Experiment 1 and Experiment 2 in our paper. 
+N.B.: Experiment 4_1 and 4_2 correspond to Experiment 1 and Experiment 2 in our paper, while Experimentation MJ refers to Experiment 3. 
 
 ---
 
@@ -13,9 +13,10 @@ N.B.: Experiment 4_1 and 4_2 correspond to Experiment 1 and Experiment 2 in our 
 ```text
 rl_project_group_6/
 ├── experiments/
-│   ├── experiment_1/          # single‑asset prototype (sparse vs dense reward)
-│   ├── experiment_4/          # FinRL agents + parallel orchestrator (90 runs)
-│   └── first_implementations/ # early notebooks: scratch Q‑table agent, scratch DQN, etc.
+│   ├── experiment_1/           # single‑asset prototype (sparse vs dense reward)
+│   ├── experiment_4/           # FinRL agents + parallel orchestrator (90 runs)
+│   ├── experimentation_mj/     # Experimentation to develop algorithms for experiment 3 (in paper)
+│   └── first_implementations/  # early notebooks: scratch Q‑table agent, scratch DQN, etc.
 ├── requirements.txt
 └── README.md  ← you are here
 
@@ -69,10 +70,12 @@ series into an RL‑ready *state → action → reward* loop.  We ship three
 variants, each tuned for its experiment’s scope:
 
 | Class / module | Main features | Used in |
-|---------------|---------------|---------|
+|----------------|---------------|---------|
 | `PortfolioEnvironment` | **Toy loop** for Q‑table / DQN prototypes.<br> • 1 stock + cash<br> • Action ∈ {buy, sell, hold} translated into ±10 % allocation steps<br> • Reward = Δ portfolio − Tx cost | `experiments/first_implementations` |
 | `StockPortfolioEnv`<br>(experiment 1) | **Gym‑compatible** env (Stable‑Baselines 3).<br> • State = current price (t) + 5 past returns<br> • Two reward modes: *sparse* vs *dense* Tx‑cost<br> • Writes per‑timestep CSV/PNG for analysis | `experiments/experiment_1` |
-| `StockPortfolioEnv`<br>(experiment 4) | **Gym‑compatible** env (Stable‑Baselines 3)<br> • State = current price only (lag features removed)<br> • Reward = Δ portfolio value (no Tx cost) • | `experiments/experiment_4` |
+| `StockPortfolioEnv`<br>(experiment 4) | **Gym‑compatible** env (Stable‑Baselines 3)<br> • State = current price only (lag features removed)<br> • Reward = Δ portfolio value (no Tx cost) | `experiments/experiment_4` |
+| `StockPortfolioEnvBinary` |**Gym‑compatible** env (Stable‑Baselines 3)<br> • Action ∈ [0, 1]² → mapped to either cash or asset<br> • State = engineered features: past returns, MAs, volatility, etc.<br> • Reward = price change × position <br> • Includes logging & episode tracking | `experiments/experimentation_mj` |
+
 
 *`StockPriceSimulator`* is a helper class (found in both experiment 1 and 4)
 that turns price generators into long‑form DataFrames which feed these
@@ -141,6 +144,29 @@ python base_trainer.py \
     --days 1000
 # results → Results/4_1/ddpg/upward/
 ```
+
+## Experimentation MJ
+
+Parallel training of RL agents on synthetic trends with **binary position-based reward** logic (cash vs. asset). Uses `250619_hc_binary_udp_orchestrator.py` to run all jobs as isolated processes with detailed logging and failure handling.
+
+
+| Setting     | Value                                                                 |
+|-------------|-----------------------------------------------------------------------|
+| Experiments | `250619_hc_binary_udp`, `250619_hc_binary_udp_noise`                 |
+| Trends      | `upward`, `downward`, `periodic`, `upward_noise`, `downward_noise`, `periodic_noise` |
+| Agents      | **A2C**, **PPO**, **DDPG**                                            |
+| Runs        | 10 per (experiment, trend, agent) → 180 total runs                   |
+| Episodes    | 50 per run                                                            |
+| Reward      | Reward = Δ price × position, Position = cash or asset based on action |
+| Logging     | reward, allocation, portfolio value        |
+
+
+### Run everything in parallel
+
+```bash
+cd experiments/experimentation_mj
+python 250619_hc_binary_udp_orchestrator.py -j 4  # use -j N to control parallelism
+
 
 ---
 

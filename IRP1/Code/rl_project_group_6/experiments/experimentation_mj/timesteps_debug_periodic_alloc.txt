@@ -1,0 +1,52 @@
+# binary 
+
+# this does not get written:
+day = 0
+stock_value = 546.60
+stock_value_yesterday= ?
+portofolio_value = 1000
+allocation = 1,0 # no choice
+
+day = 1
+allocation = 1,0 # old allocation, this get written
+stock_value = 548.78
+stock_value_yesterday = 546.60
+portofolio_value = 1000
+allocation = 0,1 -> choice to be made based on day 1 stock prices
+
+day = 2
+allocation_old = 0,1 # old allocation, this get written
+stock_value = 549.87
+stock_value_yesterday =  548.78
+portofolio_value = 1001.99
+allocation = 0,1
+
+day = 3
+allocation_old = 0, 1 # old allocation, this get written
+stock_value = 549.84
+stock_value_yesterday = 549.87
+portofolio_value = 1001.43
+allocation = 1,0
+
+day = 4
+allocation_old = 1,0 # this get written
+stock_value = 548.69
+stock_value_yesterday = 549.84
+portofolio_value = 1000
+allocation = 1,0
+
+
+# exp. 4
+# this does not get written:
+day = 0
+stock_value = 500
+stock_value_yesterday= ?
+portofolio_value = 1000
+allocation = 0.5, 0.5 # no choice
+
+day = 1
+allocation_old = 0.5, 0.5# this gets written
+stock_value = 500
+stock_value_yesterday= 500
+portofolio_value = 1000
+allocation = 0,1
