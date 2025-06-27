@@ -37,7 +37,6 @@ rl_project_group_6/
 | `calculate_evaluation_metrics.ipynb` | Computes the average allocation error and the difference (ΔV) between the agent's final portfolio value and the optimal portfolio value across multiple runs |
 | `Data/`            | Synthetic price CSVs + PNG previews for each trend         |
 | `Results/`         | CSV logs and PNG plots produced by each run                |
- CSV logs and PNG plots produced by each run        |
 
 ---
 
