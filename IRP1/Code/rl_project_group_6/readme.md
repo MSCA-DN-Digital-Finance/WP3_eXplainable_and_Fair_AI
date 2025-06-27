@@ -166,7 +166,7 @@ Parallel training of RL agents on synthetic trends with **binary position-based 
 ```bash
 cd experiments/experimentation_mj
 python 250619_hc_binary_udp_orchestrator.py -j 4  # use -j N to control parallelism
-
+```
 
 ---
 
