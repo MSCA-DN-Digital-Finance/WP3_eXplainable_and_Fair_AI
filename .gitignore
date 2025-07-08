@@ -6,8 +6,8 @@ __pycache__/
 *.pyc
 
 # Ignore everything inside irp17/code/data/
-IRP17/Code/sectoral-decabronisation/Data/*
-!IRP17/Code/sectoral-decabronisation/Data/ 
+IRP17/Code/sectoral-decarbonisation/Data/*
+!IRP17/Code/sectoral-decarbonisation/Data/ 
 
 # Output log
 nohup.out
