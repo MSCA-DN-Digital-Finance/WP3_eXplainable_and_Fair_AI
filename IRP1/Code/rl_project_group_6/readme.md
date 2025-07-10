@@ -236,7 +236,6 @@ python 250619_hc_binary_udp_orchestrator.py -j 4  # use -j N to control parallel
 ---
 
 ## Acknowledgments
-Acknowledgments
 The goal of this project is to test whether state-of-the-art implementations, such as the FinRL agents, can reliably learn optimal exploitation strategies in synthetic market environments. To achieve this, the project builds upon the FinRL framework, specifically leveraging the StockPortfolioEnv and hyperparameters from the FinRL portfolio allocation NeurIPS 2020 workshop notebook (https://github.com/timqqt/FinRL-Library/FinRL_portfolio_allocation_NeurIPS_2020.ipynb). This implementation builds the environment for portfolio management allocation and uses Stable Baselines 3 algorithms to train RL agents for optimal asset allocation. 
 
 
