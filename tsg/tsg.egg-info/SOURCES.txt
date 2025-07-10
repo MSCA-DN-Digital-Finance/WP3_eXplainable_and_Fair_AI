@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+setup.py
+tests/test_generators.py
+tsg/__init__.py
+tsg/generators.py
+tsg/modifiers.py
+tsg.egg-info/PKG-INFO
+tsg.egg-info/SOURCES.txt
+tsg.egg-info/dependency_links.txt
+tsg.egg-info/requires.txt
+tsg.egg-info/top_level.txt
