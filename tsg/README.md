@@ -21,7 +21,7 @@ It is designed for research, simulation, and testing of sequential decision-maki
 Clone the repository and install in editable mode:
 
 ```bash
-git clone https://github.com/your-username/tsg.git
+git clone https://github.com/MSCA-DN-Digital-Finance/WP3_eXplainable_and_Fair_AI/tsg.git 
 cd tsg
 pip install -e .
 ```
