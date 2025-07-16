@@ -1,0 +1,43 @@
+agent,generator,run_id,total_steps,start_value,final_cumulative_reward,average_reward
+Always Up Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-14,-0.14
+Always Up Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-16,-0.16
+Always Up Agent,Ornstein-Uhlenbeck Generator,003,100,0.0,-10,-0.1
+Always Up Agent,Random Walk Generator,001,100,0.0,10,0.1
+Always Up Agent,Random Walk Generator,002,100,0.0,8,0.08
+Always Up Agent,Random Walk Generator,003,100,0.0,12,0.12
+Dynamic Mean Reversion Agent,Linear Trend Generator,001,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,002,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,003,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,8,0.08
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,6,0.06
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,003,100,0.0,8,0.08
+Dynamic Mean Reversion Agent,Periodic Trend Generator,001,100,0.0,-88,-0.88
+Dynamic Mean Reversion Agent,Periodic Trend Generator,002,100,0.0,-88,-0.88
+Dynamic Mean Reversion Agent,Periodic Trend Generator,003,100,0.0,-88,-0.88
+Dynamic Mean Reversion Agent,Random Walk Generator,001,100,0.0,6,0.06
+Dynamic Mean Reversion Agent,Random Walk Generator,002,100,0.0,-2,-0.02
+Dynamic Mean Reversion Agent,Random Walk Generator,003,100,0.0,16,0.16
+Frequency-Based Majority Agent,Linear Trend Generator,001,100,0.0,100,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,002,100,0.0,100,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,003,100,0.0,100,1.0
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,4,0.04
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,10,0.1
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,003,100,0.0,12,0.12
+Frequency-Based Majority Agent,Periodic Trend Generator,001,100,0.0,-2,-0.02
+Frequency-Based Majority Agent,Periodic Trend Generator,002,100,0.0,-2,-0.02
+Frequency-Based Majority Agent,Periodic Trend Generator,003,100,0.0,-2,-0.02
+Frequency-Based Majority Agent,Random Walk Generator,001,100,0.0,16,0.16
+Frequency-Based Majority Agent,Random Walk Generator,002,100,0.0,2,0.02
+Frequency-Based Majority Agent,Random Walk Generator,003,100,0.0,-2,-0.02
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,2,0.02
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,22,0.22
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,003,100,0.0,8,0.08
+Repeat Last Movement Agent,Random Walk Generator,001,100,0.0,-12,-0.12
+Repeat Last Movement Agent,Random Walk Generator,002,100,0.0,-6,-0.06
+Repeat Last Movement Agent,Random Walk Generator,003,100,0.0,-10,-0.1
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-2,-0.02
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-10,-0.1
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,003,100,0.0,-2,-0.02
+Static Mean Reversion Agent,Random Walk Generator,001,100,0.0,8,0.08
+Static Mean Reversion Agent,Random Walk Generator,002,100,0.0,14,0.14
+Static Mean Reversion Agent,Random Walk Generator,003,100,0.0,-2,-0.02

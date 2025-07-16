@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
+from aggregation_functions import aggregate_results
+
 
 
 RUN_CONFIG = {
@@ -128,6 +130,15 @@ def orchestrate_all_runs():
                 future.result()
             except Exception as e:
                 logger(f"Error during run execution: {e}")
+
+    logger(f"All runs completed. Aggregating results...")
+    
+    summary_out = experiment_dir / "summary_per_run.csv"
+    convergence_out = experiment_dir / "convergence_per_step.csv"
+
+    aggregate_results(results_dir, summary_out, convergence_out)
+
+    logger(f"Aggregation completed. Summary and convergence data saved.")
 
     logger(f"Experiment {experiment_name} completed.")
 
