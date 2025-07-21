@@ -1,0 +1,127 @@
+agent,generator,run_id,total_steps,start_value,final_cumulative_reward,average_reward
+Always Up Agent,Constant Generator,001,50,0.0,-50,-1.0
+Always Up Agent,Constant Generator,002,50,0.0,-50,-1.0
+Always Up Agent,Constant Generator,003,50,0.0,-50,-1.0
+Always Up Agent,Linear Trend Generator,001,50,0.0,50,1.0
+Always Up Agent,Linear Trend Generator,002,50,0.0,50,1.0
+Always Up Agent,Linear Trend Generator,003,50,0.0,50,1.0
+Always Up Agent,Markov Regime-Switching Generator,001,50,0.0,30,0.6
+Always Up Agent,Markov Regime-Switching Generator,002,50,0.0,10,0.2
+Always Up Agent,Markov Regime-Switching Generator,003,50,0.0,28,0.56
+Always Up Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,18,0.36
+Always Up Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,12,0.24
+Always Up Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,20,0.4
+Always Up Agent,Periodic Trend Generator,001,50,0.0,-12,-0.24
+Always Up Agent,Periodic Trend Generator,002,50,0.0,-12,-0.24
+Always Up Agent,Periodic Trend Generator,003,50,0.0,-12,-0.24
+Always Up Agent,Random Walk Generator,001,50,0.0,-8,-0.16
+Always Up Agent,Random Walk Generator,002,50,0.0,0,0.0
+Always Up Agent,Random Walk Generator,003,50,0.0,-4,-0.08
+DQN Agent,Constant Generator,001,50,0.0,-50,-1.0
+DQN Agent,Constant Generator,002,50,0.0,-50,-1.0
+DQN Agent,Constant Generator,003,50,0.0,-50,-1.0
+DQN Agent,Linear Trend Generator,001,50,0.0,-18,-0.36
+DQN Agent,Linear Trend Generator,002,50,0.0,-2,-0.04
+DQN Agent,Linear Trend Generator,003,50,0.0,-14,-0.28
+DQN Agent,Markov Regime-Switching Generator,001,50,0.0,0,0.0
+DQN Agent,Markov Regime-Switching Generator,002,50,0.0,-16,-0.32
+DQN Agent,Markov Regime-Switching Generator,003,50,0.0,-8,-0.16
+DQN Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,0,0.0
+DQN Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,-4,-0.08
+DQN Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,-10,-0.2
+DQN Agent,Periodic Trend Generator,001,50,0.0,-12,-0.24
+DQN Agent,Periodic Trend Generator,002,50,0.0,6,0.12
+DQN Agent,Periodic Trend Generator,003,50,0.0,-6,-0.12
+DQN Agent,Random Walk Generator,001,50,0.0,-2,-0.04
+DQN Agent,Random Walk Generator,002,50,0.0,4,0.08
+DQN Agent,Random Walk Generator,003,50,0.0,2,0.04
+Dynamic Mean Reversion Agent,Constant Generator,001,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Constant Generator,002,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Constant Generator,003,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,001,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,002,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,003,50,0.0,-50,-1.0
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,001,50,0.0,-8,-0.16
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,002,50,0.0,-4,-0.08
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,003,50,0.0,-10,-0.2
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,-20,-0.4
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,-10,-0.2
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,-12,-0.24
+Dynamic Mean Reversion Agent,Periodic Trend Generator,001,50,0.0,-42,-0.84
+Dynamic Mean Reversion Agent,Periodic Trend Generator,002,50,0.0,-42,-0.84
+Dynamic Mean Reversion Agent,Periodic Trend Generator,003,50,0.0,-42,-0.84
+Dynamic Mean Reversion Agent,Random Walk Generator,001,50,0.0,12,0.24
+Dynamic Mean Reversion Agent,Random Walk Generator,002,50,0.0,14,0.28
+Dynamic Mean Reversion Agent,Random Walk Generator,003,50,0.0,10,0.2
+Frequency-Based Majority Agent,Constant Generator,001,50,0.0,-50,-1.0
+Frequency-Based Majority Agent,Constant Generator,002,50,0.0,-50,-1.0
+Frequency-Based Majority Agent,Constant Generator,003,50,0.0,-50,-1.0
+Frequency-Based Majority Agent,Linear Trend Generator,001,50,0.0,50,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,002,50,0.0,50,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,003,50,0.0,50,1.0
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,001,50,0.0,18,0.36
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,002,50,0.0,10,0.2
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,003,50,0.0,26,0.52
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,20,0.4
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,12,0.24
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,12,0.24
+Frequency-Based Majority Agent,Periodic Trend Generator,001,50,0.0,10,0.2
+Frequency-Based Majority Agent,Periodic Trend Generator,002,50,0.0,10,0.2
+Frequency-Based Majority Agent,Periodic Trend Generator,003,50,0.0,10,0.2
+Frequency-Based Majority Agent,Random Walk Generator,001,50,0.0,-4,-0.08
+Frequency-Based Majority Agent,Random Walk Generator,002,50,0.0,0,0.0
+Frequency-Based Majority Agent,Random Walk Generator,003,50,0.0,-2,-0.04
+Repeat Last Movement Agent,Constant Generator,001,50,0.0,-50,-1.0
+Repeat Last Movement Agent,Constant Generator,002,50,0.0,-50,-1.0
+Repeat Last Movement Agent,Constant Generator,003,50,0.0,-50,-1.0
+Repeat Last Movement Agent,Linear Trend Generator,001,50,0.0,48,0.96
+Repeat Last Movement Agent,Linear Trend Generator,002,50,0.0,48,0.96
+Repeat Last Movement Agent,Linear Trend Generator,003,50,0.0,48,0.96
+Repeat Last Movement Agent,Markov Regime-Switching Generator,001,50,0.0,32,0.64
+Repeat Last Movement Agent,Markov Regime-Switching Generator,002,50,0.0,40,0.8
+Repeat Last Movement Agent,Markov Regime-Switching Generator,003,50,0.0,16,0.32
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,16,0.32
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,-12,-0.24
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,10,0.2
+Repeat Last Movement Agent,Periodic Trend Generator,001,50,0.0,44,0.88
+Repeat Last Movement Agent,Periodic Trend Generator,002,50,0.0,44,0.88
+Repeat Last Movement Agent,Periodic Trend Generator,003,50,0.0,44,0.88
+Repeat Last Movement Agent,Random Walk Generator,001,50,0.0,2,0.04
+Repeat Last Movement Agent,Random Walk Generator,002,50,0.0,8,0.16
+Repeat Last Movement Agent,Random Walk Generator,003,50,0.0,-10,-0.2
+SGD Classifier Agent,Constant Generator,001,50,0.0,-50,-1.0
+SGD Classifier Agent,Constant Generator,002,50,0.0,-50,-1.0
+SGD Classifier Agent,Constant Generator,003,50,0.0,-50,-1.0
+SGD Classifier Agent,Linear Trend Generator,001,50,0.0,30,0.6
+SGD Classifier Agent,Linear Trend Generator,002,50,0.0,30,0.6
+SGD Classifier Agent,Linear Trend Generator,003,50,0.0,30,0.6
+SGD Classifier Agent,Markov Regime-Switching Generator,001,50,0.0,2,0.04
+SGD Classifier Agent,Markov Regime-Switching Generator,002,50,0.0,22,0.44
+SGD Classifier Agent,Markov Regime-Switching Generator,003,50,0.0,12,0.24
+SGD Classifier Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,-8,-0.16
+SGD Classifier Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,-12,-0.24
+SGD Classifier Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,-6,-0.12
+SGD Classifier Agent,Periodic Trend Generator,001,50,0.0,26,0.52
+SGD Classifier Agent,Periodic Trend Generator,002,50,0.0,26,0.52
+SGD Classifier Agent,Periodic Trend Generator,003,50,0.0,26,0.52
+SGD Classifier Agent,Random Walk Generator,001,50,0.0,-2,-0.04
+SGD Classifier Agent,Random Walk Generator,002,50,0.0,6,0.12
+SGD Classifier Agent,Random Walk Generator,003,50,0.0,2,0.04
+Static Mean Reversion Agent,Constant Generator,001,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Constant Generator,002,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Constant Generator,003,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,001,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,002,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,003,50,0.0,-50,-1.0
+Static Mean Reversion Agent,Markov Regime-Switching Generator,001,50,0.0,-12,-0.24
+Static Mean Reversion Agent,Markov Regime-Switching Generator,002,50,0.0,-22,-0.44
+Static Mean Reversion Agent,Markov Regime-Switching Generator,003,50,0.0,-24,-0.48
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,50,0.0,-18,-0.36
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,50,0.0,-16,-0.32
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,003,50,0.0,-28,-0.56
+Static Mean Reversion Agent,Periodic Trend Generator,001,50,0.0,-24,-0.48
+Static Mean Reversion Agent,Periodic Trend Generator,002,50,0.0,-24,-0.48
+Static Mean Reversion Agent,Periodic Trend Generator,003,50,0.0,-24,-0.48
+Static Mean Reversion Agent,Random Walk Generator,001,50,0.0,-16,-0.32
+Static Mean Reversion Agent,Random Walk Generator,002,50,0.0,6,0.12
+Static Mean Reversion Agent,Random Walk Generator,003,50,0.0,-12,-0.24

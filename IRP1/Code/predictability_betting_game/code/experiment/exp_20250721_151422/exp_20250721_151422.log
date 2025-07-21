@@ -1,0 +1,415 @@
+[2025-07-21 15:14:22] Starting experiment: exp_20250721_151422
+[2025-07-21 15:14:22] Experiment configuration:
+{
+  "run_config": {
+    "steps_per_run": 50,
+    "runs_per_combination": 3,
+    "start_value": 0.0,
+    "max_workers": 8
+  },
+  "agent_config": {
+    "Always Up Agent": {},
+    "Repeat Last Movement Agent": {},
+    "Frequency-Based Majority Agent": {},
+    "Static Mean Reversion Agent": {},
+    "Dynamic Mean Reversion Agent": {
+      "time_window": 5
+    },
+    "SGD Classifier Agent": {
+      "window_size": 10
+    },
+    "DQN Agent": {
+      "state_size": 10,
+      "gamma": 0.95,
+      "epsilon": 1.0,
+      "epsilon_min": 0.05,
+      "epsilon_decay": 0.995,
+      "lr": 0.001,
+      "batch_size": 32,
+      "memory_size": 1000
+    }
+  },
+  "generator_config": {
+    "Linear Trend Generator": {
+      "start_value": 10.0,
+      "slope": 0.5
+    },
+    "Constant Generator": {},
+    "Periodic Trend Generator": {
+      "start_value": 10.0,
+      "amplitude": 2.0,
+      "frequency": 0.1
+    },
+    "Ornstein-Uhlenbeck Generator": {
+      "mu": 10.0,
+      "theta": 0.15,
+      "sigma": 0.2,
+      "dt": 1.0,
+      "start_value": 20.0
+    },
+    "Random Walk Generator": {
+      "start_value": 0.0,
+      "mu": 0.0,
+      "sigma": 1.0
+    },
+    "Markov Regime-Switching Generator": {
+      "regimes": [
+        {
+          "generator": "Linear Trend Generator",
+          "params": {
+            "start_value": 0.0,
+            "slope": 0.5
+          }
+        },
+        {
+          "generator": "Random Walk Generator",
+          "params": {
+            "start_value": 0.0,
+            "mu": 0.0,
+            "sigma": 1.0
+          }
+        }
+      ],
+      "transition_matrix": [
+        [
+          0.8,
+          0.2
+        ],
+        [
+          0.2,
+          0.8
+        ]
+      ]
+    },
+    "Noisy Markov Regime-Switching Generator": {
+      "regimes": [
+        {
+          "generator": "Linear Trend Generator",
+          "params": {
+            "start_value": 0.0,
+            "slope": 0.5
+          }
+        },
+        {
+          "generator": "Ornstein-Uhlenbeck Generator",
+          "params": {
+            "mu": 0.0,
+            "theta": 0.1,
+            "sigma": 0.1,
+            "dt": 1.0,
+            "start_value": 0.0
+          }
+        }
+      ],
+      "transition_matrix": [
+        [
+          0.8,
+          0.2
+        ],
+        [
+          0.2,
+          0.8
+        ]
+      ],
+      "noise_mu": 0.0,
+      "noise_sigma": 0.1
+    }
+  }
+}
+[2025-07-21 15:14:22] Saved experiment config to experiment\exp_20250721_151422\experiment_config.json
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:24] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:30] Run completed: Always Up Agent x Constant Generator | Run 001
+[2025-07-21 15:14:30] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:30] Run completed: Always Up Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:14:30] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Constant Generator | Run 002
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Constant Generator | Run 003
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:31] Run completed: Always Up Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:14:31] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:37] Run completed: Always Up Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:14:37] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:37] Run completed: Always Up Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:14:37] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Always Up Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Always Up Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Random Walk Generator | Run 002
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Always Up Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Random Walk Generator | Run 003
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Random Walk Generator | Run 001
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:38] Run completed: Always Up Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:14:38] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:14:44] Run completed: Always Up Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:14:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:44] Run completed: Always Up Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:14:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:45] Run completed: Always Up Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:14:45] Run completed: Always Up Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:45] Run completed: Always Up Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:45] Run completed: Repeat Last Movement Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:14:45] Run completed: Repeat Last Movement Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:45] Run completed: Repeat Last Movement Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:14:45] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:51] Run completed: Repeat Last Movement Agent x Constant Generator | Run 001
+[2025-07-21 15:14:51] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:14:51] Run completed: Repeat Last Movement Agent x Constant Generator | Run 002
+[2025-07-21 15:14:51] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:52] Run completed: Repeat Last Movement Agent x Constant Generator | Run 003
+[2025-07-21 15:14:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:52] Run completed: Repeat Last Movement Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:14:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:14:52] Run completed: Repeat Last Movement Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:14:52] Run completed: Repeat Last Movement Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:14:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:52] Run completed: Repeat Last Movement Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:14:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:14:53] Run completed: Repeat Last Movement Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:14:53] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:14:59] Run completed: Repeat Last Movement Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:14:59] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:14:59] Run completed: Repeat Last Movement Agent x Random Walk Generator | Run 001
+[2025-07-21 15:14:59] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Repeat Last Movement Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:00] Run completed: Repeat Last Movement Agent x Random Walk Generator | Run 002
+[2025-07-21 15:15:00] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:01] Run completed: Repeat Last Movement Agent x Random Walk Generator | Run 003
+[2025-07-21 15:15:01] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:01] Run completed: Repeat Last Movement Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:01] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:01] Run completed: Repeat Last Movement Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:01] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:01] Run completed: Repeat Last Movement Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:01] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:01] Run completed: Repeat Last Movement Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:01] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:07] Run completed: Repeat Last Movement Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:07] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:07] Run completed: Repeat Last Movement Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:07] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:08] Run completed: Frequency-Based Majority Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:15:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:08] Run completed: Frequency-Based Majority Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:15:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:08] Run completed: Frequency-Based Majority Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:15:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:09] Run completed: Frequency-Based Majority Agent x Constant Generator | Run 003
+[2025-07-21 15:15:09] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:09] Run completed: Frequency-Based Majority Agent x Constant Generator | Run 001
+[2025-07-21 15:15:09] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:09] Run completed: Frequency-Based Majority Agent x Constant Generator | Run 002
+[2025-07-21 15:15:09] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:14] Run completed: Frequency-Based Majority Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:15:14] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:15] Run completed: Frequency-Based Majority Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:15:15] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:16] Run completed: Frequency-Based Majority Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:15:16] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:16] Run completed: Frequency-Based Majority Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:15:16] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:16] Run completed: Frequency-Based Majority Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:15:16] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:16] Run completed: Frequency-Based Majority Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:15:16] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:17] Run completed: Frequency-Based Majority Agent x Random Walk Generator | Run 001
+[2025-07-21 15:15:17] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Frequency-Based Majority Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:17] Run completed: Frequency-Based Majority Agent x Random Walk Generator | Run 002
+[2025-07-21 15:15:17] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:23] Run completed: Frequency-Based Majority Agent x Random Walk Generator | Run 003
+[2025-07-21 15:15:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:23] Run completed: Frequency-Based Majority Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:23] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:25] Run completed: Frequency-Based Majority Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:25] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:25] Run completed: Frequency-Based Majority Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:25] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:25] Run completed: Frequency-Based Majority Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:25] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {}
+[2025-07-21 15:15:25] Run completed: Frequency-Based Majority Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:25] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:25] Run completed: Static Mean Reversion Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:15:25] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:26] Run completed: Frequency-Based Majority Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:26] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:32] Run completed: Static Mean Reversion Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:15:32] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:32] Run completed: Static Mean Reversion Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:15:32] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:35] Run completed: Static Mean Reversion Agent x Constant Generator | Run 002
+[2025-07-21 15:15:35] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:35] Run completed: Static Mean Reversion Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:15:35] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:36] Run completed: Static Mean Reversion Agent x Constant Generator | Run 001
+[2025-07-21 15:15:36] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:36] Run completed: Static Mean Reversion Agent x Constant Generator | Run 003
+[2025-07-21 15:15:36] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:15:36] Run completed: Static Mean Reversion Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:15:36] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:37] Run completed: Static Mean Reversion Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:15:37] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:44] Run completed: Static Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:15:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:15:44] Run completed: Static Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:15:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Random Walk Generator | Run 001
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Static Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Random Walk Generator | Run 002
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Random Walk Generator | Run 003
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:15:46] Run completed: Static Mean Reversion Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:46] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {}
+[2025-07-21 15:15:52] Run completed: Static Mean Reversion Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {}
+[2025-07-21 15:15:52] Run completed: Static Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:15:52] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {}
+[2025-07-21 15:15:54] Run completed: Static Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:15:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:54] Run completed: Static Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:15:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:54] Run completed: Dynamic Mean Reversion Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:15:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:15:54] Run completed: Dynamic Mean Reversion Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:15:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:54] Run completed: Dynamic Mean Reversion Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:15:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:15:55] Run completed: Dynamic Mean Reversion Agent x Constant Generator | Run 001
+[2025-07-21 15:15:55] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:00] Run completed: Dynamic Mean Reversion Agent x Constant Generator | Run 002
+[2025-07-21 15:16:00] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:00] Run completed: Dynamic Mean Reversion Agent x Constant Generator | Run 003
+[2025-07-21 15:16:00] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:02] Run completed: Dynamic Mean Reversion Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:16:02] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:02] Run completed: Dynamic Mean Reversion Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:16:02] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:02] Run completed: Dynamic Mean Reversion Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:16:02] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:02] Run completed: Dynamic Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:16:02] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:02] Run completed: Dynamic Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:16:02] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:03] Run completed: Dynamic Mean Reversion Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:16:03] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:08] Run completed: Dynamic Mean Reversion Agent x Random Walk Generator | Run 001
+[2025-07-21 15:16:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent Dynamic Mean Reversion Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"time_window": 5} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:08] Run completed: Dynamic Mean Reversion Agent x Random Walk Generator | Run 002
+[2025-07-21 15:16:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:10] Run completed: Dynamic Mean Reversion Agent x Random Walk Generator | Run 003
+[2025-07-21 15:16:10] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:10] Run completed: Dynamic Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:16:10] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:10] Run completed: Dynamic Mean Reversion Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:16:10] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {}
+[2025-07-21 15:16:11] Run completed: Dynamic Mean Reversion Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:16:11] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {}
+[2025-07-21 15:16:11] Run completed: Dynamic Mean Reversion Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:16:11] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {}
+[2025-07-21 15:16:11] Run completed: Dynamic Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:16:11] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:17] Run completed: Dynamic Mean Reversion Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:16:17] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:17] Run completed: SGD Classifier Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:16:17] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:19] Run completed: SGD Classifier Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:16:19] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:19] Run completed: SGD Classifier Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:16:19] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:19] Run completed: SGD Classifier Agent x Constant Generator | Run 002
+[2025-07-21 15:16:19] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:19] Run completed: SGD Classifier Agent x Constant Generator | Run 001
+[2025-07-21 15:16:19] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:19] Run completed: SGD Classifier Agent x Constant Generator | Run 003
+[2025-07-21 15:16:19] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:20] Run completed: SGD Classifier Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:16:20] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:27] Run completed: SGD Classifier Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:16:27] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:27] Run completed: SGD Classifier Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:16:27] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent SGD Classifier Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent SGD Classifier Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Random Walk Generator | Run 002
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent SGD Classifier Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"window_size": 10} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Random Walk Generator | Run 001
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:28] Run completed: SGD Classifier Agent x Random Walk Generator | Run 003
+[2025-07-21 15:16:28] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Linear Trend Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "slope": 0.5}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Constant Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:40] Run completed: SGD Classifier Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:16:40] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:44] Run completed: DQN Agent x Linear Trend Generator | Run 002
+[2025-07-21 15:16:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Periodic Trend Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 10.0, "amplitude": 2.0, "frequency": 0.1}
+[2025-07-21 15:16:44] Run completed: DQN Agent x Linear Trend Generator | Run 001
+[2025-07-21 15:16:44] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:53] Run completed: DQN Agent x Linear Trend Generator | Run 003
+[2025-07-21 15:16:53] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:53] Run completed: DQN Agent x Constant Generator | Run 001
+[2025-07-21 15:16:53] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Ornstein-Uhlenbeck Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"mu": 10.0, "theta": 0.15, "sigma": 0.2, "dt": 1.0, "start_value": 20.0}
+[2025-07-21 15:16:54] Run completed: DQN Agent x Constant Generator | Run 002
+[2025-07-21 15:16:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:54] Run completed: DQN Agent x Constant Generator | Run 003
+[2025-07-21 15:16:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:54] Run completed: DQN Agent x Periodic Trend Generator | Run 001
+[2025-07-21 15:16:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Random Walk Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}
+[2025-07-21 15:16:54] Run completed: DQN Agent x Periodic Trend Generator | Run 002
+[2025-07-21 15:16:54] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:57] Run completed: DQN Agent x Periodic Trend Generator | Run 003
+[2025-07-21 15:16:57] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent DQN Agent --run 002 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:16:57] Run completed: DQN Agent x Ornstein-Uhlenbeck Generator | Run 001
+[2025-07-21 15:16:57] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Markov Regime-Switching Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Random Walk Generator", "params": {"start_value": 0.0, "mu": 0.0, "sigma": 1.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]]}
+[2025-07-21 15:17:08] Run completed: DQN Agent x Ornstein-Uhlenbeck Generator | Run 003
+[2025-07-21 15:17:08] Run completed: DQN Agent x Ornstein-Uhlenbeck Generator | Run 002
+[2025-07-21 15:17:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent DQN Agent --run 001 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:17:08] Run completed: DQN Agent x Random Walk Generator | Run 002
+[2025-07-21 15:17:08] Run completed: DQN Agent x Random Walk Generator | Run 001
+[2025-07-21 15:17:08] Running: python single_run.py --experiment experiment\exp_20250721_151422\results --generator Noisy Markov Regime-Switching Generator --agent DQN Agent --run 003 --steps 50 --start_value 0.0 --agent_params {"state_size": 10, "gamma": 0.95, "epsilon": 1.0, "epsilon_min": 0.05, "epsilon_decay": 0.995, "lr": 0.001, "batch_size": 32, "memory_size": 1000} --generator_params {"regimes": [{"generator": "Linear Trend Generator", "params": {"start_value": 0.0, "slope": 0.5}}, {"generator": "Ornstein-Uhlenbeck Generator", "params": {"mu": 0.0, "theta": 0.1, "sigma": 0.1, "dt": 1.0, "start_value": 0.0}}], "transition_matrix": [[0.8, 0.2], [0.2, 0.8]], "noise_mu": 0.0, "noise_sigma": 0.1}
+[2025-07-21 15:17:08] Run completed: DQN Agent x Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:17:08] Run completed: DQN Agent x Random Walk Generator | Run 003
+[2025-07-21 15:17:11] Run completed: DQN Agent x Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:17:11] Run completed: DQN Agent x Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:17:15] Run completed: DQN Agent x Noisy Markov Regime-Switching Generator | Run 001
+[2025-07-21 15:17:15] Run completed: DQN Agent x Noisy Markov Regime-Switching Generator | Run 002
+[2025-07-21 15:17:16] Run completed: DQN Agent x Noisy Markov Regime-Switching Generator | Run 003
+[2025-07-21 15:17:16] All runs completed. Aggregating results...
+[2025-07-21 15:17:19] Aggregation completed. Summary and convergence data saved.
+[2025-07-21 15:17:19] Experiment exp_20250721_151422 completed.

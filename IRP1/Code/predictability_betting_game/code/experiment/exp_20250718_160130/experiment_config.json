@@ -1,0 +1,58 @@
+{
+  "run_config": {
+    "steps_per_run": 10000,
+    "runs_per_combination": 100,
+    "start_value": 0.0,
+    "max_workers": 8
+  },
+  "agent_config": {
+    "Always Up Agent": {},
+    "Repeat Last Movement Agent": {},
+    "Frequency-Based Majority Agent": {},
+    "Static Mean Reversion Agent": {},
+    "Dynamic Mean Reversion Agent": {
+      "time_window": 5
+    },
+    "SGD Classifier Agent": {
+      "window_size": 10
+    },
+    "DQN Agent": {
+      "state_size": 10,
+      "gamma": 0.95,
+      "epsilon": 1.0,
+      "epsilon_min": 0.05,
+      "epsilon_decay": 0.995,
+      "lr": 0.001,
+      "batch_size": 32,
+      "memory_size": 1000
+    }
+  },
+  "generator_config": {
+    "Linear Trend Generator": {
+      "start_value": 10.0,
+      "slope": 0.5
+    },
+    "Constant Generator": {},
+    "Periodic Trend Generator": {
+      "start_value": 10.0,
+      "amplitude": 2.0,
+      "frequency": 0.1
+    },
+    "Ornstein-Uhlenbeck Generator": {
+      "mu": 10.0,
+      "theta": 0.15,
+      "sigma": 0.2,
+      "dt": 1.0,
+      "start_value": 20.0
+    },
+    "Random Walk Generator": {
+      "start_value": 0.0,
+      "mu": 0.0,
+      "sigma": 1.0
+    }
+  },
+  "deterministic_agents": [],
+  "deterministic_generators": [],
+  "experiment_name": "exp_20250718_160130",
+  "timestamp": "20250718_160130"
+}

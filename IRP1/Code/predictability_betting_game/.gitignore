@@ -1,6 +1,9 @@
 # Ignore everything inside code/experiment folders
 code/experiment/*
 
+# Allow folders inside experiment (so negated files inside can be tracked)
+!code/experiment/**/
+
 # Allow specific files
 !code/experiment/*/experiment_config.json
 !code/experiment/*/summary_per_run.csv
