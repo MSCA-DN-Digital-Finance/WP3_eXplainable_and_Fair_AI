@@ -1,0 +1,11 @@
+# Ignore everything inside code/experiment folders
+code/experiment/*
+
+# Allow specific files
+!code/experiment/*/experiment_config.json
+!code/experiment/*/summary_per_run.csv
+!code/experiment/*/exp_*.log
+
+# Explicitly ignore results and convergence files
+code/experiment/*/results/
+code/experiment/*/convergence*
