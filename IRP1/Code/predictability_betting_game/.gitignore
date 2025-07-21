@@ -1,14 +1,14 @@
-# Ignore everything inside code/experiment folders
-code/experiment/*
+# Ignore everything inside data/experiment folders
+data/experiment/*
 
 # Allow folders inside experiment (so negated files inside can be tracked)
-!code/experiment/**/
+!data/experiment/**/
 
 # Allow specific files
-!code/experiment/*/experiment_config.json
-!code/experiment/*/summary_per_run.csv
-!code/experiment/*/exp_*.log
+!data/experiment/*/experiment_config.json
+!data/experiment/*/summary_per_run.csv
+!data/experiment/*/exp_*.log
 
 # Explicitly ignore results and convergence files
-code/experiment/*/results/
-code/experiment/*/convergence*
+data/experiment/*/results/
+data/experiment/*/convergence*

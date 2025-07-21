@@ -146,7 +146,7 @@ def run_single(agent_name, agent_params, generator_name, generator_params, run_i
 def orchestrate_all_runs():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     experiment_name = f"exp_{timestamp}"
-    experiment_dir = Path("experiment") / experiment_name
+    experiment_dir = Path("../data/experiment") / experiment_name
     results_dir = experiment_dir / "results"
     log_file = experiment_dir / f"{experiment_name}.log"
 
@@ -159,6 +159,19 @@ def orchestrate_all_runs():
     max_workers = RUN_CONFIG["max_workers"]
 
     results_dir.mkdir(parents=True, exist_ok=True)
+
+    config_out = experiment_dir / "experiment_config.json"
+    with open(config_out, "w") as f:
+        json.dump({
+            "run_config": RUN_CONFIG,
+            "agent_config": AGENT_CONFIG,
+            "generator_config": GENERATOR_CONFIG,
+            "deterministic_agents": list(DETERMINISTIC_AGENTS),
+            "deterministic_generators": list(DETERMINISTIC_GENERATORS),
+            "experiment_name": experiment_name,
+            "timestamp": timestamp
+        }, f, indent=2)
+    logger(f"Saved experiment config to {config_out}")
 
     tasks = []
 
