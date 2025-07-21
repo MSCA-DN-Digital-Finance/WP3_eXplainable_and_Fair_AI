@@ -26,33 +26,84 @@ AGENT_CONFIG = {
 }
 
 GENERATOR_CONFIG = {
-    "Linear Trend Generator": {
-        "start_value": 10.0,
-        "slope": 0.5
-    },
-    "Constant Generator": {},
-    "Periodic Trend Generator": {
-        "start_value": 10.0,
-        "amplitude": 2.0,
-        "frequency": 0.1
-    },
-    "Ornstein-Uhlenbeck Generator": {
-        "mu": 10.0,
-        "theta": 0.15,
-        "sigma": 0.2,
-        "dt": 1.0,
-        "start_value": 20.0
-    },
-    "Random Walk Generator": {
-        "start_value": 0.0,
-        "mu": 0.0,
-        "sigma": 1.0
-    }
+  "Linear Trend Generator": {
+    "start_value": 10.0,
+    "slope": 0.5
+  },
+  "Constant Generator": {},
+  "Periodic Trend Generator": {
+    "start_value": 10.0,
+    "amplitude": 2.0,
+    "frequency": 0.1
+  },
+  "Ornstein-Uhlenbeck Generator": {
+    "mu": 10.0,
+    "theta": 0.15,
+    "sigma": 0.2,
+    "dt": 1.0,
+    "start_value": 20.0
+  },
+  "Random Walk Generator": {
+    "start_value": 0.0,
+    "mu": 0.0,
+    "sigma": 1.0
+  },
+  "Markov Regime-Switching Generator": {
+    "regimes": [
+      {
+        "generator": "Linear Trend Generator",
+        "params": {
+          "start_value": 0.0,
+          "slope": 0.5
+        }
+      },
+      {
+        "generator": "Random Walk Generator",
+        "params": {
+          "start_value": 0.0,
+          "mu": 0.0,
+          "sigma": 1.0
+        }
+      }
+    ],
+    "transition_matrix": [
+      [0.8, 0.2],
+      [0.2, 0.8]
+    ]
+  },
+  "Noisy Markov Regime-Switching Generator": {
+    "regimes": [
+      {
+        "generator": "Linear Trend Generator",
+        "params": {
+          "start_value": 0.0,
+          "slope": 0.5
+        }
+      },
+      {
+        "generator": "Ornstein-Uhlenbeck Generator",
+        "params": {
+          "mu": 0.0,
+          "theta": 0.1,
+          "sigma": 0.1,
+          "dt": 1.0,
+          "start_value": 0.0
+        }
+      }
+    ],
+    "transition_matrix": [
+      [0.8, 0.2],
+      [0.2, 0.8]
+    ],
+    "noise_mu": 0.0,
+    "noise_sigma": 0.1
+  }
 }
 
 
-DETERMINISTIC_AGENTS = {"Always Up Agent", "Repeat Last Movement Agent", "Static Mean Reversion Agent"}
-DETERMINISTIC_GENERATORS = {"Linear Trend Generator", "Constant Generator", "Periodic Trend Generator"}
+
+DETERMINISTIC_AGENTS = {} #{"Always Up Agent", "Repeat Last Movement Agent", "Static Mean Reversion Agent"}
+DETERMINISTIC_GENERATORS = {} #{"Linear Trend Generator", "Constant Generator", "Periodic Trend Generator"}
 
 
 def get_logger(log_file_path):
