@@ -1,0 +1,113 @@
+agent,generator,run_id,total_steps,start_value,final_cumulative_reward,average_reward
+Always Up Agent,Constant Generator,001,100,0.0,-100,-1.0
+Always Up Agent,Constant Generator,002,100,0.0,-100,-1.0
+Always Up Agent,Linear Trend Generator,001,100,0.0,100,1.0
+Always Up Agent,Linear Trend Generator,002,100,0.0,100,1.0
+Always Up Agent,Markov Regime-Switching Generator,001,100,0.0,32,0.32
+Always Up Agent,Markov Regime-Switching Generator,002,100,0.0,58,0.58
+Always Up Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,8,0.08
+Always Up Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,12,0.12
+Always Up Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,10,0.1
+Always Up Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,22,0.22
+Always Up Agent,Periodic Trend Generator,001,100,0.0,-2,-0.02
+Always Up Agent,Periodic Trend Generator,002,100,0.0,-2,-0.02
+Always Up Agent,Random Walk Generator,001,100,0.0,-2,-0.02
+Always Up Agent,Random Walk Generator,002,100,0.0,-4,-0.04
+Always Up Agent,Real World Asset Price Generator,001,100,0.0,-12,-0.12
+Always Up Agent,Real World Asset Price Generator,002,100,0.0,-12,-0.12
+DQN Agent,Constant Generator,001,100,0.0,-100,-1.0
+DQN Agent,Constant Generator,002,100,0.0,-100,-1.0
+DQN Agent,Linear Trend Generator,001,100,0.0,4,0.04
+DQN Agent,Linear Trend Generator,002,100,0.0,0,0.0
+DQN Agent,Markov Regime-Switching Generator,001,100,0.0,-8,-0.08
+DQN Agent,Markov Regime-Switching Generator,002,100,0.0,4,0.04
+DQN Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,12,0.12
+DQN Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,-10,-0.1
+DQN Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-6,-0.06
+DQN Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-4,-0.04
+DQN Agent,Periodic Trend Generator,001,100,0.0,-16,-0.16
+DQN Agent,Periodic Trend Generator,002,100,0.0,6,0.06
+DQN Agent,Random Walk Generator,001,100,0.0,0,0.0
+DQN Agent,Random Walk Generator,002,100,0.0,-14,-0.14
+DQN Agent,Real World Asset Price Generator,001,100,0.0,-14,-0.14
+DQN Agent,Real World Asset Price Generator,002,100,0.0,6,0.06
+Dynamic Mean Reversion Agent,Constant Generator,001,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Constant Generator,002,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,001,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,002,100,0.0,-100,-1.0
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,001,100,0.0,-24,-0.24
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,002,100,0.0,-40,-0.4
+Dynamic Mean Reversion Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,-38,-0.38
+Dynamic Mean Reversion Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,-32,-0.32
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-2,-0.02
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-10,-0.1
+Dynamic Mean Reversion Agent,Periodic Trend Generator,001,100,0.0,-80,-0.8
+Dynamic Mean Reversion Agent,Periodic Trend Generator,002,100,0.0,-80,-0.8
+Dynamic Mean Reversion Agent,Random Walk Generator,001,100,0.0,2,0.02
+Dynamic Mean Reversion Agent,Random Walk Generator,002,100,0.0,-8,-0.08
+Dynamic Mean Reversion Agent,Real World Asset Price Generator,001,100,0.0,4,0.04
+Dynamic Mean Reversion Agent,Real World Asset Price Generator,002,100,0.0,4,0.04
+Frequency-Based Majority Agent,Constant Generator,001,100,0.0,-100,-1.0
+Frequency-Based Majority Agent,Constant Generator,002,100,0.0,-100,-1.0
+Frequency-Based Majority Agent,Linear Trend Generator,001,100,0.0,100,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,002,100,0.0,100,1.0
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,001,100,0.0,46,0.46
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,002,100,0.0,38,0.38
+Frequency-Based Majority Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,28,0.28
+Frequency-Based Majority Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,0,0.0
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,24,0.24
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,18,0.18
+Frequency-Based Majority Agent,Periodic Trend Generator,001,100,0.0,-2,-0.02
+Frequency-Based Majority Agent,Periodic Trend Generator,002,100,0.0,-2,-0.02
+Frequency-Based Majority Agent,Random Walk Generator,001,100,0.0,2,0.02
+Frequency-Based Majority Agent,Random Walk Generator,002,100,0.0,8,0.08
+Frequency-Based Majority Agent,Real World Asset Price Generator,001,100,0.0,-16,-0.16
+Frequency-Based Majority Agent,Real World Asset Price Generator,002,100,0.0,-16,-0.16
+Repeat Last Movement Agent,Constant Generator,001,100,0.0,-100,-1.0
+Repeat Last Movement Agent,Constant Generator,002,100,0.0,-100,-1.0
+Repeat Last Movement Agent,Linear Trend Generator,001,100,0.0,98,0.98
+Repeat Last Movement Agent,Linear Trend Generator,002,100,0.0,98,0.98
+Repeat Last Movement Agent,Markov Regime-Switching Generator,001,100,0.0,58,0.58
+Repeat Last Movement Agent,Markov Regime-Switching Generator,002,100,0.0,-6,-0.06
+Repeat Last Movement Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,56,0.56
+Repeat Last Movement Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,56,0.56
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,26,0.26
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,14,0.14
+Repeat Last Movement Agent,Periodic Trend Generator,001,100,0.0,92,0.92
+Repeat Last Movement Agent,Periodic Trend Generator,002,100,0.0,92,0.92
+Repeat Last Movement Agent,Random Walk Generator,001,100,0.0,6,0.06
+Repeat Last Movement Agent,Random Walk Generator,002,100,0.0,-22,-0.22
+Repeat Last Movement Agent,Real World Asset Price Generator,001,100,0.0,-10,-0.1
+Repeat Last Movement Agent,Real World Asset Price Generator,002,100,0.0,-10,-0.1
+SGD Classifier Agent,Constant Generator,001,100,0.0,-100,-1.0
+SGD Classifier Agent,Constant Generator,002,100,0.0,-100,-1.0
+SGD Classifier Agent,Linear Trend Generator,001,100,0.0,0,0.0
+SGD Classifier Agent,Linear Trend Generator,002,100,0.0,0,0.0
+SGD Classifier Agent,Markov Regime-Switching Generator,001,100,0.0,-20,-0.2
+SGD Classifier Agent,Markov Regime-Switching Generator,002,100,0.0,-8,-0.08
+SGD Classifier Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,12,0.12
+SGD Classifier Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,0,0.0
+SGD Classifier Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-10,-0.1
+SGD Classifier Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-22,-0.22
+SGD Classifier Agent,Periodic Trend Generator,001,100,0.0,58,0.58
+SGD Classifier Agent,Periodic Trend Generator,002,100,0.0,58,0.58
+SGD Classifier Agent,Random Walk Generator,001,100,0.0,6,0.06
+SGD Classifier Agent,Random Walk Generator,002,100,0.0,4,0.04
+SGD Classifier Agent,Real World Asset Price Generator,001,100,0.0,-8,-0.08
+SGD Classifier Agent,Real World Asset Price Generator,002,100,0.0,-8,-0.08
+Static Mean Reversion Agent,Constant Generator,001,100,0.0,-100,-1.0
+Static Mean Reversion Agent,Constant Generator,002,100,0.0,-100,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,001,100,0.0,-100,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,002,100,0.0,-100,-1.0
+Static Mean Reversion Agent,Markov Regime-Switching Generator,001,100,0.0,-40,-0.4
+Static Mean Reversion Agent,Markov Regime-Switching Generator,002,100,0.0,-6,-0.06
+Static Mean Reversion Agent,Noisy Markov Regime-Switching Generator,001,100,0.0,-12,-0.12
+Static Mean Reversion Agent,Noisy Markov Regime-Switching Generator,002,100,0.0,-18,-0.18
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,100,0.0,-10,-0.1
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,100,0.0,-12,-0.12
+Static Mean Reversion Agent,Periodic Trend Generator,001,100,0.0,-18,-0.18
+Static Mean Reversion Agent,Periodic Trend Generator,002,100,0.0,-18,-0.18
+Static Mean Reversion Agent,Random Walk Generator,001,100,0.0,4,0.04
+Static Mean Reversion Agent,Random Walk Generator,002,100,0.0,14,0.14
+Static Mean Reversion Agent,Real World Asset Price Generator,001,100,0.0,-16,-0.16
+Static Mean Reversion Agent,Real World Asset Price Generator,002,100,0.0,-16,-0.16

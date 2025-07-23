@@ -4,6 +4,8 @@ from tsdm.agents import (
     FrequencyBasedMajorityAgent,
     StaticMeanReversionAgent,
     DynamicMeanReversionAgent,
+    SGDClassifierAgent,
+    DQNAgent,
 )
 
 def create_agent(agent_name, params=None):
@@ -20,5 +22,9 @@ def create_agent(agent_name, params=None):
         return StaticMeanReversionAgent()
     elif agent_name == "Dynamic Mean Reversion Agent":
         return DynamicMeanReversionAgent(**params)
+    elif agent_name == "SGD Classifier Agent":
+        return SGDClassifierAgent(**params)
+    elif agent_name == "DQN Agent":
+        return DQNAgent(**params)
     else:
         raise ValueError(f"Unknown agent type: {agent_name}")

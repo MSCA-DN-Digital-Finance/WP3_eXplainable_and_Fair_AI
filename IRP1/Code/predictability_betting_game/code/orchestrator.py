@@ -8,7 +8,7 @@ from aggregation_functions import aggregate_results
 
 
 RUN_CONFIG = {
-    "steps_per_run": 10,
+    "steps_per_run": 100,
     "runs_per_combination": 2,
     "start_value": 0.0,
     "max_workers": 8
@@ -16,12 +16,34 @@ RUN_CONFIG = {
 
 
 AGENT_CONFIG = {
+    # Zero-Intelligence Class
     "Always Up Agent": {},
+
+    # Fixed-Rule Class
     "Repeat Last Movement Agent": {},
+
+    # Stationary Statistical Class
     "Frequency-Based Majority Agent": {},
     "Static Mean Reversion Agent": {},
+
+    # Dynamic Statistical Class
     "Dynamic Mean Reversion Agent": {
-        "time_window": 5
+        "time_window": 10 
+    },
+
+    # Inferring Model Class
+    "SGD Classifier Agent": {
+        "window_size": 50
+    },
+    "DQN Agent": {
+        "state_size": 10,
+        "epsilon": 1.0,
+        "epsilon_min": 0.05,
+        "epsilon_decay": 0.995,
+        "gamma": 0.95,
+        "lr": 1e-3,
+        "batch_size": 32,
+        "memory_size": 1000
     }
 }
 

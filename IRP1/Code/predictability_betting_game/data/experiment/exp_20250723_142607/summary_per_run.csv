@@ -1,0 +1,81 @@
+agent,generator,run_id,total_steps,start_value,final_cumulative_reward,average_reward
+Always Up Agent,Constant Generator,001,5,0.0,-5,-1.0
+Always Up Agent,Constant Generator,002,5,0.0,-5,-1.0
+Always Up Agent,Linear Trend Generator,001,5,0.0,5,1.0
+Always Up Agent,Linear Trend Generator,002,5,0.0,5,1.0
+Always Up Agent,Markov Regime-Switching Generator,001,5,0.0,5,1.0
+Always Up Agent,Markov Regime-Switching Generator,002,5,0.0,5,1.0
+Always Up Agent,Noisy Markov Regime-Switching Generator,001,5,0.0,5,1.0
+Always Up Agent,Noisy Markov Regime-Switching Generator,002,5,0.0,-1,-0.2
+Always Up Agent,Ornstein-Uhlenbeck Generator,001,5,0.0,5,1.0
+Always Up Agent,Ornstein-Uhlenbeck Generator,002,5,0.0,5,1.0
+Always Up Agent,Periodic Trend Generator,001,5,0.0,5,1.0
+Always Up Agent,Periodic Trend Generator,002,5,0.0,5,1.0
+Always Up Agent,Random Walk Generator,001,5,0.0,1,0.2
+Always Up Agent,Random Walk Generator,002,5,0.0,3,0.6
+Always Up Agent,Real World Asset Price Generator,001,5,0.0,-1,-0.2
+Always Up Agent,Real World Asset Price Generator,002,5,0.0,-1,-0.2
+Dynamic Mean Reversion Agent,Constant Generator,001,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Constant Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,001,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Linear Trend Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,001,5,0.0,-3,-0.6
+Dynamic Mean Reversion Agent,Markov Regime-Switching Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Noisy Markov Regime-Switching Generator,001,5,0.0,1,0.2
+Dynamic Mean Reversion Agent,Noisy Markov Regime-Switching Generator,002,5,0.0,-3,-0.6
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Periodic Trend Generator,001,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Periodic Trend Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Random Walk Generator,001,5,0.0,-3,-0.6
+Dynamic Mean Reversion Agent,Random Walk Generator,002,5,0.0,-5,-1.0
+Dynamic Mean Reversion Agent,Real World Asset Price Generator,001,5,0.0,-1,-0.2
+Dynamic Mean Reversion Agent,Real World Asset Price Generator,002,5,0.0,-1,-0.2
+Frequency-Based Majority Agent,Constant Generator,001,5,0.0,-5,-1.0
+Frequency-Based Majority Agent,Constant Generator,002,5,0.0,-5,-1.0
+Frequency-Based Majority Agent,Linear Trend Generator,001,5,0.0,5,1.0
+Frequency-Based Majority Agent,Linear Trend Generator,002,5,0.0,5,1.0
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,001,5,0.0,5,1.0
+Frequency-Based Majority Agent,Markov Regime-Switching Generator,002,5,0.0,5,1.0
+Frequency-Based Majority Agent,Noisy Markov Regime-Switching Generator,001,5,0.0,-1,-0.2
+Frequency-Based Majority Agent,Noisy Markov Regime-Switching Generator,002,5,0.0,5,1.0
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,001,5,0.0,5,1.0
+Frequency-Based Majority Agent,Ornstein-Uhlenbeck Generator,002,5,0.0,5,1.0
+Frequency-Based Majority Agent,Periodic Trend Generator,001,5,0.0,5,1.0
+Frequency-Based Majority Agent,Periodic Trend Generator,002,5,0.0,5,1.0
+Frequency-Based Majority Agent,Random Walk Generator,001,5,0.0,-1,-0.2
+Frequency-Based Majority Agent,Random Walk Generator,002,5,0.0,-3,-0.6
+Frequency-Based Majority Agent,Real World Asset Price Generator,001,5,0.0,-1,-0.2
+Frequency-Based Majority Agent,Real World Asset Price Generator,002,5,0.0,-1,-0.2
+Repeat Last Movement Agent,Constant Generator,001,5,0.0,-5,-1.0
+Repeat Last Movement Agent,Constant Generator,002,5,0.0,-5,-1.0
+Repeat Last Movement Agent,Linear Trend Generator,001,5,0.0,3,0.6
+Repeat Last Movement Agent,Linear Trend Generator,002,5,0.0,3,0.6
+Repeat Last Movement Agent,Markov Regime-Switching Generator,001,5,0.0,-1,-0.2
+Repeat Last Movement Agent,Markov Regime-Switching Generator,002,5,0.0,3,0.6
+Repeat Last Movement Agent,Noisy Markov Regime-Switching Generator,001,5,0.0,1,0.2
+Repeat Last Movement Agent,Noisy Markov Regime-Switching Generator,002,5,0.0,1,0.2
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,001,5,0.0,3,0.6
+Repeat Last Movement Agent,Ornstein-Uhlenbeck Generator,002,5,0.0,3,0.6
+Repeat Last Movement Agent,Periodic Trend Generator,001,5,0.0,3,0.6
+Repeat Last Movement Agent,Periodic Trend Generator,002,5,0.0,3,0.6
+Repeat Last Movement Agent,Random Walk Generator,001,5,0.0,-1,-0.2
+Repeat Last Movement Agent,Random Walk Generator,002,5,0.0,1,0.2
+Repeat Last Movement Agent,Real World Asset Price Generator,001,5,0.0,-1,-0.2
+Repeat Last Movement Agent,Real World Asset Price Generator,002,5,0.0,-1,-0.2
+Static Mean Reversion Agent,Constant Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Constant Generator,002,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Linear Trend Generator,002,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Markov Regime-Switching Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Markov Regime-Switching Generator,002,5,0.0,-3,-0.6
+Static Mean Reversion Agent,Noisy Markov Regime-Switching Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Noisy Markov Regime-Switching Generator,002,5,0.0,-3,-0.6
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Ornstein-Uhlenbeck Generator,002,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Periodic Trend Generator,001,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Periodic Trend Generator,002,5,0.0,-5,-1.0
+Static Mean Reversion Agent,Random Walk Generator,001,5,0.0,5,1.0
+Static Mean Reversion Agent,Random Walk Generator,002,5,0.0,1,0.2
+Static Mean Reversion Agent,Real World Asset Price Generator,001,5,0.0,-1,-0.2
+Static Mean Reversion Agent,Real World Asset Price Generator,002,5,0.0,-1,-0.2
