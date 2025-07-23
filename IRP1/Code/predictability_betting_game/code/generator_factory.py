@@ -9,6 +9,8 @@ from tsg.generators import (
 from tsg.meta_generators import MarkovSwitchGenerator
 from tsg.modifiers import GaussianNoise
 
+from custom_generators import RealWorldAssetPriceGenerator
+
 
 GENERATOR_CLASS_MAP = {
     "Linear Trend Generator": LinearTrendGenerator,
@@ -16,6 +18,7 @@ GENERATOR_CLASS_MAP = {
     "Periodic Trend Generator": PeriodicTrendGenerator,
     "Ornstein-Uhlenbeck Generator": OrnsteinUhlenbeckGenerator,
     "Random Walk Generator": RandomWalkGenerator,
+    "Real World Asset Price Generator": RealWorldAssetPriceGenerator
 }
 
 

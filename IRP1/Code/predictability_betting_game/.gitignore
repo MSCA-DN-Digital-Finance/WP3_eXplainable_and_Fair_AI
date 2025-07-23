@@ -1,5 +1,6 @@
-# Ignore everything inside data/experiment folders
+# Ignore everything inside data folders
 data/experiment/*
+data/real_world_asset_prices/*
 
 # Allow folders inside experiment (so negated files inside can be tracked)
 !data/experiment/**/

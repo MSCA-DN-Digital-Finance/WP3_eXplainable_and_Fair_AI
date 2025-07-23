@@ -8,8 +8,8 @@ from aggregation_functions import aggregate_results
 
 
 RUN_CONFIG = {
-    "steps_per_run": 100,
-    "runs_per_combination": 3,
+    "steps_per_run": 10,
+    "runs_per_combination": 2,
     "start_value": 0.0,
     "max_workers": 8
 }
@@ -26,6 +26,11 @@ AGENT_CONFIG = {
 }
 
 GENERATOR_CONFIG = {
+    "Real World Asset Price Generator": {
+        "ticker": "AAPL",
+        "start": "1985-01-01",
+        "end": "2025-01-01"
+    },
   "Linear Trend Generator": {
     "start_value": 10.0,
     "slope": 0.5
