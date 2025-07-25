@@ -8,8 +8,8 @@ from aggregation_functions import aggregate_results
 
 
 RUN_CONFIG = {
-    "steps_per_run": 100,
-    "runs_per_combination": 2,
+    "steps_per_run": 10000,
+    "runs_per_combination": 100,
     "start_value": 0.0,
     "max_workers": 8
 }
