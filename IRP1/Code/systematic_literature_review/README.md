@@ -53,6 +53,7 @@ systematic_literature_review/
    - Final corpus provided in `250711_final_corpus.bib`.  
    - Exclusion tables (`excluded_studies_*.tex`, etc.) integrated into the manuscript.
 
+## Reproducibility
 
 Because this project lives as a **subfolder** of a larger repository, the simplest way to get only this part is to **download a ZIP** and extract just this folder.
 
