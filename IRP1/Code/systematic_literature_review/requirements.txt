@@ -1,0 +1,6 @@
+requests>=2.31
+bibtexparser>=1.4
+tqdm>=4.66
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.9
