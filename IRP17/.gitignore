@@ -1,0 +1,9 @@
+# Ignore Data folder and its contents
+Code/sectoral-decarbonisation/Data/*
+
+# Keep the folder itself
+!Code/sectoral-decarbonisation/Data/
+
+# Ignore cache folder
+Code/sectoral-decarbonisation/cache/
+
