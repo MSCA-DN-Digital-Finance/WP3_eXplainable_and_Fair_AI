@@ -93,6 +93,10 @@ class CT3SingleExecutor:
                 ref_log = ref_logs[k]
                 mu_log  = t_mu.log
 
+                # write task log to file
+                log_path = k_dir / f"task_logs[{mu}].json"
+                _write_json(log_path, mu_log)
+
                 # merge metrics from all metric functions
                 result: Dict[str, float] = {}
                 for mf in cfg.metrics:
@@ -119,6 +123,8 @@ class CT3SingleExecutor:
             out_path = k_dir / "metrics.json"
             _write_json(out_path, payload)
             artifacts[f"k={k}"] = str(out_path.resolve())
+
+            
 
         # Also write a tiny config snapshot at the root folder (optional, helpful)
         cfg_path = root / "config_snapshot.json"
