@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.linear_model import SGDClassifier
 from tsdm.agents import Agent
 
-
+############################### SGD Agents #####################################
 class SGDClassifierAgent(Agent):
     """
     SGDClassifierAgent (CT3-ready)
@@ -218,7 +218,7 @@ class SGDAllocAgent:
         self._last_features = None
 
 
-
+############################### UCBBandit Agents #################################
 
 
 class UCBBanditAgent(Agent):
@@ -406,3 +406,317 @@ class UCBBanditAgent(Agent):
         self._counts[a] = n + 1.0
         # Incremental mean update: μ_new = μ_old + (r - μ_old) / (n + 1)
         self._values[a] = self._values[a] + (reward - self._values[a]) / (n + 1.0)
+
+
+
+import numpy as np
+from typing import List, Optional
+
+class ContextualUCBBanditAgent(Agent):
+    """
+    ContextualUCBBanditAgent (CT3-ready, NN-based)
+
+    - Two actions: 0 = "down", 1 = "up"
+    - Contextual bandit with a small neural network per action:
+        f_a(context) ≈ E[reward | context, action=a]
+    - Uses a UCB-style decision rule:
+        a_t = argmax_a ( f_a(x_t) + c * sqrt( 2 log T / N_a ) )
+      where:
+        * x_t is the current context (last `window_size` observations),
+        * N_a is how often arm a has been updated,
+        * T is total number of reward-updates so far.
+
+    - Reward is defined from directional accuracy:
+        * +1 if last action matches sign(y_t - y_{t-1})
+        * -1 otherwise
+
+    - Learning happens in observe():
+        * place_bet() stores (last_context, last_action)
+        * observe(value) gets the new value, computes reward for LAST action,
+          and performs a gradient step on the corresponding arm-network.
+
+    - Provides freeze()/soft_reset() to integrate with CT3:
+        * freeze()      -> no learning in observe()
+        * soft_reset()  -> clear buffers and last_action/context, keep weights
+        * reset()       -> full reset; re-init networks and stats
+
+    Conventions:
+      * Actions: 0 = "down", 1 = "up"
+      * At time t, label is based on Δy_t = y_t - y_{t-1}
+      * During early stages (not enough context), defaults to action 0
+    """
+
+    def __init__(
+        self,
+        window_size: int = 50,
+        hidden_dim: int = 32,
+        exploration_c: float = 1.0,
+        lr: float = 1e-3,
+        temperature: float = 1.0,
+        random_state: int = 42,
+    ):
+        super().__init__()
+        self.window_size   = int(window_size)
+        self.hidden_dim    = int(hidden_dim)
+        self.exploration_c = float(exploration_c)
+        self.lr            = float(lr)
+        self.temperature   = float(temperature)
+        self.random_state  = int(random_state)
+
+        rng = np.random.default_rng(self.random_state)
+
+        # We have a separate 1-hidden-layer MLP for each arm
+        # Shapes:
+        #   W1[a]: (hidden_dim, window_size)
+        #   b1[a]: (hidden_dim,)
+        #   W2[a]: (1, hidden_dim)
+        #   b2[a]: (1,)
+        self.W1 = np.stack(
+            [rng.normal(0, 0.1, size=(self.hidden_dim, self.window_size)) for _ in range(2)],
+            axis=0
+        )  # (2, H, D)
+        self.b1 = np.zeros((2, self.hidden_dim), dtype=float)      # (2, H)
+        self.W2 = np.stack(
+            [rng.normal(0, 0.1, size=(1, self.hidden_dim)) for _ in range(2)],
+            axis=0
+        )  # (2, 1, H)
+        self.b2 = np.zeros((2, 1), dtype=float)                    # (2, 1)
+
+        # Bandit statistics
+        self._counts = np.zeros(2, dtype=float)   # how often each arm has been updated
+        self._updates_total = 0.0                 # total number of reward updates
+
+        # Runtime state
+        self._obs: List[float] = []              # full series of observed values
+        self._last_action: Optional[int] = None
+        self._last_context: Optional[np.ndarray] = None  # context at time of last action
+        self.frozen: bool = False
+
+        self._eps = 1e-9
+
+    # ------------- Core TSDM interface -------------
+
+    def observe(self, value: float) -> None:
+        """
+        Append new observation. If there is a previous observation and a last
+        (context, action) pair, compute the reward for that action based on the
+        direction of movement and update the corresponding arm-network, unless
+        frozen.
+
+        Important: reward is assigned to (last_context, last_action), i.e., to
+        the context that was available when the last action was chosen.
+        """
+        self._obs.append(float(value))
+
+        # Need at least two observations to define Δy_t
+        if len(self._obs) < 2:
+            return
+        if self._last_action is None or self._last_context is None:
+            return
+
+        # Compute movement since last step
+        dy = self._obs[-1] - self._obs[-2]
+        if dy > 0:
+            true_dir = 1  # up
+        elif dy < 0:
+            true_dir = 0  # down
+        else:
+            reward = 0.0
+            if not self.frozen:
+                self._update_model(self._last_action, self._last_context, reward)
+            # After using it once, forget the last (context, action)
+            self._last_action = None
+            self._last_context = None
+            return
+
+        reward = 1.0 if self._last_action == true_dir else -1.0
+
+        if not self.frozen:
+            self._update_model(self._last_action, self._last_context, reward)
+
+        # After we have used the pair once, clear it
+        self._last_action = None
+        self._last_context = None
+
+    def place_bet(self) -> int:
+        """
+        Choose an action according to a UCB-style rule using the current context.
+
+        - Context is the last `window_size` observations.
+        - If not enough observations, defaults to action 0.
+        - We also ensure that each arm is tried at least once.
+        """
+        # Need enough context to build a window
+        if len(self._obs) < self.window_size:
+            action = 0
+            self._last_action = action
+            self._last_context = None  # no proper context yet
+            return action
+
+        context = np.asarray(self._obs[-self.window_size:], dtype=float).reshape(-1)
+
+        # Ensure each arm is tried at least once
+        if self._counts.sum() == 0:
+            action = 0
+        elif self._counts[0] == 0:
+            action = 0
+        elif self._counts[1] == 0:
+            action = 1
+        else:
+            # UCB-style over predicted rewards
+            preds = np.array(
+                [self._forward(a, context) for a in (0, 1)],
+                dtype=float
+            ).reshape(2)
+
+            t = max(self._updates_total, 1.0)
+            c = self.exploration_c
+            # Avoid division by zero
+            bonuses = c * np.sqrt(2.0 * np.log(t + 1.0) / (self._counts + 1e-9))
+            ucb = preds + bonuses
+            action = int(np.argmax(ucb))
+
+        self._last_action = action
+        self._last_context = context
+        return action
+
+    def reset(self) -> None:
+        """
+        Full reset: clears buffers, reinitializes networks and bandit statistics.
+        Use this if you want to re-train from scratch.
+        """
+        super().reset()
+        rng = np.random.default_rng(self.random_state)
+
+        self.W1 = np.stack(
+            [rng.normal(0, 0.1, size=(self.hidden_dim, self.window_size)) for _ in range(2)],
+            axis=0
+        )
+        self.b1 = np.zeros((2, self.hidden_dim), dtype=float)
+        self.W2 = np.stack(
+            [rng.normal(0, 0.1, size=(1, self.hidden_dim)) for _ in range(2)],
+            axis=0
+        )
+        self.b2 = np.zeros((2, 1), dtype=float)
+
+        self._counts[:] = 0.0
+        self._updates_total = 0.0
+        self._obs = []
+        self._last_action = None
+        self._last_context = None
+        self.frozen = False
+
+    # ------------- CT3 helpers -------------
+
+    def soft_reset(self) -> None:
+        """
+        Soft reset: clears observation buffer and last_action/context,
+        but keeps the learned networks and bandit statistics intact.
+        This is the right choice before CT3 evaluation runs.
+        """
+        self._obs = []
+        self._last_action = None
+        self._last_context = None
+
+    def freeze(self) -> None:
+        """
+        Disable learning: no updates in observe().
+        """
+        self.frozen = True
+
+    def unfreeze(self) -> None:
+        """
+        Enable learning: updates in observe() are applied again.
+        """
+        self.frozen = False
+
+    def action_distribution(self) -> np.ndarray:
+        """
+        Returns a probability vector [P(0), P(1)] representing the current policy,
+        based on a softmax over predicted rewards for the *current* context.
+
+        During the early phase (no context), returns [1.0, 0.0].
+        """
+        if len(self._obs) < self.window_size:
+            return np.array([1.0, 0.0], dtype=float)
+
+        context = np.asarray(self._obs[-self.window_size:], dtype=float).reshape(-1)
+        vals = np.array(
+            [self._forward(a, context) for a in (0, 1)],
+            dtype=float
+        ).reshape(2)
+
+        # Temperature scaling
+        if self.temperature != 1.0:
+            vals = vals / max(self.temperature, self._eps)
+
+        # Stable softmax
+        max_v = np.max(vals)
+        exp_v = np.exp(vals - max_v)
+        probs = exp_v / (np.sum(exp_v) + self._eps)
+
+        probs = np.clip(probs, self._eps, 1.0 - self._eps)
+        probs = probs / probs.sum()
+        return probs
+
+    # ------------- Internals: tiny NN per arm -------------
+
+    def _forward(self, action: int, context: np.ndarray) -> float:
+        """
+        Forward pass of the arm-specific MLP: context -> predicted reward (scalar).
+        """
+        a = int(action)
+        x = context.reshape(-1)  # (D,)
+        W1 = self.W1[a]          # (H, D)
+        b1 = self.b1[a]          # (H,)
+        W2 = self.W2[a]          # (1, H)
+        b2 = self.b2[a]          # (1,)
+
+        z1 = W1 @ x + b1         # (H,)
+        h1 = np.maximum(z1, 0.0) # ReLU
+        out = float(W2 @ h1 + b2)  # scalar
+        return out
+
+    def _update_model(self, action: int, context: np.ndarray, reward: float) -> None:
+        """
+        One-step SGD update on the MLP for the chosen action using MSE loss:
+            L = 0.5 * (pred - reward)^2
+        """
+        a = int(action)
+        x = context.reshape(-1)  # (D,)
+        r = float(reward)
+
+        W1 = self.W1[a]          # (H, D)
+        b1 = self.b1[a]          # (H,)
+        W2 = self.W2[a]          # (1, H)
+        b2 = self.b2[a]          # (1,)
+
+        # Forward
+        z1 = W1 @ x + b1              # (H,)
+        h1 = np.maximum(z1, 0.0)      # ReLU
+        pred = float(W2 @ h1 + b2)    # scalar
+
+        # dL/dpred = (pred - r)
+        grad_out = pred - r           # scalar
+
+        # Gradients for second layer
+        dW2 = grad_out * h1.reshape(1, -1)  # (1, H)
+        db2 = grad_out                     # scalar
+
+        # Backprop into hidden layer
+        dh1 = grad_out * W2.reshape(-1)    # (H,)
+        dz1 = dh1 * (z1 > 0.0)             # ReLU'
+
+        dW1 = dz1.reshape(-1, 1) @ x.reshape(1, -1)  # (H, D)
+        db1 = dz1                                   # (H,)
+
+        # SGD step
+        eta = self.lr
+        self.W2[a] = W2 - eta * dW2
+        self.b2[a] = b2 - eta * db2
+        self.W1[a] = W1 - eta * dW1
+        self.b1[a] = b1 - eta * db1
+
+        # Update bandit statistics
+        self._counts[a] += 1.0
+        self._updates_total += 1.0
