@@ -1,4 +1,19 @@
 # Ignore Data folder and its contents
+Code/sectoral-decarbonisation-scope-1-2-only/Data/*
+
+# Keep the folder itself
+!Code/sectoral-decarbonisation-scope-1-2-only/Data/
+
+# Ignore Results folder and its contents
+Code/sectoral-decarbonisation-scope-1-2-only/results/*
+
+# Keep the folder itself
+!Code/sectoral-decarbonisation-scope-1-2-only/results/
+
+# Ignore cache folder
+Code/sectoral-decarbonisation-scope-1-2-only/cache/
+
+# Ignore Data folder and its contents
 Code/sectoral-decarbonisation/Data/*
 
 # Keep the folder itself
@@ -7,3 +22,10 @@ Code/sectoral-decarbonisation/Data/*
 # Ignore cache folder
 Code/sectoral-decarbonisation/cache/
 
+
+# Ignore Data folder and its contents
+Code/sectoral-decarbonisation/results/*
+
+# Keep the folder itself
+!Code/sectoral-decarbonisation/results
+/
