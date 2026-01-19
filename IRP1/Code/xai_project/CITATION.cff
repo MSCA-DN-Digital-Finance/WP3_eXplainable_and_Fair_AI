@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "Structural Causal Models with Neural Mechanisms as an Alternative to Post-Hoc XAI Methods"
+authors:
+  - family-names: Jander
+    given-names: Mathis
+year: 2025
+license: Apache-2.0
+repository-code: https://github.com/MSCA-DN-Digital-Finance/WP3_eXplainable_and_Fair_AI/tree/main/IRP1/Code/xai_project
