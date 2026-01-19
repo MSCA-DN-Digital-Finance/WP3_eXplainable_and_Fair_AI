@@ -13,62 +13,69 @@ The goal of the project is to train a supervised machine learning model for **lo
 
 ```text
 xai_project/
-├── __pycache__/
 ├── data/
-│   ├── LC_loans_granting_model_dataset.csv
-│   ├── X_train.npy
-│   ├── X_test.npy
-│   ├── y_train.npy
-│   └── y_test.npy
+│   └── README.md                  # Instructions for obtaining the dataset externally
 ├── results/
-│   ├── eval_20251014_115109.json
-│   ├── eval_20251014_115147.json
-│   ├── eval_20251014_115236.json
-│   ├── eval_20251014_115320.json
-│   ├── eval_20251014_123329.json
-│   ├── eval_20251014_142017.json
-│   ├── eval_20251014_150637.json
-│   ├── eval_20251014_154532.json
-│   └── eval_20251014_161610.json
-├── 251014_data_preparation.ipynb
-├── 251014_scm.ipynb
-├── 251014_xgb_training.ipynb
-├── environment.yml
-├── shap_dependence_fico_n.png
-├── shap_dependence_loan_amnt.png
-├── shap_dependence_revenue.png
-├── shap_summary_bar.png
-├── shap_summary_beeswarm.png
-└── utils.py
+│   └── eval_*.json                 # Logged evaluation results from multiple runs
+├── 251014_data_preparation.ipynb   # Data cleaning, train/test split
+├── 251014_scm.ipynb                # Structural causal model (SCM) with neural mechanisms
+├── 251014_xgb_training.ipynb       # XGBoost baseline training and evaluation
+├── utils.py                        # Shared helper functions
+├── shap_dependence_fico_n.png      # SHAP dependence plot (FICO score)
+├── shap_dependence_loan_amnt.png   # SHAP dependence plot (loan amount)
+├── shap_dependence_revenue.png     # SHAP dependence plot (revenue / income)
+├── shap_summary_bar.png            # Global SHAP feature importance (bar plot)
+├── shap_summary_beeswarm.png       # SHAP summary (beeswarm)
+├── environment.yml                 # Conda environment specification
+├── CITATION.cff                    # Citation metadata for academic reuse
+├── LICENSE                         # Apache License 2.0
+├── README.md                       # Project documentation
+└── 260119_xai_assignment_mathis_jander.pdf  # Final assignment report (PDF)
+
 ```
 
 ## Workflow Overview
 
-### Data Preparation
+### Data Preparation & Feature Engineering
 - Implemented in `251014_data_preparation.ipynb`
-- Raw loan data is cleaned, encoded, and split into training and test sets
-- Processed datasets are stored as NumPy arrays to ensure reproducibility
+- Lending Club loan data is cleaned, standardized, and transformed into a domain-informed feature set
+- Engineered variables reflect credit-relevant concepts (e.g. income, loan amount, debt-to-income)
+- A fixed train/test split is created to ensure consistent comparison across models
 
-### Model Training
+### Supervised Learning Baseline (SML)
 - Implemented in `251014_xgb_training.ipynb`
-- An **XGBoost classifier** is trained to predict loan approval outcomes
-- Multiple evaluation runs are executed and logged for comparison
+- A tuned **XGBoost classifier** is trained to predict loan default under purely observational assumptions
+- Hyperparameters are selected via randomized search with cross-validation
+- Serves as a strong black-box baseline for predictive performance (ROC AUC, PR-AUC, F1)
 
-### Evaluation and Logging
-- Model performance metrics are stored as timestamped JSON files in `results/`
-- Enables systematic comparison across runs and hyperparameter settings
-
-### Explainability Analysis (XAI)
-- **SHAP** is used to analyze feature importance and both local and global effects
-- Generated outputs include:
-  - Global feature importance: `shap_summary_bar.png`
-  - Distribution of SHAP values: `shap_summary_beeswarm.png`
-  - Feature dependence plots (e.g. FICO score, loan amount, revenue)
-
-### Structural / Causal Exploration
+### Structural Causal Model with Neural Mechanisms
 - Implemented in `251014_scm.ipynb`
-- Explores structural or causal perspectives on model behavior
-- Used to contrast purely predictive explanations with more causal reasoning
+- A **structural causal model (SCM)** is specified via an explicit directed acyclic graph (DAG)
+- Each causal mechanism is parameterized by a **feed-forward neural network (FFNN)**
+- Continuous nodes are trained via regression (MSE), the binary outcome via classification (BCE)
+- Supports both:
+  - *Factual inference* (using observed intermediate variables)
+  - *From-roots inference* (recomputing endogenous variables via the DAG)
+
+### Comparative Evaluation
+- Predictive performance of SCM+FFNN is benchmarked against XGBoost
+- Metrics include ROC AUC, PR-AUC, and F1 score at fixed and optimal thresholds
+- Results highlight the trade-off between predictive accuracy and causal transparency
+
+### Interventional Analysis (Explainable-by-Design)
+- The SCM natively supports **interventions via Pearl’s `do`-operator**
+- Policy-relevant “what-if” analyses are performed (e.g. changing income or loan amount)
+- Effects are propagated through intermediate variables (e.g. debt-to-income), enabling causal tracing
+- Demonstrates capabilities fundamentally unavailable to post-hoc XAI methods
+
+### Post-hoc Explainability for Comparison
+- **SHAP** is applied to the XGBoost baseline for associational explanations
+- Generated artifacts include:
+  - Global feature importance (`shap_summary_bar.png`)
+  - Distribution of SHAP values (`shap_summary_beeswarm.png`)
+  - Feature dependence plots (income, loan amount, FICO score)
+- Used to illustrate limitations of post-hoc explanations under correlated and engineered features
+
 
 ---
 
