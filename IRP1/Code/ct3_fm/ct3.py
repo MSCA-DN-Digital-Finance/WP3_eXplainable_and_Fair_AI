@@ -21,25 +21,45 @@ def iter_runs(gen_root: Path) -> List[Path]:
     )
 
 
-def load_run(run_dir: Path) -> Run:
+def load_run(run_dir: Path, *, model_name: str) -> Run:
+    """
+    Load one run (trajectory + predictions) for a specific model.
+
+    Expected layout:
+      run_dir/
+        trajectory.npz
+        meta.json
+        predictions/<model_name>/
+          preds.npz
+          meta.json
+
+    The prediction archive schema can differ by model/task (e.g., yhat/t_idx vs yhat_q).
+    This loader is schema-agnostic: it always returns 'preds' and adds convenience keys
+    if present.
+    """
+    # --- run metadata + trajectory ---
     meta = json.loads((run_dir / "meta.json").read_text())
     cfg = meta.get("config", {})
 
     traj = np.load(run_dir / "trajectory.npz")
 
-    pred_dir = run_dir / "predictions"
+    # --- model-specific predictions ---
+    pred_dir = run_dir / "predictions" / model_name
     if not pred_dir.exists():
         raise FileNotFoundError(f"Missing predictions directory: {pred_dir}")
 
-    npz_files = list(pred_dir.glob("*.npz"))
-    if len(npz_files) == 0:
-        raise FileNotFoundError(f"No prediction .npz found in {pred_dir}")
-    if len(npz_files) > 1:
-        raise RuntimeError(
-            f"Multiple prediction .npz files found in {pred_dir}: {[p.name for p in npz_files]}"
+    npz_files = sorted(pred_dir.glob("*.npz"))
+    json_files = sorted(pred_dir.glob("*.json"))
+
+    if len(npz_files) != 1 or len(json_files) != 1:
+        raise FileNotFoundError(
+            f"Expected exactly 1 .npz and 1 .json in {pred_dir}, got "
+            f"{len(npz_files)} npz and {len(json_files)} json "
+            f"(npz={[p.name for p in npz_files]}, json={[p.name for p in json_files]})"
         )
 
-    preds = np.load(npz_files[0])
+    pred_file = npz_files[0]
+    preds = np.load(pred_file)
 
     run: Run = {
         "run_dir": run_dir,
@@ -50,10 +70,11 @@ def load_run(run_dir: Path) -> Run:
         "signal": traj["signal"],
         "noise": traj["noise"],
         "x": traj["x"],
-        "preds": preds,  # <-- always present, schema depends on model/task
+        "model_name": model_name,
+        "preds": preds,  # always present; schema depends on model/task
     }
 
-    # Optional convenience fields (only if present)
+    # Optional convenience fields (only if present in preds.npz)
     if "yhat" in preds:
         run["yhat"] = np.asarray(preds["yhat"], dtype=float)
     if "t_idx" in preds:
@@ -64,8 +85,13 @@ def load_run(run_dir: Path) -> Run:
         run["yhat_q"] = np.asarray(preds["yhat_q"], dtype=float)
     if "quantile_levels" in preds:
         run["quantile_levels"] = np.asarray(preds["quantile_levels"], dtype=float)
+    if "window_start" in preds:
+        run["window_start"] = np.asarray(preds["window_start"], dtype=int)
+    if "window_end" in preds:
+        run["window_end"] = np.asarray(preds["window_end"], dtype=int)
 
     return run
+
 
 
 
@@ -163,38 +189,57 @@ def harmonic_run_spectrum_from_predictions(
     nfft: int | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """
-    Returns (f, P_run) where P_run is the average normalized spectrum over forecast windows.
+    Compute one normalized power spectrum from a run's harmonic forecasts.
+
+    Supports two prediction formats:
+      - Quantile forecasts: yhat_q (W, H, Q) + quantile_levels (Q,)
+      - Point forecasts:    yhat   (W, H)
+
+    Strategy:
+      - Take the mean forecast trajectory across windows (averaging over W),
+        producing a single length-H series, then compute its power spectrum.
     """
-    preds = run["preds"]  # we'll add this in load_run below
-    yhat_q = np.asarray(preds["yhat_q"], dtype=float)          # (W, H, Q)
-    q_levels = np.asarray(preds["quantile_levels"], dtype=float)
+    preds = run["preds"]
 
-    # find quantile index (robust)
-    q_idx = int(np.argmin(np.abs(q_levels - float(quantile))))
-    if abs(q_levels[q_idx] - float(quantile)) > 1e-6:
-        raise ValueError(f"Requested quantile={quantile} not found. Available: {q_levels}")
+    # --- extract a single forecast series of length H ---
+    if "yhat_q" in preds.files:
+        yhat_q = np.asarray(preds["yhat_q"], dtype=float)  # (W, H, Q)
 
-    # compute spectrum for each window forecast path
-    P_list = []
-    f_ref = None
+        if "quantile_levels" not in preds.files:
+            raise KeyError("Pred archive has yhat_q but missing quantile_levels.")
 
-    for w in range(yhat_q.shape[0]):
-        x_fore = yhat_q[w, :, q_idx]  # (H,)
-        f, P = power_spectrum(
-            x_fore, dt=dt, detrend=detrend, window=window, normalize=normalize, nfft=nfft
+        q_levels = np.asarray(preds["quantile_levels"], dtype=float)  # (Q,)
+        q_idx = int(np.argmin(np.abs(q_levels - float(quantile))))
+
+        # take chosen quantile -> (W, H)
+        yhat_wh = yhat_q[:, :, q_idx]
+
+    elif "yhat" in preds.files:
+        yhat_wh = np.asarray(preds["yhat"], dtype=float)  # (W, H)
+
+    else:
+        raise KeyError(
+            f"Pred archive missing required keys. Have: {list(preds.files)}; "
+            "expected yhat_q or yhat."
         )
-        if f_ref is None:
-            f_ref = f
-        else:
-            if len(f) != len(f_ref) or np.max(np.abs(f - f_ref)) > 1e-12:
-                raise RuntimeError("Frequency grids differ across windows; fix nfft/dt.")
-        P_list.append(P)
 
-    P_run = np.mean(np.stack(P_list, axis=0), axis=0)
-    if normalize:
-        P_run = P_run / (P_run.sum() + 1e-12)
+    if yhat_wh.ndim != 2:
+        raise ValueError(f"Expected (W, H) after extraction, got shape {yhat_wh.shape}")
 
-    return f_ref, P_run
+    # average across windows -> (H,)
+    yhat_h = np.mean(yhat_wh, axis=0)
+
+    # --- compute spectrum ---
+    f, P = power_spectrum(
+        yhat_h,
+        dt=dt,
+        detrend=detrend,
+        window=window,
+        normalize=normalize,
+        nfft=nfft,
+    )
+    return f, P
+
 
 
 
@@ -236,6 +281,7 @@ def ct3_pairwise_table(
     gen_root: Path,
     *,
     intervention_key: str,
+    model_name: str,
     metric_fn: MetricFn = metric_prob_positive_forecast,
 ) -> pd.DataFrame:
     """
@@ -246,7 +292,7 @@ def ct3_pairwise_table(
       [theta, theta_prime, ct3_signed, ct3_abs, m_theta, m_theta_prime]
     """
     run_dirs = iter_runs(gen_root)
-    runs = [load_run(d) for d in run_dirs]
+    runs = [load_run(d, model_name=model_name) for d in run_dirs]
 
     m = compute_scalar_by_theta(runs, intervention_key=intervention_key, metric_fn=metric_fn)
 
@@ -278,12 +324,13 @@ def ct3_harmonic_wasserstein_table(
     gen_root: Path,
     *,
     intervention_key: str = "omega",
+    model_name: str,
     quantile: float = 0.5,
     dt: float = 1.0,
     nfft: int | None = None,
 ) -> pd.DataFrame:
     run_dirs = iter_runs(gen_root)
-    runs = [load_run(d) for d in run_dirs]
+    runs = [load_run(d, model_name=model_name) for d in run_dirs]
 
     # compute one spectrum per theta
     spectra = {}
@@ -331,6 +378,7 @@ def run_rw_ct3_and_save(
     gen_root: Path,
     *,
     intervention_key: str,
+    model_name: str,
     out_path: Path | None = None,
     metric_name: str = "prob_pos_forecast",
 ) -> pd.DataFrame:
@@ -340,7 +388,7 @@ def run_rw_ct3_and_save(
         return pd.read_csv(out_path)
     
     metric_fn = metric_prob_positive_forecast if metric_name == "prob_pos_forecast" else metric_mean_forecast
-    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, metric_fn=metric_fn)
+    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, model_name=model_name, metric_fn=metric_fn)
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(out_path, index=False)
@@ -351,6 +399,7 @@ def run_ar1_ct3_and_save(
     gen_root: Path,
     *,
     intervention_key: str = "phi",
+    model_name: str,
     out_path: Path | None = None,
     metric_name: str = "beta_hat_model",
 ) -> pd.DataFrame:
@@ -374,7 +423,7 @@ def run_ar1_ct3_and_save(
     else:
         raise ValueError("metric_name must be 'beta_hat_model' or 'mean_forecast'")
 
-    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, metric_fn=metric_fn)
+    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, model_name=model_name, metric_fn=metric_fn)
 
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -386,6 +435,7 @@ def run_harmonic_ct3_and_save(
     gen_root: Path,
     *,
     intervention_key: str = "omega",
+    model_name: str,
     out_path: Path | None = None,
     quantile: float = 0.5,
     dt: float = 1.0,
@@ -398,6 +448,7 @@ def run_harmonic_ct3_and_save(
     df = ct3_harmonic_wasserstein_table(
         gen_root,
         intervention_key=intervention_key,
+        model_name=model_name,
         quantile=quantile,
         dt=dt,
         nfft=nfft,

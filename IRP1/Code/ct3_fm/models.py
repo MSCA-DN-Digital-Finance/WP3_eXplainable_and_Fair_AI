@@ -7,6 +7,14 @@ import pandas as pd
 from typing import Dict, Any, Tuple
 
 
+# Moirai / uni2ts (adjust imports if your repo version differs)
+from uni2ts.model.moirai import MoiraiForecast
+from uni2ts.module.moirai import MoiraiModule
+
+# GluonTS dataset wrapper
+from gluonts.dataset.pandas import PandasDataset
+
+
 
 def load_npz_series(run_dir: Path, key: str = "x") -> np.ndarray:
     data = np.load(run_dir / "trajectory.npz")
@@ -26,6 +34,9 @@ def make_target(x: np.ndarray, target_kind: str) -> np.ndarray:
     if target_kind == "diff":
         return np.diff(x)
     raise ValueError("target_kind must be 'x' or 'diff'")
+
+
+### Chronos prediction functions ###
 
 
 def chronos_rolling_1step_predict(
@@ -279,3 +290,208 @@ def chronos_harmonic_multistep_forecast(
         "x_last": np.asarray(x_last, dtype=np.float32),
         "quantile_levels": np.asarray(q_levels, dtype=np.float32),
     }
+
+
+
+### TimesFM prediction functions ###
+
+
+def timesfm_rolling_1step_predict(
+    model,
+    y: np.ndarray,
+    *,
+    window_length: int = 50,
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    TimesFM analogue of chronos_rolling_1step_predict.
+
+    Returns:
+      - yhat: shape (N_windows,) one-step point forecasts (TimesFM point forecast)
+      - t_idx: shape (N_windows,) integer indices in the target y such that
+              each yhat[i] predicts y[t_idx[i] + 1]
+
+    Notes:
+      - TimesFM `forecast` takes raw arrays; no timestamps / ids needed.
+      - We keep the same alignment convention as your Chronos helper.
+    """
+    y = np.asarray(y, dtype=np.float32)
+
+    if y.ndim != 1:
+        raise ValueError("y must be 1D")
+    if window_length < 2:
+        raise ValueError("window_length must be >= 2")
+    if len(y) <= window_length:
+        raise ValueError("len(y) must be > window_length for 1-step forecasts")
+
+    yhat = []
+    t_idx = []
+
+    # window covers indices [start_idx, end_idx-1], forecast next step end_idx
+    for start_idx in range(0, len(y) - window_length):
+        end_idx = start_idx + window_length
+        window_y = y[start_idx:end_idx]
+
+        point_forecast, _quantile_forecast = model.forecast(
+            horizon=1,
+            inputs=[window_y],
+        )
+        # point_forecast shape: (1, 1)
+        yhat.append(float(point_forecast[0, 0]))
+        t_idx.append(end_idx - 1)
+
+    return np.asarray(yhat, dtype=np.float32), np.asarray(t_idx, dtype=np.int32)
+
+
+
+def timesfm_harmonic_multistep_forecast(
+    model,
+    x: np.ndarray,
+    *,
+    window_length: int = 100,
+    prediction_length: int = 200,
+    step_size: int = 1,
+) -> Dict[str, Any]:
+    """
+    TimesFM analogue of chronos_harmonic_multistep_forecast.
+
+    Sliding-window multi-step forecasting on a harmonic oscillator level series.
+
+    Returns a compact dict of arrays:
+      - yhat: (N_windows, prediction_length) point forecasts
+      - window_start: (N_windows,)
+      - window_end: (N_windows,)  (index of last observed point in the window)
+      - x_last: (N_windows,)
+
+    Notes
+    -----
+    - TimesFM requires `model.compile(ForecastConfig(...))` *before* calling forecast().
+    - TimesFM `forecast(horizon=H, inputs=[window])` returns:
+        point_forecast: (1, H)
+        quantile_forecast: (1, H, K)  (optional depending on config)
+      Here we store only point forecasts for simplicity/stability.
+    """
+    x = np.asarray(x, dtype=np.float32)
+    if x.ndim != 1:
+        raise ValueError("x must be 1D")
+    if len(x) <= window_length:
+        raise ValueError("len(x) must be > window_length")
+    if prediction_length <= 0:
+        raise ValueError("prediction_length must be positive")
+    if step_size <= 0:
+        raise ValueError("step_size must be positive")
+
+    yhat_all = []
+    w_start = []
+    w_end = []
+    x_last = []
+
+    for start_idx in range(0, len(x) - window_length, step_size):
+        end_idx = start_idx + window_length  # window includes [start_idx, end_idx-1]
+        window = x[start_idx:end_idx].astype(np.float32, copy=False)
+
+        point_forecast, _quantile_forecast = model.forecast(
+            horizon=prediction_length,
+            inputs=[window],
+        )
+        # point_forecast: (1, H)
+        yhat_h = np.asarray(point_forecast[0], dtype=np.float32)  # (H,)
+
+        yhat_all.append(yhat_h)
+        w_start.append(start_idx)
+        w_end.append(end_idx - 1)
+        x_last.append(float(window[-1]))
+
+    yhat = np.stack(yhat_all, axis=0)  # (N_windows, H)
+
+    return {
+        "yhat": yhat,
+        "window_start": np.asarray(w_start, dtype=np.int32),
+        "window_end": np.asarray(w_end, dtype=np.int32),
+        "x_last": np.asarray(x_last, dtype=np.float32),
+    }
+
+
+### Moirai prediction functions ###
+
+
+def build_moirai_predictor(
+    *,
+    size: str = "large",
+    prediction_length: int = 1,
+    context_length: int = 50,
+    patch_size: str | int = "auto",
+    num_samples: int = 1,
+    batch_size: int = 32,
+) :
+    """
+    Build a Moirai predictor (once) and reuse it across rolling windows.
+    """
+    model = MoiraiForecast(
+        module=MoiraiModule.from_pretrained(f"Salesforce/moirai-1.0-R-{size}"),
+        prediction_length=prediction_length,
+        context_length=context_length,
+        patch_size=patch_size,
+        num_samples=num_samples,
+        target_dim=1,
+        feat_dynamic_real_dim=0,
+        past_feat_dynamic_real_dim=0,
+    )
+    predictor = model.create_predictor(batch_size=batch_size)
+    return predictor
+
+
+def moirai_rolling_1step_predict(
+    predictor,
+    y: np.ndarray,
+    *,
+    window_length: int = 50,
+    freq: str = "D",
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Moirai analogue of your rolling 1-step predict helper.
+
+    Returns:
+      - yhat: shape (N_windows,) one-step point forecasts (mean over samples if stochastic)
+      - t_idx: shape (N_windows,) indices such that yhat[i] predicts y[t_idx[i] + 1]
+
+    Notes:
+      - We create one-item PandasDataset per window and run predictor.predict on it.
+      - Moirai returns Forecast objects; we take the *mean* of the sample distribution.
+        If you set num_samples=1, this is just the single sample.
+    """
+    y = np.asarray(y, dtype=np.float32)
+
+    if y.ndim != 1:
+        raise ValueError("y must be 1D")
+    if window_length < 2:
+        raise ValueError("window_length must be >= 2")
+    if len(y) <= window_length:
+        raise ValueError("len(y) must be > window_length for 1-step forecasts")
+
+    yhat = []
+    t_idx = []
+
+    # window covers indices [start_idx, end_idx-1], forecast next step end_idx
+    for start_idx in range(0, len(y) - window_length):
+        end_idx = start_idx + window_length
+        window_y = y[start_idx:end_idx]
+
+        # Build a tiny one-series dataset for this window
+        # PandasDataset expects a pandas Series or DataFrame; simplest is Series-like via dict.
+        # We use integer index; freq only matters for GluonTS metadata.
+        ds = PandasDataset({"target": window_y})
+
+        # predictor.predict returns an iterator of Forecast objects
+        fcst = next(iter(predictor.predict(ds)))
+
+        # Extract 1-step point forecast:
+        # - if probabilistic: use mean
+        # - if deterministic: mean still works
+        # Common GluonTS Forecast API:
+        #   fcst.mean  -> ndarray of shape (prediction_length,)
+        step1 = float(np.asarray(fcst.mean)[0])
+
+        yhat.append(step1)
+        t_idx.append(end_idx - 1)
+
+    return np.asarray(yhat, dtype=np.float32), np.asarray(t_idx, dtype=np.int32)
