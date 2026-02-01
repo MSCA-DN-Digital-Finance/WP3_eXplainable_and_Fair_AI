@@ -1,0 +1,5 @@
+anchors_runtime_seconds: 394.261651
+num_applicable_pairs: 203
+num_perturb_calls: 203
+num_perturb_texts: 40600
+num_precB_none: 0

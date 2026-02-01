@@ -1,4 +1,10 @@
 # Ignore Data folder and its contents
+Code/xai_proj/models/*
+
+# Keep the folder itself
+!Code/xai_proj/models/
+
+# Ignore Data folder and its contents
 Code/sectoral-decarbonisation-scope-1-2-only/Data/*
 
 # Keep the folder itself

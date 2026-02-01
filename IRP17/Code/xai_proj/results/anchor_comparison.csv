@@ -1,0 +1,33 @@
+test_index,beam_anchor,beam_anchor_norm,beam_precision_B,beam_coverage,cand_anchor,cand_anchor_norm,cand_precision_B,cand_coverage,same_anchor_string,beam_precision_higher,beam_precision_equal,beam_precision_lower,beam_coverage_higher,beam_coverage_equal,beam_coverage_lower,precision_diff_beam_minus_cand,coverage_diff_beam_minus_cand,beam_contains_cand_as_part
+2,natural,natural,0.965,0.1806451612903225,natural,natural,0.965,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+10,naturally AND skincare,naturally AND skincare,0.95,0.0026638917793964,naturally derived,naturally derived,0.99,0.0258064516129032,False,False,False,True,False,False,True,-0.040000000000000036,-0.023142559833506802,False
+15,oil,oil,0.965,0.0709677419354838,oil,oil,0.965,0.0709677419354838,True,False,True,False,False,True,False,0.0,0.0,True
+16,vegan,vegan,1.0,0.032258064516129,vegan,vegan,1.0,0.032258064516129,True,False,True,False,False,True,False,0.0,0.0,True
+17,hair,hair,0.955,0.1096774193548387,hair,hair,0.955,0.1096774193548387,True,False,True,False,False,True,False,0.0,0.0,True
+18,natural,natural,0.965,0.1806451612903225,natural,natural,0.965,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+24,sustainable,sustainable,1.0,0.032258064516129,sustainable,sustainable,1.0,0.032258064516129,True,False,True,False,False,True,False,0.0,0.0,True
+25,natural,natural,0.96,0.1806451612903225,natural,natural,0.96,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+28,vegan,vegan,1.0,0.032258064516129,vegan,vegan,1.0,0.032258064516129,True,False,True,False,False,True,False,0.0,0.0,True
+37,natural,natural,0.985,0.1806451612903225,natural,natural,0.985,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+39,natural,natural,0.985,0.1806451612903225,natural,natural,0.985,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+42,ingredients AND natural,ingredients AND natural,0.995,0.0104890738813735,natural ingredients,natural ingredients,0.995,0.0193548387096774,False,False,True,False,False,False,True,0.0,-0.0088657648283039,False
+47,organic,organic,0.965,0.0516129032258064,organic,organic,0.965,0.0516129032258064,True,False,True,False,False,True,False,0.0,0.0,True
+56,environmentally,environmentally,1.0,0.0064516129032258,environmentally,environmentally,1.0,0.0064516129032258,True,False,True,False,False,True,False,0.0,0.0,True
+60,organic,organic,0.99,0.0516129032258064,organic,organic,0.99,0.0516129032258064,True,False,True,False,False,True,False,0.0,0.0,True
+63,sustainable,sustainable,1.0,0.032258064516129,sustainable,sustainable,1.0,0.032258064516129,True,False,True,False,False,True,False,0.0,0.0,True
+64,new,new,0.965,0.1483870967741935,bio,bio,0.98,0.0193548387096774,False,False,False,True,True,False,False,-0.015000000000000013,0.12903225806451613,False
+69,green,green,0.97,0.0580645161290322,green,green,0.97,0.0580645161290322,True,False,True,False,False,True,False,0.0,0.0,True
+70,new,new,0.97,0.1483870967741935,hair,hair,0.96,0.1096774193548387,False,True,False,False,True,False,False,0.010000000000000009,0.03870967741935481,False
+71,botanical,botanical,0.96,0.0193548387096774,botanical,botanical,0.96,0.0193548387096774,True,False,True,False,False,True,False,0.0,0.0,True
+72,sustainability,sustainability,0.985,0.0064516129032258,sustainability,sustainability,0.985,0.0064516129032258,True,False,True,False,False,True,False,0.0,0.0,True
+80,products,products,1.0,0.0903225806451612,products,products,1.0,0.0903225806451612,True,False,True,False,False,True,False,0.0,0.0,True
+84,natural,natural,0.99,0.1806451612903225,natural,natural,0.99,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+85,organic,organic,0.98,0.0516129032258064,organic,organic,0.98,0.0516129032258064,True,False,True,False,False,True,False,0.0,0.0,True
+88,natural AND ingredients,natural AND ingredients,1.0,0.0104890738813735,natural ingredients,natural ingredients,1.0,0.0193548387096774,False,False,True,False,False,False,True,0.0,-0.0088657648283039,False
+90,botanicals,botanicals,0.985,0.0129032258064516,botanicals,botanicals,0.985,0.0129032258064516,True,False,True,False,False,True,False,0.0,0.0,True
+102,natural,natural,1.0,0.1806451612903225,natural,natural,1.0,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+115,ingredients,ingredients,1.0,0.0580645161290322,ingredients,ingredients,1.0,0.0580645161290322,True,False,True,False,False,True,False,0.0,0.0,True
+124,natural,natural,0.99,0.1806451612903225,natural,natural,0.99,0.1806451612903225,True,False,True,False,False,True,False,0.0,0.0,True
+131,naturally AND derived,naturally AND derived,0.96,0.0013319458896982,naturally derived,naturally derived,0.96,0.0258064516129032,False,False,True,False,False,False,True,0.0,-0.024474505723205,False
+136,cruelty AND products,cruelty AND products,0.965,0.0017481789802289,cruelty free,cruelty free,0.965,0.0193548387096774,False,False,True,False,False,False,True,0.0,-0.0176066597294485,False
+142,hydration,hydration,0.985,0.0129032258064516,botanicals,botanicals,1.0,0.0129032258064516,False,False,False,True,False,True,False,-0.015000000000000013,0.0,False

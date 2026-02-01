@@ -1,0 +1,17 @@
+{
+  "method": "candidate_first",
+  "anchors_runtime_seconds": 394.2616507920029,
+  "num_tp_green": 49,
+  "num_candidates": 80,
+  "num_applicable_pairs": 203,
+  "num_perturb_calls": 203,
+  "num_perturb_texts": 40600,
+  "num_precB_none": 0,
+  "N_PERT": 200,
+  "BATCH_SIZE": 32,
+  "approx_num_batches": 1269,
+  "TAU": 0.95,
+  "num_best_anchors": 32,
+  "anchor_rate_over_tp_green": 0.6530612244897959,
+  "timestamp": "2026-01-29 13:12:42"
+}

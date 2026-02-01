@@ -1,0 +1,7 @@
+anchors_runtime_seconds: 3255.290808
+num_applicable_pairs: 1705
+num_perturb_calls: 1705
+num_perturb_texts: 341000
+num_precB_none: 23
+beam_width: 3
+depth_max: 2

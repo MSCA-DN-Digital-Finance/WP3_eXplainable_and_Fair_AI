@@ -1,0 +1,20 @@
+{
+  "method": "beam_search_unigram_conjunction",
+  "anchors_runtime_seconds": 3255.290807750018,
+  "num_tp_green": 49,
+  "beam_width": 3,
+  "depth_max": 2,
+  "max_feats_per_tweet": 20,
+  "num_applicable_pairs": 1705,
+  "num_perturb_calls": 1705,
+  "num_perturb_texts": 341000,
+  "num_precB_none": 23,
+  "N_PERT": 200,
+  "BATCH_SIZE": 32,
+  "approx_num_batches": 10657,
+  "TAU": 0.95,
+  "num_best_anchors": 40,
+  "anchor_rate_over_tp_green": 0.8163265306122449,
+  "timestamp": "2026-01-29 16:04:29",
+  "coverage_note": "coverage_empirical is APPROX for conjunction via independence product of unigram coverages"
+}
