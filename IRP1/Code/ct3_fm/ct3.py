@@ -9,9 +9,59 @@ from typing import Callable, Dict, List, Tuple, Any
 import numpy as np
 import pandas as pd
 
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class ExperimentSpec:
+    experiment_id: int
+    generator: str
+    intervention_key: str
+
+
+EXPERIMENTS = {
+    1: ExperimentSpec(1, "rw_drift", "mu"),
+    2: ExperimentSpec(2, "ar1", "phi"),
+    3: ExperimentSpec(3, "harmonic", "omega"),
+    4: ExperimentSpec(4, "ar1", "sigma"),
+    5: ExperimentSpec(5, "harmonic", "A"),  # or "amplitude_multiplier" if you prefer
+}
+
+
 
 Run = Dict[str, Any]
 MetricFn = Callable[[Run], float]
+
+# Seed utilities
+
+def get_seed_noise_from_run(run: Run) -> int:
+    cfg = run.get("config", {}) or {}
+    if "seed_noise" in cfg:
+        return int(cfg["seed_noise"])
+
+    meta_seeds = run.get("seeds", {}) or {}
+    if "noise" in meta_seeds:
+        return int(meta_seeds["noise"])
+
+    raise KeyError(f"Run {run.get('run_id')} missing seed_noise in config and seeds.noise in meta.")
+    
+
+def split_runs_by_seed(runs: List[Run]) -> Dict[int, List[Run]]:
+    out: Dict[int, List[Run]] = {}
+    for r in runs:
+        s = get_seed_noise_from_run(r)
+        out.setdefault(s, []).append(r)
+    return out
+
+# Experiment utilities
+
+def iter_experiment_runs(gen_root: Path, *, model_name: str, experiment_id: int) -> List[Run]:
+    run_dirs = iter_runs(gen_root)
+    runs = [load_run(d, model_name=model_name) for d in run_dirs]
+    out = [r for r in runs if int(r["config"].get("experiment_id", -1)) == int(experiment_id)]
+    if not out:
+        raise ValueError(f"No runs found for experiment_id={experiment_id} under {gen_root}")
+    return out
+
 
 
 def iter_runs(gen_root: Path) -> List[Path]:
@@ -72,6 +122,7 @@ def load_run(run_dir: Path, *, model_name: str) -> Run:
         "x": traj["x"],
         "model_name": model_name,
         "preds": preds,  # always present; schema depends on model/task
+        "seeds": meta.get("seeds", {}),
     }
 
     # Optional convenience fields (only if present in preds.npz)
@@ -317,6 +368,108 @@ def ct3_pairwise_table(
 
     return pd.DataFrame.from_records(records)
 
+def ct3_pairwise_table_across_seeds(
+    gen_root: Path,
+    *,
+    intervention_key: str,
+    model_name: str,
+    metric_fn: MetricFn,
+) -> pd.DataFrame:
+    run_dirs = iter_runs(gen_root)
+    runs = [load_run(d, model_name=model_name) for d in run_dirs]
+
+    by_seed = split_runs_by_seed(runs)
+
+    per_seed_rows = []
+    for seed, seed_runs in sorted(by_seed.items()):
+        m = compute_scalar_by_theta(seed_runs, intervention_key=intervention_key, metric_fn=metric_fn)
+
+        thetas = sorted(m.keys())
+        for theta, theta_prime in itertools.product(thetas, thetas):
+            if theta == theta_prime:
+                continue
+            delta = m[theta_prime] - m[theta]
+            per_seed_rows.append(
+                {
+                    intervention_key: float(theta),
+                    f"{intervention_key}_prime": float(theta_prime),
+                    "seed_noise": int(seed),
+                    "ct3_signed": float(delta),
+                    "ct3_abs": float(abs(delta)),
+                    "m_theta": float(m[theta]),
+                    "m_theta_prime": float(m[theta_prime]),
+                }
+            )
+
+    df = pd.DataFrame.from_records(per_seed_rows)
+
+    grp_cols = [intervention_key, f"{intervention_key}_prime"]
+    agg = (
+        df.groupby(grp_cols, as_index=False)
+          .agg(
+              ct3_signed_mean=("ct3_signed", "mean"),
+              ct3_signed_std=("ct3_signed", "std"),
+              ct3_abs_mean=("ct3_abs", "mean"),
+              ct3_abs_std=("ct3_abs", "std"),
+              n_seeds=("seed_noise", "nunique"),
+          )
+    )
+    return agg
+
+
+def ct3_pairwise_table_by_experiment_across_seeds(
+    gen_root: Path,
+    *,
+    experiment_id: int,
+    model_name: str,
+    metric_fn: MetricFn,
+    intervention_key: str | None = None,  # optional override
+) -> pd.DataFrame:
+    runs = iter_experiment_runs(gen_root, model_name=model_name, experiment_id=experiment_id)
+
+    # Determine which parameter is "theta"
+    if intervention_key is None:
+        intervention_key = EXPERIMENTS[experiment_id].intervention_key
+
+    by_seed = split_runs_by_seed(runs)
+
+    per_seed_rows = []
+    for seed, seed_runs in sorted(by_seed.items()):
+        # strict uniqueness: one theta per seed per experiment
+        m = compute_scalar_by_theta(seed_runs, intervention_key=intervention_key, metric_fn=metric_fn)
+        thetas = sorted(m.keys())
+
+        for theta, theta_prime in itertools.product(thetas, thetas):
+            if theta == theta_prime:
+                continue
+            delta = m[theta_prime] - m[theta]
+            per_seed_rows.append(
+                {
+                    "experiment_id": int(experiment_id),
+                    intervention_key: float(theta),
+                    f"{intervention_key}_prime": float(theta_prime),
+                    "seed_noise": int(seed),
+                    "ct3_signed": float(delta),
+                    "ct3_abs": float(abs(delta)),
+                }
+            )
+
+    df = pd.DataFrame.from_records(per_seed_rows)
+
+    grp_cols = ["experiment_id", intervention_key, f"{intervention_key}_prime"]
+    agg = (
+        df.groupby(grp_cols, as_index=False)
+          .agg(
+              ct3_signed_mean=("ct3_signed", "mean"),
+              ct3_signed_std=("ct3_signed", "std"),
+              ct3_abs_mean=("ct3_abs", "mean"),
+              ct3_abs_std=("ct3_abs", "std"),
+              n_seeds=("seed_noise", "nunique"),
+          )
+    )
+    return agg
+
+
 
 
 
@@ -369,14 +522,198 @@ def ct3_harmonic_wasserstein_table(
     return pd.DataFrame.from_records(records)
 
 
+def ct3_harmonic_wasserstein_table_across_seeds(
+    gen_root: Path,
+    *,
+    intervention_key: str = "omega",
+    model_name: str,
+    quantile: float = 0.5,
+    dt: float = 1.0,
+    nfft: int | None = None,
+) -> pd.DataFrame:
+    run_dirs = iter_runs(gen_root)
+    runs = [load_run(d, model_name=model_name) for d in run_dirs]
+
+    by_seed = split_runs_by_seed(runs)
+
+    rows = []
+    for seed, seed_runs in sorted(by_seed.items()):
+        spectra: Dict[float, Tuple[np.ndarray, np.ndarray]] = {}
+
+        for r in seed_runs:
+            theta = float(r["config"][intervention_key])
+            if theta in spectra:
+                raise ValueError(f"Duplicate theta={theta} within seed={seed}; expected one run per theta.")
+            f, P = harmonic_run_spectrum_from_predictions(r, quantile=quantile, dt=dt, nfft=nfft)
+            spectra[theta] = (f, P)
+
+        thetas = sorted(spectra.keys())
+        for theta, theta_prime in itertools.product(thetas, thetas):
+            if theta == theta_prime:
+                continue
+            f, P = spectra[theta]
+            f2, Q = spectra[theta_prime]
+
+            if len(f) != len(f2) or np.max(np.abs(f - f2)) > 1e-12:
+                raise RuntimeError("Frequency grids differ between runs; fix nfft/dt.")
+
+            W = wasserstein_1d_from_spectra(f, P, Q)
+            rows.append(
+                {
+                    intervention_key: float(theta),
+                    f"{intervention_key}_prime": float(theta_prime),
+                    "seed_noise": int(seed),
+                    "ct3_abs": float(W),
+                }
+            )
+
+    df = pd.DataFrame.from_records(rows)
+    grp_cols = [intervention_key, f"{intervention_key}_prime"]
+    agg = (
+        df.groupby(grp_cols, as_index=False)
+          .agg(
+              ct3_abs_mean=("ct3_abs", "mean"),
+              ct3_abs_std=("ct3_abs", "std"),
+              n_seeds=("seed_noise", "nunique"),
+          )
+    )
+    return agg
+
+
+def ct3_harmonic_wasserstein_by_experiment_across_seeds(
+    gen_root: Path,
+    *,
+    experiment_id: int,
+    model_name: str,
+    intervention_key: str | None = None,
+    quantile: float = 0.5,
+    dt: float = 1.0,
+    nfft: int | None = None,
+) -> pd.DataFrame:
+    runs = iter_experiment_runs(gen_root, model_name=model_name, experiment_id=experiment_id)
+
+    if intervention_key is None:
+        intervention_key = EXPERIMENTS[experiment_id].intervention_key
+
+    by_seed = split_runs_by_seed(runs)
+
+    rows = []
+    for seed, seed_runs in sorted(by_seed.items()):
+        spectra: Dict[float, Tuple[np.ndarray, np.ndarray]] = {}
+
+        for r in seed_runs:
+            theta = float(r["config"][intervention_key])
+            if theta in spectra:
+                raise ValueError(f"Duplicate theta={theta} within seed={seed} exp={experiment_id}")
+            f, P = harmonic_run_spectrum_from_predictions(r, quantile=quantile, dt=dt, nfft=nfft)
+            spectra[theta] = (f, P)
+
+        thetas = sorted(spectra.keys())
+        for theta, theta_prime in itertools.product(thetas, thetas):
+            if theta == theta_prime:
+                continue
+            f, P = spectra[theta]
+            f2, Q = spectra[theta_prime]
+            if len(f) != len(f2) or np.max(np.abs(f - f2)) > 1e-12:
+                raise RuntimeError("Frequency grids differ; fix nfft/dt.")
+
+            W = wasserstein_1d_from_spectra(f, P, Q)
+            rows.append(
+                {
+                    "experiment_id": int(experiment_id),
+                    intervention_key: float(theta),
+                    f"{intervention_key}_prime": float(theta_prime),
+                    "seed_noise": int(seed),
+                    "ct3_abs": float(W),
+                }
+            )
+
+    df = pd.DataFrame.from_records(rows)
+    grp_cols = ["experiment_id", intervention_key, f"{intervention_key}_prime"]
+    agg = (
+        df.groupby(grp_cols, as_index=False)
+          .agg(
+              ct3_abs_mean=("ct3_abs", "mean"),
+              ct3_abs_std=("ct3_abs", "std"),
+              n_seeds=("seed_noise", "nunique"),
+          )
+    )
+    return agg
+
+
+def ct3_harmonic_wasserstein_by_experiment_across_seeds(
+    gen_root: Path,
+    *,
+    experiment_id: int,
+    model_name: str,
+    intervention_key: str | None = None,
+    quantile: float = 0.5,
+    dt: float = 1.0,
+    nfft: int | None = None,
+) -> pd.DataFrame:
+    runs = iter_experiment_runs(gen_root, model_name=model_name, experiment_id=experiment_id)
+
+    if intervention_key is None:
+        intervention_key = EXPERIMENTS[experiment_id].intervention_key
+
+    by_seed = split_runs_by_seed(runs)
+
+    rows = []
+    for seed, seed_runs in sorted(by_seed.items()):
+        spectra: Dict[float, Tuple[np.ndarray, np.ndarray]] = {}
+
+        for r in seed_runs:
+            theta = float(r["config"][intervention_key])
+            if theta in spectra:
+                raise ValueError(f"Duplicate theta={theta} within seed={seed} exp={experiment_id}")
+            f, P = harmonic_run_spectrum_from_predictions(r, quantile=quantile, dt=dt, nfft=nfft)
+            spectra[theta] = (f, P)
+
+        thetas = sorted(spectra.keys())
+        for theta, theta_prime in itertools.product(thetas, thetas):
+            if theta == theta_prime:
+                continue
+            f, P = spectra[theta]
+            f2, Q = spectra[theta_prime]
+            if len(f) != len(f2) or np.max(np.abs(f - f2)) > 1e-12:
+                raise RuntimeError("Frequency grids differ; fix nfft/dt.")
+
+            W = wasserstein_1d_from_spectra(f, P, Q)
+            rows.append(
+                {
+                    "experiment_id": int(experiment_id),
+                    intervention_key: float(theta),
+                    f"{intervention_key}_prime": float(theta_prime),
+                    "seed_noise": int(seed),
+                    "ct3_abs": float(W),
+                }
+            )
+
+    df = pd.DataFrame.from_records(rows)
+    grp_cols = ["experiment_id", intervention_key, f"{intervention_key}_prime"]
+    agg = (
+        df.groupby(grp_cols, as_index=False)
+          .agg(
+              ct3_abs_mean=("ct3_abs", "mean"),
+              ct3_abs_std=("ct3_abs", "std"),
+              n_seeds=("seed_noise", "nunique"),
+          )
+    )
+    return agg
+
+
+
+
+
 
 # -----------------------
-# Optional: convenience runner
+# Runner
 # -----------------------
 
 def run_rw_ct3_and_save(
     gen_root: Path,
     *,
+    exp_id: int,
     intervention_key: str,
     model_name: str,
     out_path: Path | None = None,
@@ -388,7 +725,16 @@ def run_rw_ct3_and_save(
         return pd.read_csv(out_path)
     
     metric_fn = metric_prob_positive_forecast if metric_name == "prob_pos_forecast" else metric_mean_forecast
-    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, model_name=model_name, metric_fn=metric_fn)
+    
+    df = ct3_pairwise_table_by_experiment_across_seeds(
+        gen_root, 
+        experiment_id=exp_id,
+        intervention_key=intervention_key, 
+        model_name=model_name, 
+        metric_fn=metric_fn
+        )
+    
+
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(out_path, index=False)
@@ -398,6 +744,7 @@ def run_rw_ct3_and_save(
 def run_ar1_ct3_and_save(
     gen_root: Path,
     *,
+    exp_id: int,
     intervention_key: str = "phi",
     model_name: str,
     out_path: Path | None = None,
@@ -423,7 +770,13 @@ def run_ar1_ct3_and_save(
     else:
         raise ValueError("metric_name must be 'beta_hat_model' or 'mean_forecast'")
 
-    df = ct3_pairwise_table(gen_root, intervention_key=intervention_key, model_name=model_name, metric_fn=metric_fn)
+    df = ct3_pairwise_table_by_experiment_across_seeds(
+        gen_root, 
+        experiment_id=exp_id,
+        intervention_key=intervention_key,
+        model_name=model_name,
+        metric_fn=metric_fn
+    )
 
     if out_path is not None:
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -434,6 +787,7 @@ def run_ar1_ct3_and_save(
 def run_harmonic_ct3_and_save(
     gen_root: Path,
     *,
+    exp_id: int,
     intervention_key: str = "omega",
     model_name: str,
     out_path: Path | None = None,
@@ -445,8 +799,9 @@ def run_harmonic_ct3_and_save(
         print(f"{out_path}: CT3 output already exists, skipping...")
         return pd.read_csv(out_path)
 
-    df = ct3_harmonic_wasserstein_table(
+    df = ct3_harmonic_wasserstein_by_experiment_across_seeds(
         gen_root,
+        experiment_id=exp_id,
         intervention_key=intervention_key,
         model_name=model_name,
         quantile=quantile,

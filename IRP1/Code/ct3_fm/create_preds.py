@@ -32,7 +32,7 @@ def run_chronos_over_rw(
         run_id = run_dir.name
 
         pred_dir = run_dir / "predictions/chronos"
-        pred_dir.mkdir(exist_ok=True)
+        pred_dir.mkdir(parents=True, exist_ok=True)
 
         pred_file = pred_dir / "chronos2_rolling_1step.npz"
         meta_file = pred_dir / "chronos2_rolling_1step_meta.json"
@@ -95,7 +95,7 @@ def run_chronos_over_ar1(
         run_id = run_dir.name
 
         pred_dir = run_dir / "predictions/chronos"
-        pred_dir.mkdir(exist_ok=True)
+        pred_dir.mkdir(parents=True, exist_ok=True)
 
         # ✅ skip if predictions already exist
         npz_files = list(pred_dir.glob("*.npz"))
@@ -152,7 +152,7 @@ def run_chronos_over_harmonic(
         run_id = run_dir.name
 
         pred_dir = run_dir / "predictions/chronos"
-        pred_dir.mkdir(exist_ok=True)
+        pred_dir.mkdir(parents=True, exist_ok=True)
 
         pred_file = pred_dir / "chronos2_harmonic_multistep.npz"
         meta_file = pred_dir / "chronos2_harmonic_multistep_meta.json"
@@ -388,6 +388,9 @@ def run_timesfm_over_harmonic(
 
 
 
+
+
+
 if __name__ == "__main__":
 
     # Chronos block
@@ -492,7 +495,8 @@ if __name__ == "__main__":
     step_size=1,
     series_key="x",
     )
+
     print("Harmonic Oscillator completed.")
     print("TimesFM predictions completed.")
+    print("All predictions completed.")
 
-    # Moirai block
