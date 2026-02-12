@@ -204,7 +204,18 @@ def run_chronos_over_solar(
     quantile_levels: tuple[float, ...] = (0.5,),
 ):
     
+    
+
+    # skip if predictions already exist
+    sum_pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_summer.npz"
+    win_pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_winter.npz"
+
+    if sum_pred_file.exists() and win_pred_file.exists():
+        print(f"Predictions already exist for solar data, skipping...")
+        return
+    
     print(f"Processing solar data from {file}...")
+    
     summer_traj = np.load(file)['summer']
     winter = np.load(file)['winter']
 
@@ -269,6 +280,63 @@ def run_chronos_over_solar(
     print(f"Chronos predictions for solar data completed. Saved to {sum_pred_file} and {win_pred_file}.")
 
 
+
+def run_chronos_over_cpi(
+    pipeline,
+    file: Path,
+    *,
+    series_key: str = "x",
+    window_length: int = 50,
+    prediction_length: int = 1,
+    step_size: int = 1,
+    quantile_levels: tuple[float, ...] = (0.5,),
+):
+    
+
+    # skip if predictions already exist
+    pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_cpi.npz"
+    if pred_file.exists():
+        print(f"Predictions already exist for CPI data, skipping...")
+        return
+    
+    print(f"Processing CPI data from {file}...")
+
+
+    traj = np.load(file)['trajectory']
+
+    print(f"Running Chronos singlestep forecast on CPI trajectory...")
+
+    out = chronos_harmonic_multistep_forecast(
+        pipeline,
+        traj,
+        run_id="cpi",
+        window_length=window_length,
+        prediction_length=prediction_length,
+        step_size=step_size,
+        quantile_levels=quantile_levels,
+    )
+
+    pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_cpi.npz"
+
+    os.makedirs(os.path.dirname(pred_file), exist_ok=True)
+    np.savez_compressed(pred_file, **out)
+
+    meta = {
+        "model": "amazon/chronos-2",
+        "task": "cpi_singlestep",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    meta_file = Path(file).parent / "predictions" / "chronos" / "chronos2_cpi_meta.json"
+    meta_file.write_text(json.dumps(meta, indent=2, sort_keys=True))
+
+    print(f"Chronos predictions for CPI data completed. Saved to {pred_file}.")
+
+
 if __name__ == "__main__":
 
     # Chronos block
@@ -313,7 +381,17 @@ if __name__ == "__main__":
         prediction_length=200,
         step_size=1,
         quantile_levels=(0.5,),
-    )   
+    )
+
+    run_chronos_over_cpi(
+        pipeline,
+        Path("data/cpi_trajectory.npz"),
+        series_key="x",
+        window_length=50,
+        prediction_length=1,
+        step_size=1,
+        quantile_levels=(0.5,),
+    )
 
     print("Chronos predictions completed.")
 

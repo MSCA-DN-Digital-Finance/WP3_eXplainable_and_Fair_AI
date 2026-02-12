@@ -243,6 +243,14 @@ def run_timesfm_over_solar(
     quantile_levels: tuple[float, ...] = (0.5,),
 ):
     
+    # skip if predictions already exist
+    sum_pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_summer.npz"
+    win_pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_winter.npz"
+
+    if sum_pred_file.exists() and win_pred_file.exists():
+        print(f"Predictions already exist for solar data, skipping...")
+        return
+    
     print(f"Processing solar data from {file}...")
     summer_traj = np.load(file)['summer']
     winter_traj = np.load(file)['winter']
@@ -304,7 +312,58 @@ def run_timesfm_over_solar(
     print(f"TimesFM predictions for solar data completed. Saved to {sum_pred_file} and {win_pred_file}.")
 
 
+def run_timesfm_over_cpi(
+    model,
+    file: Path,
+    *,
+    series_key: str = "x",
+    window_length: int = 100,
+    prediction_length: int = 200,
+    step_size: int = 1,
+    quantile_levels: tuple[float, ...] = (0.5,),
+):
+    
+    
 
+    # skip if predictions already exist
+    pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_cpi.npz"
+    if pred_file.exists():
+        print(f"Predictions already exist for CPI data, skipping...")
+        return
+
+    print(f"Processing CPI data from {file}...")
+    
+    traj = np.load(file)['trajectory']
+
+    print(f"Running TimesFM single-step forecast on CPI trajectory...")
+
+    out = timesfm_harmonic_multistep_forecast(
+            model,
+            traj,
+            window_length=window_length,
+            prediction_length=prediction_length,
+            step_size=step_size,
+        )
+
+    pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_cpi.npz"
+
+    os.makedirs(os.path.dirname(pred_file), exist_ok=True)
+    np.savez_compressed(pred_file, **out)
+
+    meta = {
+        "model": "google/timesfm-2.5-200m-pytorch",
+        "task": "cpi_single_step",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    meta_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_cpi_meta.json"
+    meta_file.write_text(json.dumps(meta, indent=2, sort_keys=True))
+
+    print(f"TimesFM predictions for CPI data completed. Saved to {pred_file}.")
 
 if __name__ == "__main__":
 
@@ -389,6 +448,19 @@ if __name__ == "__main__":
         quantile_levels=(0.5,),
     )
     print("Solar Trajectories completed.")
+
+    print("CPI Trajectory:")
+    run_timesfm_over_cpi(
+        timesfm_multistep,
+        Path("data/cpi_trajectory.npz"),
+        series_key="x",
+        window_length=50,
+        prediction_length=1,
+        step_size=1,
+        quantile_levels=(0.5,),
+    )
+    print("CPI Trajectory completed.")
+
     print("TimesFM predictions completed.")
     print("All predictions completed.")
 
