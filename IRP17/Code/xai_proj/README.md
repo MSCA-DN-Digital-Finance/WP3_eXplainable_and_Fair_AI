@@ -1,6 +1,6 @@
 # Candidate-Driven Anchors for Green Claim Detection
 
-This repository contains the implementation and experiments for a PhD-level course assignment on **Explainable Artificial Intelligence (XAI)**, focusing on the **Anchors** explanation method applied to transformer-based text classification.
+This repository contains the implementation and experiments for the PhD-level MSCA course assignment on **Explainable Artificial Intelligence (XAI)**, focusing on the **Anchors** explanation method applied to transformer-based text classification.
 
 The project investigates a key limitation of Anchors—**high computational cost**—and proposes a **candidate-driven anchor search strategy** that substantially reduces runtime while preserving explanation quality. The approach is evaluated on a green marketing claim detection task using a fine-tuned DistilBERT model.
 
@@ -184,5 +184,5 @@ python 07_compare_anchor_methods.py
 
 ## License
 
-This project is developed for **educational and research purposes** as part of a PhD-level course assignment on Explainable Artificial Intelligence.  
+This project is developed for **educational and research purposes** as part of a PhD-level MSCA course assignment on Explainable Artificial Intelligence.  
 The dataset is subject to the original authors’ license and should be cited accordingly.
