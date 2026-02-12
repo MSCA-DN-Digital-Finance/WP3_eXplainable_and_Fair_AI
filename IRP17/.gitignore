@@ -33,5 +33,9 @@ Code/sectoral-decarbonisation/cache/
 Code/sectoral-decarbonisation/results/*
 
 # Keep the folder itself
-!Code/sectoral-decarbonisation/results
-/
+!Code/sectoral-decarbonisation/results/
+
+Code/green_finance/*
+
+Code/agentic_ai_rbi_project/*
+
