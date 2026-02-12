@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -192,6 +193,81 @@ def run_chronos_over_harmonic(
         print(f"{gen_root.name}/{run_id}: saved {out['yhat_q'].shape[0]} windows")
 
 
+def run_chronos_over_solar(
+    pipeline,
+    file: Path,
+    *,
+    series_key: str = "x",
+    window_length: int = 100,
+    prediction_length: int = 200,
+    step_size: int = 1,
+    quantile_levels: tuple[float, ...] = (0.5,),
+):
+    
+    print(f"Processing solar data from {file}...")
+    summer_traj = np.load(file)['summer']
+    winter = np.load(file)['winter']
+
+    print(f"Running Chronos multistep forecast on solar summer trajectory...")
+
+    summer_out = chronos_harmonic_multistep_forecast(
+        pipeline,
+        summer_traj,
+        run_id="summer",
+        window_length=window_length,
+        prediction_length=prediction_length,
+        step_size=step_size,
+        quantile_levels=quantile_levels,
+    )
+
+    sum_pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_summer.npz"
+
+    os.makedirs(os.path.dirname(sum_pred_file), exist_ok=True)
+    np.savez_compressed(sum_pred_file, **summer_out)
+
+    summer_meta = {
+        "model": "amazon/chronos-2",
+        "task": "harmonic_multistep",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    summer_meta_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_summer_meta.json"
+    summer_meta_file.write_text(json.dumps(summer_meta, indent=2, sort_keys=True))
+
+    print(f"Running Chronos multistep forecast on solar winter trajectory...")
+
+    winter_out = chronos_harmonic_multistep_forecast(
+        pipeline,
+        winter,
+        run_id="winter",
+        window_length=window_length,
+        prediction_length=prediction_length,
+        step_size=step_size,
+        quantile_levels=quantile_levels,
+    )
+    win_pred_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_winter.npz"
+    os.makedirs(os.path.dirname(win_pred_file), exist_ok=True)
+    np.savez_compressed(win_pred_file, **winter_out)
+
+    winter_meta = {
+        "model": "amazon/chronos-2",
+        "task": "harmonic_multistep",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    win_meta_file = Path(file).parent / "predictions" / "chronos" / "chronos2_solar_winter_meta.json"
+    win_meta_file.write_text(json.dumps(winter_meta, indent=2, sort_keys=True))
+
+    print(f"Chronos predictions for solar data completed. Saved to {sum_pred_file} and {win_pred_file}.")
+
 
 if __name__ == "__main__":
 
@@ -228,6 +304,16 @@ if __name__ == "__main__":
     series_key="x",
     quantile_levels=(0.5,),
     )
+
+    run_chronos_over_solar(
+        pipeline,
+        Path("data/solar_summer_winter.npz"),
+        series_key="x",
+        window_length=100,
+        prediction_length=200,
+        step_size=1,
+        quantile_levels=(0.5,),
+    )   
 
     print("Chronos predictions completed.")
 

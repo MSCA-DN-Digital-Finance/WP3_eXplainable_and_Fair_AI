@@ -38,7 +38,6 @@ def save_run(run_dir: Path, traj: Dict[str, Any], config: Dict[str, Any]) -> Non
 
     # Save arrays in compressed npz
     arrays = {
-        "signal": np.asarray(traj["signal"], dtype=float),
         "noise": np.asarray(traj["noise"], dtype=float),
     }
     if "x" in traj:
@@ -239,7 +238,7 @@ def filter_kwargs_for_fn(fn, cfg: Dict[str, Any]) -> Dict[str, Any]:
 def run_sweep(out_root: Path) -> None:
     ensure_dir(out_root)
 
-    sweep = build_sweep()
+    sweep = build_sweep(n_seeds=10)
     print(f"Planned runs: {len(sweep)}")
 
     for cfg in sweep:

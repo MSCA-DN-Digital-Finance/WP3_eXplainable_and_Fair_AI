@@ -84,9 +84,8 @@ def ar1_with_noise(
 ) -> Dict[str, Any]:
     """
     AR(1) (deterministic recursion) + independent noise:
-        signal: s_{t+1} = c + phi * s_t
         noise:  eps_t ~ N(0, sigma^2)
-        x_t = s_t + eps_t
+        x_t = c + phi * x_t + eps_t
 
     Again: all randomness is in the separate noise trajectory.
     """
@@ -98,10 +97,7 @@ def ar1_with_noise(
     if sigma < 0:
         raise ValueError("sigma must be >= 0.")
 
-    signal = np.empty(T, dtype=float)
-    signal[0] = float(x0)
-    for t in range(T - 1):
-        signal[t + 1] = float(c) + float(phi) * signal[t]
+    
 
     noise = gaussian_noise(T=T, sigma=sigma, seed=seed_noise)
 
@@ -110,11 +106,14 @@ def ar1_with_noise(
         "T": int(T),
         "params": {"x0": float(x0), "phi": float(phi), "c": float(c), "sigma": float(sigma)},
         "seeds": {"noise": int(seed_noise)},
-        "signal": signal,
         "noise": noise,
     }
     if return_x:
-        out["x"] = (signal + noise).astype(float)
+        x = np.empty(T, dtype=float)
+        x[0] = float(x0)
+        for t in range(T - 1):
+            x[t + 1] = float(c) + float(phi) * x[t] + noise[t]
+        out["x"] = x.astype(float)
     return out
 
 

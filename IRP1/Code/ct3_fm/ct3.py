@@ -117,7 +117,6 @@ def load_run(run_dir: Path, *, model_name: str) -> Run:
         "generator": cfg.get("generator", meta.get("generator")),
         "T": cfg.get("T", meta.get("T")),
         "config": cfg,
-        "signal": traj["signal"],
         "noise": traj["noise"],
         "x": traj["x"],
         "model_name": model_name,
@@ -183,7 +182,6 @@ def metric_beta_hat_model(run: Run, eps: float = 1e-12) -> float:
 
     return float(np.dot(x_t, yhat) / denom)
 
-import numpy as np
 
 def power_spectrum(x, dt=1.0, detrend=True, window=True, normalize=True, nfft=None):
     x = np.asarray(x, float)

@@ -28,3 +28,12 @@ artifacts/ct3/*.csv
 
 Each stage can be re-run independently without recomputing previous stages.
 
+
+
+How to get started:
+
+- install ct3-core conda env
+- open vs code with code .
+- in powershell execute ./run_all or .run_all -Setup to install other conda envs for chronos and timesfm inference
+
+

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -231,9 +232,76 @@ def run_timesfm_over_harmonic(
 
         print(f"{gen_root.name}/{run_id}: saved {out['yhat'].shape[0]} windows")
 
+def run_timesfm_over_solar(
+    model,
+    file: Path,
+    *,
+    series_key: str = "x",
+    window_length: int = 100,
+    prediction_length: int = 200,
+    step_size: int = 1,
+    quantile_levels: tuple[float, ...] = (0.5,),
+):
+    
+    print(f"Processing solar data from {file}...")
+    summer_traj = np.load(file)['summer']
+    winter_traj = np.load(file)['winter']
 
+    print(f"Running TimesFM multistep forecast on solar summer trajectory...")
 
+    summer_out = timesfm_harmonic_multistep_forecast(
+            model,
+            summer_traj,
+            window_length=window_length,
+            prediction_length=prediction_length,
+            step_size=step_size,
+        )
 
+    sum_pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_summer.npz"
+
+    os.makedirs(os.path.dirname(sum_pred_file), exist_ok=True)
+    np.savez_compressed(sum_pred_file, **summer_out)
+
+    summer_meta = {
+        "model": "google/timesfm-2.5-200m-pytorch",
+        "task": "solar_multistep",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    summer_meta_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_summer_meta.json"
+    summer_meta_file.write_text(json.dumps(summer_meta, indent=2, sort_keys=True))
+
+    print(f"Running TimesFM multistep forecast on solar winter trajectory...")
+
+    winter_out = timesfm_harmonic_multistep_forecast(
+            model,
+            winter_traj,
+            window_length=window_length,
+            prediction_length=prediction_length,
+            step_size=step_size,
+        )
+    win_pred_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_winter.npz"
+    os.makedirs(os.path.dirname(win_pred_file), exist_ok=True)
+    np.savez_compressed(win_pred_file, **winter_out)
+
+    winter_meta = {
+        "model": "google/timesfm-2.5-200m-pytorch",
+        "task": "solar_multistep",
+        "series_key": series_key,
+        "window_length": window_length,
+        "prediction_length": prediction_length,
+        "step_size": step_size,
+        "quantile_levels": list(quantile_levels),
+        "alignment": "yhat_q[w, h, q] predicts x[window_end[w] + 1 + h]",
+    }
+    win_meta_file = Path(file).parent / "predictions" / "timesfm" / "timesfm_solar_winter_meta.json"
+    win_meta_file.write_text(json.dumps(winter_meta, indent=2, sort_keys=True))
+
+    print(f"TimesFM predictions for solar data completed. Saved to {sum_pred_file} and {win_pred_file}.")
 
 
 
@@ -309,6 +377,18 @@ if __name__ == "__main__":
     )
 
     print("Harmonic Oscillator completed.")
+
+    print("Solar Trajectories:")
+    run_timesfm_over_solar(
+        timesfm_multistep,
+        Path("data/solar_summer_winter.npz"),
+        series_key="x",
+        window_length=100,
+        prediction_length=200,
+        step_size=1,
+        quantile_levels=(0.5,),
+    )
+    print("Solar Trajectories completed.")
     print("TimesFM predictions completed.")
     print("All predictions completed.")
 
