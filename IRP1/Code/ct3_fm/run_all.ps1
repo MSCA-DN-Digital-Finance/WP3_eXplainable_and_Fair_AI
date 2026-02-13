@@ -39,6 +39,8 @@ function Run-Step {
 }
 
 Run-Step "Creating trajectories..."       "ct3-core"  "create_trajs.py"
+Run-Step "Creating solar trajectories..." "ct3-core"  "create_solar_trajs.py"
+Run-Step "Creating CPI trajectorys..."   "ct3-core"  "create_cpi_trajs.py"
 Run-Step "Running TimesFM predictions..." "timesfm"   "create_preds_timesfm.py"
 Run-Step "Running Chronos predictions..." "chronos"   "create_preds_chronos.py"
 Run-Step "Computing CT3 metrics..."       "ct3-core"  "create_ct3_metrics.py"
