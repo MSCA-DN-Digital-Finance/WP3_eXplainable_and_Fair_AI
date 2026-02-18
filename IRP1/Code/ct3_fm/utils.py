@@ -1,6 +1,7 @@
 # file holding generic utility functions used across codebase
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 # function to calculate  wasserstein distance from 1D grid
 def wasserstein_1d_on_grid(f, P, Q):
@@ -79,4 +80,43 @@ def calculate_mae(file_path, season='summer'):
 
 
     return maes
+
+# function to calculate wasserstein distance from file
+def calculate_wasserstein(file_path, season='summer'):
+    
+    data = np.load(file_path)
+    traj = np.load('data/solar_summer_winter.npz')[season]
+    if 'chronos' in file_path:
+        preds = data['yhat_q']
+    else:
+        preds = data['yhat']
+    window_starts = data['window_start']
+    window_ends = data['window_end']
+
+    wasserstein_distances = []
+
+    for i in range(len(window_starts)):
+
+        if 'chronos' in file_path:
+            pred = preds[i, :, :]
+        else:
+            pred = preds[i, :]
+        target = traj[window_ends[i]:window_ends[i]+pred.shape[0]]
+        try:
+            f_pred, P_pred = power_spectrum_1s(pred.flatten())
+            f_target, P_target = power_spectrum_1s(target.flatten())
+            wasserstein_distance = wasserstein_1d_on_grid(f_target, P_target, P_pred)
+            wasserstein_distances.append(wasserstein_distance)
+        except ValueError:
+            print(f"Error calculating Wasserstein distance for iteration {i}")
+            continue
+        
+
+    plt.hist(wasserstein_distances, bins=20)
+
+    return wasserstein_distances
+
+
+
+
         
