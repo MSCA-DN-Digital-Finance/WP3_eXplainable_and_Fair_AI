@@ -1,0 +1,332 @@
+INTERVIEWER 1 00:00
+
+So first, can you briefly describe your role at your bank or previously, because I know you're going to Europe also for your studies.
+
+PARTICIPANT 00:12
+
+Yes, yeah. So I recently resigned just about a month ago. But before that, I've been with [the bank] for around two years. Up until 2024, I was working mostly as a data scientist. And then in 2025, I moved more into AI product management. So as a data scientist, I focused more on sort of hyper-personalization efforts of the bank. So that includes a lot of marketing-related use cases, or even alternative credit scoring use cases as a data scientist. And then as an AI product manager, well, we explored a lot of POCs related to LLMs, Gen AI, Agentic AI, and it spanned a lot of different departments within the bank. So it was quite varied, the use cases that I explored there.
+
+INTERVIEWER 1 01:21
+
+Okay, can you just clarify POC?
+
+PARTICIPANT 01:25
+
+Sorry, proof of concepts.
+
+INTERVIEWER 1 01:27
+
+Okay, thanks. And your background before doing data science, did you major in finance or what was your training in finance, if any?
+
+PARTICIPANT 01:38
+
+So I came from a statistics background, but I had a lot of courses in economics, econometrics, and then I took formal data science training on the job when I started.
+
+INTERVIEWER 2 01:55
+
+So no finance background at all?
+
+PARTICIPANT 01:58
+
+Not directly, no.
+
+INTERVIEWER 2 01:59
+
+Okay, cool.
+
+INTERVIEWER 1 02:00
+
+Okay. So based on the products that you mentioned, which AI tools or systems you mostly interacted with? You mentioned something like credit scoring, like which of these tools employ, like machine learning, predictions, and maybe you can expound on hyper-personalization, what does this mean?
+
+PARTICIPANT 02:31
+
+Yeah, OK, sure. I can, if I can, I can take my time on this. I can go through it a little bit more in depth, especially related to explainable AI.
+
+So I'll start with the alternative credit scoring, because one of my major projects, this was the first time that the bank wanted to explore credit scoring using more than just their traditional credit scoring model, which used a lot of the sort of, I guess, intuitive or more simple variables in terms of filtering clients for their credit risk. And it was usually a model that applied to credit cards and loans mainly. It wasn't something that other units could use, but mainly just for the credit card and loans people to usually help find clients to help pre-approve, essentially, applications in advance.
+
+So what we did in the data science team was we used machine learning, particularly, I think, we used, I think, an LGBM, a light GBM, or an XGBoost model in machine learning, to help us create a model based on data in the bank that wasn't all necessarily related to credit. And obviously, it was for clients that didn't directly have credit history. It was focused on applying machine learning models to clients who want to apply for a credit card, but we had no other way to assess them.
+
+So it used a lot of variables, which included like their use of our app, [the bank] app at that time. We also had a lot of ATM data. Well, they had personal loans data that also helped. What else? There were POS, so debit card transactions, even non-financial movements in the app, for example, like simply just logging in. So those were the sort of things we also looked into to sort of create a credit score for the client. And the basis was really clients who were obtained based on an external score.
+
+So we would get usually a score from [an alternative credit scoring company], and that's how they usually pre-approved their clients. And so we tested to see based on clients that were acquired from that score, how their probability of default sort of came about. And that was our target variable. So using that target variable and all the different explanatory variables I shared, we were able to create a[n] alternative credit scoring model, which ended up going through a lot of risk validation, especially with the risk management office, risk model validation. And I think now, although I'm not sure, but when I left, they were ready to present it again, because we had to remodel it after a bit. But after remodeling, it would be presented to the [Central Bank] for approval. So that's about how far it went. Yes, go ahead.
+
+INTERVIEWER 2 06:07
+
+All these variables, which were kind of non-standard, were suggested by you and your team, or did you allow an algorithm also to discover variables that might be explanatory?
+
+PARTICIPANT 06:21
+
+Yeah, so we used a mix of both. So the very, very first run, we just allowed a selection algorithm to sort of go about it. But then when we presented it, that's one of the reasons that they said we had to remodel is because they didn't want it completely by the algorithm. So when we did remodel it again, we brought in experts from their team. And also at the same time, we sort of created our own methodology. So it's very similar to forward-backward selection in terms of machine learning. But we modified it in such a way that it's a healthy balance between minimizing error but then also getting features that have the higher explainability. So it ended up being a mix of automated selection to an extent, and then both filtering with those with experience.
+
+INTERVIEWER 2 07:22
+
+But what exactly did you did with the variables that were suggested by the machine? So maybe it suggested, for example, I don't know whether the person is married or not married as an explanatory variable. So you cannot see the reason behind this variable, but it might be explanatory. So what did you do with this variable, these kinds?
+
+PARTICIPANT 07:47
+
+Yeah, so when we got our results from model selection, we would present it to, first, the credit card or the unsecured lending team. And based on their experience, they had other models for different purposes, but also using alternative data. So they were able to validate if it did make sense with their other models, even if the variable was a slight variation. So for example, there was a variable that's common for a lot of credit scoring, which is if they had any delinquency with any payment. So let's say it was, let's say, credit card payment, but with another bank. So we can see that in our app. They would just flag, OK, did you have one? Yes, yes or no. So that was the normal variable that they knew of. But then we expanded it to, for example, how many times they were delinquent. What was their worst delinquency? What's their most common delinquency? So they were adjacent variables that, when we showed it to those in unsecured lending, they essentially approved of it or they made sense of it that way, such as it was extensions of what they already knew. It was more information than what they were used to.
+
+INTERVIEWER 2 09:10
+
+But those extensions came from other models or came from you as humans?
+
+PARTICIPANT 09:16
+
+It came from models and data engineering from our end before feeding it into the model. And we usually presented these variables using shapely additive explanations. So that was our main tool for showing unsecured lending. Because I guess for additional context, up until that point, the team had only used linear models. So it was their first time as well dealing with models that could use nonlinear patterns. So that's how we explained it to them.
+
+INTERVIEWER 2 09:54
+
+Mm-hmm.
+
+INTERVIEWER 1 09:57
+
+And since we already talked about shapley, so did it help you understand or trust the output? Can you tell us how did the other teams receive this type of explanation?
+
+PARTICIPANT 10:13
+
+OK, yeah, it was in our team in the data science team. I think it was more of we understood it generally. We understood that what type of plot it was essentially the different observations, how the score changes based on the value. We understood that.But one thing I encountered that was a difficulty, not just with our team for credit scoring, but even other teams who used SHAP, the business would not understand it. They were so used to the regression coefficients that were, OK, if you increase this variable, therefore the value will increase, right? Or if it decreases, they see it that way.
+
+So I sort of devised a way for the team to be able to communicate more effectively. So when we first started the business, they didn't understand. So what we did was first highlight the different types of trends that we could see in the SHAP plot. So normally, let's say, I think I defined three different cases to make it easier for them. So we'd show them first linear relationship. So they were usually using, I think, the normal Python visualization for SHAP plot. We just said if it goes from blue to red, so left to right, that simply means that it's a linear relationship because the score changes positively. As the bodies go high. That's the first description. Then the second is the opposite way around. So we said it was the inverse relationship if it went from red to blue. And then we identified the third category, which is more complex relationships, which would have either segments of blue or red in the middle of a predominantly colored line.
+
+So let's say somewhere from the lower values, it was all red and the upper bodies are all red in the middle of this blue. We would say that these are the nonlinear variables that you may have missed. And these are the things that you can see. And you can see that it essentially follows this sort of parabola of sorts in terms of that case. But then there are the other cases as well where it would be purple, meaning obviously the blue and the red would mix, meaning there was no clearly defined relationship. These relationships were the ones that we didn't define ourselves. So these are the ones that we put up to them and said, hey, we tried understanding this. We don't understand this. Does this make sense to you? So even the general concept of it being unclear was clear to them. And they said, right, right, that makes sense because this variable, yes, of course it's purple. I don't think there's a sure way that you can explain. Let's say, for example, the number of clicks a customer does in the app every session. Let's just say, of course that doesn't have any correlation to how they would perform in terms of borrowing, in terms of defaulting. So yes, it's okay if it's purple. That's fine.
+
+INTERVIEWER 2 13:31
+
+But what did you do with variables that could not be clearly explained? Was it kind of thrown out, terminated, or you'd still accept it and kept it in the model?
+
+PARTICIPANT 13:42
+
+So our criteria was, if it was a significant predictor in terms of, how do I explain this? We looked at the performance of the different variables and in different variable sets. And essentially, if we determined that the drop in error or the increase in error was too big given this variable that was unexplainable, quote unquote, we would still include it in the model. But we had a certain threshold and we were strict about it. Otherwise, we went away without those variables as much as possible.
+
+INTERVIEWER 2 14:26
+
+Mm hmm. And the threshold was determined by you and your team, right?
+
+PARTICIPANT 14:31
+
+Yes, and also approved by the landing group. Yes.
+
+INTERVIEWER 2 14:36
+
+Mm-hmm
+
+INTERVIEWER 1 14:39
+
+Right. I really find this interesting, the type of like the work around that you did on top of Shapley. So how many, sorry, just to clarify first, so this model is not yet deployed, I mean, before you left? Or did you already?
+
+PARTICIPANT 15:01
+
+It was already being used. Yes, it was already being used. Yes.
+
+INTERVIEWER 1 15:05
+
+Okay, so was there a time that there was a conflict with expectations that you received maybe complaints with the rejections or someone that wasn't really credible?
+
+PARTICIPANT 15:20
+
+Well, for the model, I think overall it was a very positive thing for the bank, particularly because I think the bank was a bit strict with these pre-approvals then. So what this model was able to do is actually sort of contribute to financial inclusion. Like we were able to increase our credit card base by 40% and we sort of, what had additional credit card debt of around, was that five, translating it to US dollars would be around 5 million, I think. So it brought in a lot of clients and a lot of money for the bank. So they were generally happy on it. It was more on the positive side, not really on the rejection side, because the initial model that they had was very strict in that sense. So it was able to give them more insight on behavior that is actually, I guess, allowable or safe behavior. And it performed within the expected risk or the risk appetite that the bank had, which was a very big thing because I forgot the exact numbers, but let's say the non-performing loans' appetite is around 10%, let's say. The old model would keep it to around 2%, 1%, which is obviously very, very nice.
+
+But the bank wanted to expand, the client base expand and get more clients, get more loans in. So our model still performed within the 10%, but it went to around maybe 5% to 7%. So it was still within the risk appetite at the bank. It was a leap in that sense for the users, specifically the unsecured lending group, because they were so used to being super conservative. So it was a step towards being a bit more liberal with the decisions for pre-approving. But it was still well within the risk appetite defined by the bank.
+
+INTERVIEWER 2 17:42
+
+But maybe to follow up on INTERVIEWER 1’s question, I understand that more applications were approved. However, there were rejections, right? And you had to explain to a client why the loan was, one application was rejected. Did you use the model to do so? Or how was, which role did model play in communication to clients who got rejections? Not at all.
+
+PARTICIPANT 18:14
+
+Yes, I'm from my side as a data scientist. I'm not sure. We didn't have full transparency on those type of things.But from what we've heard as feedback from the unsecured lending team, they would essentially use our variables. And actually, one of the big predictors, or a lot of the predictors that were significant for these type of clients were their active usage of our products, services, and the app. So they sort of just said that umbrella for unapproved clients that what would help them is something more related to how frequent of a [bank] app user they are or how they use their current product. So that's what came. I know it's more from an umbrella term, but that's the visibility we have on that.
+
+INTERVIEWER 2 19:12
+
+Mm-hmm. All right.
+
+INTERVIEWER 1 19:13
+
+Also like all the rejections for this round of models kind of got the same explanation that this is the variable that could help you.
+
+PARTICIPANT 19:24
+
+Yes, as far as I know, so it's not yet very personalized, but yeah.
+
+INTERVIEWER 1 19:35
+
+Okay. And going back on the three things the [unintelligible] represented, is this like regularly updated to the lending team?Or is it like, okay, let's have a meeting then I present you what we are doing? Like, is it on record or did you just present by slide?
+
+PARTICIPANT 19:56
+
+But the way that the models are usually presented in the bank is, well, of course it's created. Then we have, what we did was we had regular sessions with the lending team, like not official sessions, but sort of more casual keeping up. They also had their own set of data scientists who were really in charge of the risk models in the bank. So we talked to them.But all of this would eventually go through a formal presentation as well, not just to the unsecured lending team, but also to the risk team. So there always had to be at least two presentations, which included both the lending team and the risk team. The first meeting would be more of the business context of the model, more on that side. And then the second meeting would be more on model validation by the model validators from risk.
+
+INTERVIEWER 1 21:04
+
+Right, and you mentioned earlier that the model was also approved by the [Central Bank]? Did you also cater to the requests, like before it was submitted to the central bank? Were there any, you can recall the requests to change the presentation?
+
+PARTICIPANT 21:30
+
+As far as I remember, from when I left off, they hadn't submitted it yet, but that was the initiative of the Risk Model Validation Team. So they were the ones who made sure that we were compliant to the different things that needed submission to the central bank. So it had a lot of things related to, let's say, the standardized definition of probability of default. I think it had to have a horizon, for example, of 90 days. I think that was the standard. And then it also had to exclude demographic variables that might have bias or gender variables. So we didn't include that. We were advised not to include that. And then other things such as the full detailed breakdown. So the documents we presented to the Model Validation Team included a technical presentation and a full technical doc of everything, which, from what I remember, is what they would have submitted to the central bank if needed.
+
+INTERVIEWER 1 22:47
+
+Okay, and you yourself what what is your opinion of like shapley? Are you satisfied by this type of like extra layer to the XGboost or ML models?
+
+PARTICIPANT 23:02
+
+I think Shapley is very good for that purpose. It's obviously not the most perfect, I guess, explainable method for explainable machine learning. The different methods have their pros and cons. But I think it is more than satisfactory, especially since it has worked for the risk team. So for the risk team that was used to a lot of linear models, they accepted it very well once we were able to explain it better. And even when we presented this model to our C-suite executives, they were able to understand it. So at first, actually, they were also very against it. They were very confused. But when we were able to explain it better, it was close enough to their experience, essentially, of explanation. So I think from a business standpoint, it is very, very helpful.
+
+INTERVIEWER 2 24:12
+
+But it seems that you have to invest a lot of effort to be able to explain this explainable model.
+
+PARTICIPANT 24:20
+
+Yes, you can definitely say that.
+
+INTERVIEWER 2 24:23
+
+Did you have meetings with your team discussing how to explain it to different audiences because it seems that different levels of technicality are needed?
+
+PARTICIPANT 24:33
+
+Yes, I think there definitely was a gap in terms of data science communication that the team had. And I noticed this when I came in. So when I came in, when I came into the bank, they would just paste these plots on the slides and present these and hope that the business understands. So I think there's sometimes a little malpractice where you hope it's complex enough that they'll just trust you and agree, right? So I mean, I was like, okay, that I guess it's easier for us. But for me, I couldn't stand it. So I had, it was more of a personal initiative on my end. I created the slides with the three explanations. And then I started sharing this to the different people in our team. And they all essentially agreed. So it was really a lot of effort from my end to push it forward in the first case. And what was really funny about this was, in my undergrad experience, coming from a statistics background, we actually never had Shapley. So I learned this on the job. But even if I learned it on the job, being able to explain it in simple terms, or terms that the business would understand, came out to be more helpful than some of the people who had already had knowledge of it. So yeah, it does take a lot of effort. But at least internally, once I showed it to one person, it was easy for them to understand that everyone needed it. So they'd say, hey, I heard PARTICIPANT had these slides on how to present Shap. So you might want to ask him how to do it. It's easier to present because we had a lot of models that use Shap a lot. But unfortunately, some would struggle with explaining it. But it's definitely an effort.
+
+INTERVIEWER 2 26:38
+
+Mm-hmm.
+
+INTERVIEWER 1 26:40
+
+And so when you were presenting to these business users, was there an instance where it did not maybe match their expectations based on financial theory? Or was it already the purple variables?
+
+PARTICIPANT 27:06
+
+If I remember correctly, I think essentially 90% to 95% of the variables did match. Some of it were new to us. But when we saw it, we were like, what? Does this make sense? But then when we presented it, then we said, yes, yeah, this is like 100% correct. So there were things that we were surprised to know were true. But then for them, honestly, yeah, around 90% to 95% work, for those variables that did not necessarily agree, what they did, although they did not inform us anymore, they performed their own back testing on those specific variables. Because they were not against the fact that maybe for our data, for our customers, for our use case, the data could say something else. So at the very least, they tested it on their own to see if it actually made sense, if it did not agree with theory.
+
+INTERVIEWER 2 28:14
+
+But what is the theory actually we are referring here to?
+
+PARTICIPANT 28:19
+
+For example, there was one variable I think related to, well okay, I can give two examples. So the first one was a variable related to personal loans. So we had a variable essentially had a flag, if a client had a personal loan or not, but never had a credit card. So for some reason, having a personal loan came out to be very bad for the model. Like it negatively impacted the score and it did not make sense for the team from our end and even from the the secured, unsecured lending group. So what we found out later on, which they did back testing on and we got feedback on was that it was a data problem. It is more of a data problem than a theory problem. So the reason why the data was bad or why the impact of the variable was bad was because the data itself was not accurate. So they said, okay, we found that this column in this data set, which supposedly tags this variable, it's not actually accurate and so on and so forth. So this is something we have to fix moving forward and so on. So that's the first case where it was clearly just the data problem.
+
+The other one was, I'm trying to remember, but there's something related to ATM withdrawals, essentially how frequent a client would use an ATM. It did not make sense with them. Yeah, it did not make sense to them. And when they tested it, they didn't veto it anyways. I'm not sure exactly why, but I mean, the explanation that we proposed was that the joint amount of information that the variable explains with other variables could be significant as opposed to it being by itself. So they agreed to it to an extent. So it was more of verifying that variable with the other groups of variables, because like I said earlier, these groups of variables that we used were new to them in the sense that they're extensions of what they know, but not exactly what they were familiar with. So that's sort of how they responded to that. I hope I was able to make that clear.
+
+INTERVIEWER 2 31:11
+
+Yes, but it sounds to me like this verification was primarily based on kind of common knowledge or experience of those people. So if you say it didn't make sense to them, so it was based on experience, right? From what they know about this market and so on. But the question was a little bit related to financial theory. And so any theoretical explanation did say play a role here? And maybe just a personal question. So you said you don't have any finance background. Did you miss finance background or did you do the job at all? So knowing how finance works, financial markets work?
+
+PARTICIPANT 31:53
+
+Yeah. Well, for our for our model, when we made it, we didn't necessarily have any of that theory background as well. I think completely we went in blind and we were more on data science side. And to our surprise, it made sense to them. Like when we presented at [unintelligible] times, though, that they would talk about certain variables, right, and certain relationships. We wouldn't fully understand what they were saying, but they would come in unison and agree. So we sort of, I guess, accidentally ticked the right boxes about us fully knowing, I guess.
+
+INTERVIEWER 1 32:39
+
+But so they didn't mention any like, oh, this doesn't align with X theory of loans or something? If you can recall anything.
+
+PARTICIPANT 32:52
+
+The closest we got was for defining our target variable. They made us do, if I remember, what do they call it? Well, vintage analysis and, they may just make a transition metric of sorts. Essentially it was more for probability of default. So that's the closest theory we had on defining probability of default properly based on previous loans, all based on previous non-performing loans. That's the, probably the closest we got because our value added was more on the modeling and the variable side, but on the target variable definition. Oh yeah, but they helped us a little bit there.
+
+INTERVIEWER 2 33:45
+
+But on this job, did you miss finance education at any time? Or it was completely fine to be just a data scientist? I'm just curious.
+
+PARTICIPANT 33:55
+
+Oh, in general, I learned a lot. So like I mentioned that we had like AI proof of concepts with different business units. So the different business units I worked with were like global markets and treasury. So we learned all about their business.We also talked to our SME, so small, medium enterprise unit, even our private banking, so ultra high net worth individual. So a lot of the things that different pockets or different segments, I was able to learn in that sense, more involved than when I was a data scientist, I would say, because well, the treatment, I would say, sort of, of these business units would be, hey, I have a problem, can data science magically fix it? If we agree with it, then it's fine. So if they agreed, we didn't really get much context. But if they didn't agree, they would say why and then we'd learn a little bit. But compared to gen AI, agentic AI use cases, which is really building with them. Yeah, they definitely teach us more because they felt that we needed more background on their work before we…
+
+INTERVIEWER 1 35:24
+
+Right. Thank you for that.I think I have just two more questions. So apart from the... I'm gonna repeat and you can just say if you agree. My understanding is that after you deployed this model, the increase in pre-approvals and there was increase in pre-approvals and also the team was more open to including non-traditional variables. Are there other changes when the AI was implemented that you noticed?
+
+PARTICIPANT 36:04
+
+Well, the other big thing that happened was the risk team had to start learning about nonlinear models. So that's a major change as well, more for validating it.So they had to update their, their, I guess, I guess, essentially their playbook, right, and their ways of working. So it sort of made them have to adjust in terms of the risk perspective. Yeah, I think that's the only other. Yeah, that's the other thing that changed.
+
+INTERVIEWER 1 36:46
+
+biggest change. Okay. Yeah.
+
+INTERVIEWER 2 36:49
+
+small question in between. So you said that you invented this extra explanation for sharp. Yes.Yeah. So like three steps explanation of three possibilities, right? Did you adjusted talking to various audiences, for example, when you talk to risk team, you might talk about different things when you explain, or talking to different businesses, private equity, for example, might require different explanations in global markets. So were there any differences or you just said, okay, so this is my standard and to explain sharp and I go to everyone with this.
+
+PARTICIPANT 37:30
+
+Yeah, so all business units were really receptive to the standard explanation. OK, cool. Although some business units, I guess those are more quantitative, they would sometimes ask for additional, not essentially explanations, but I guess more detailed graphs. So for example, instead of just seeing the SHAP plot, they would like to see the scatterplot specifically for the variable and the target. But for the most part, it was because they just wanted a deeper understanding. I think also more on the outliers, if there were any. But for the most part, everyone is pretty much receptive to the standard explanation.
+
+INTERVIEWER 2 38:20
+
+Yeah, cool. Thank you.
+
+INTERVIEWER 1 38:23
+
+Thank you. So just the last I just want to ask, I asked my respondents to like, rank these five aspects of generating explanations. So like, maybe first as the most important to five as the last, you can tell us how would you order them. So this is not about the output, but the XAI layer itself, like the explanation.
+
+PARTICIPANT 38:53
+
+I see, yeah.
+
+INTERVIEWER 1 38:54
+
+Yeah, and you can also think aloud because that would help us like why would you put one here, five there.
+
+PARTICIPANT 39:02
+
+OK, sure. OK, I'll go ahead and think out loud. You can also just type.
+
+INTERVIEWER 1 39:07
+
+If you want, as you want, yeah.
+
+PARTICIPANT 39:09
+
+Yeah, so ease of understanding, accuracy of explanation, speed of generating explanations, cost of implementation, and compliance industry regulation. So the ones that stand out in terms of my experience, I think that make the most sense were the first three. So ease of understanding, accuracy of explanations, speed of generating explanations, compliance industry regulations, I only found out because of this one project. So that's the one I would say I have some opinion on, but not as heavy as the first three. And then the cost of implementation never really occurred to me. I didn't feel that there was a cost of implementation for this. So I would say that I would rank it on number one, ease of understanding, number two, accuracy of explanations, number three, compliance industry regulations, number four, speed of generating explanations, and number five, the cost of implementation.
+
+So just I guess for a bit more context, I will always prioritize ease of understanding because for me personally, if I cannot communicate what I'm doing, then there's no point. No matter how accurate or how fast or how compliant it is, if no one will understand it, then no one will consume it. So I think that's why I would prioritize that.And then accuracy, well, the reason why it's second is because I think that sometimes you don't need the completely accurate description sometimes, at least from my experience. When you talk to the business users, some of them don't care much about the details, but about the thought because when they create their decisions, I guess, what matters is the general direction. So I think it came second to ease of understanding. And then compliance industry regulations, I think that's because, the reason why I ranked it third is because it's biased towards my experience in a financial institution, which is very, very important.So unfortunately, we can't have that very, very low. Then speed of generating explanations. I don't think this is as high, of course, the first three, particularly because you want to get it right. And you want the ease of understanding to be good.
+
+I think I can really quickly citejust experience on this. I also had this one sort of data science communication problem when I introduced causal machine learning for marketing. That one was definitely way harder to explain in terms of design, explainability and everything to the marketing team. So that one I prioritized the ease and the accuracy, essentially, it was very, very easy for them to understand. And they didn't just understand it. They realized that that's what they wanted, but they couldn't communicate it. So that's why I would rank speed a bit lower, because even if it takes a while, if you get it right, I think that's what matters for business users. And last is cost of implementation, because I don't think it came about in my experience that much.
+
+INTERVIEWER 1 43:19
+
+Okay.
+
+INTERVIEWER 2 43:20
+
+Maybe a small follow-up question would interest me personally because I looked also in causal machine learning. What was particularly difficult to explain in this case, maybe just the words?
+
+PARTICIPANT 43:32
+
+Well, counterfactuals, the whole concept of counterfactuals, I thought it would be intuitive, but it wasn't. I found out it wasn't. And I also had to dig deep on the explanation of conditional average treatment effect. So the model or the use case focused more on the conditional average treatment effect because it was supposed to be a personalized way to identify the best channel to message clients a promo on. So it could be either text, email, or through the app. So framing conditional average treatment effects as essentially an individual reaction to a treatment. So I thought it would be easier said than done. But yeah, it took me quite a lot of revisions. And honestly, the best way that the method that was most effective to get across to them was to explain it using Google Maps. Essentially, that's how I said, oh, when you use Google Maps, you want to get from point A to point B. But there are many routes that you can take. The different routes will have different times. But when you estimate how much or which is the best route, you estimate which one saves you the most time. So you compare it to each other. And then if this is the one with the least difference in time, then that's what you take sort of something along there. So it's really more of grounding into the personal experience.
+
+INTERVIEWER 2 45:17
+
+You have a real gift for explaining things. You should be a professor in a university.
+
+PARTICIPANT 45:22
+
+Thank you. Thank you so much. I think, yeah, I do enjoy it a lot, though, but it's because that's also how I understand that.I would admit that even though I come from a statistics background or technical background, I'm not the smartest bean out there, so I really like to simplify stuff. So if it makes sense to me, I think it will make sense for other people as well. That's a good route.
+
+INTERVIEWER 1 45:46
+
+Yeah, really cool, that's a good question. Yeah, sorry, just one more thing with accuracy of explanations. How do you define it in your role? Do you say it's accurate if the lending team approves it? Or do you have a different definition?
+
+PARTICIPANT 46:10
+
+Yeah, in my definition, it's two things. So the first is accuracy of explanation in terms of the model itself or whatever is generated by the algorithm. So how truthful is an explanation to what is literally output? How do I put that? Well, yes, because the machine learning models are obviously, more complex models are black boxes for that reason. It's not directly translatable. So making sure that that explanation is preserved while also matching what is the experience, of course, of the [unintelligible], not necessarily just the theory but experience. So it could be true to the data or true to the theory depending on the use case.
+
+INTERVIEWER 2 47:04
+
+Mm-hmm.
+
+INTERVIEWER 1 47:06
+
+With the “true to data”, do you have like a metric for that, or do you use some like open source framework to have an accuracy score?
+
+PARTICIPANT 47:20
+
+No, we don't have a standard metric, but what we did a lot was the back testing, essentially, with historical performances. So like when I mentioned a while ago that the risk team, for example, would say, hey, let's talk about this variable, this makes sense, this makes sense, this makes sense. If it didn't make sense at first, it would make sense later on when someone would say, oh, I remember I made this model and it did come up there. So we did flag it as an outlier in an old model, but if it came up again now, that means we have to revisit it. So it was a lot of comparison really, back testing with previous iterations or previous observations.
+
+INTERVIEWER 1 48:12
+
+Great. Okay. Thank you very much. That's it for me. I really enjoyed this talk and also we learned a lot and we're happy you're the first Asian sample. So thank you for responding to my call. Yeah.
+
