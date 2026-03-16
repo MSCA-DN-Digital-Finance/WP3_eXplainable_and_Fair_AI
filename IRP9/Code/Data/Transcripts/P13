@@ -1,0 +1,233 @@
+INTERVIEWER 00:10
+
+[Redacted company] is a company I own. And I set it up last year. April. The intention is. To provide anti money laundering, anti financial crime consultancy and services across. Mainly [generalized region], I would say, but now. It's started to expand into.
+
+PARTICIPANT 00:33
+
+[generalized region] as well.
+
+INTERVIEWER 00:36
+
+Congratulations.
+
+PARTICIPANT 00:37
+
+Thank you. Okay. And do you use AI tools? Or do you interact with them for your work, and what do they typically help you to do?
+
+INTERVIEWER
+
+Well, I think at the moment because the company is new. Mainly I use a lot of gen AI, like Gemini chat, GPT and all that, for content. Creation and because. I conduct training as well, so it actually helps me a lot. With preparing for my presentations like. You have canva and all that, so it helps a lot. It's definitely much faster than I used to do. So, basically. It helps to make my life easier. Right? Yeah.
+
+PARTICIPANT
+
+And would you say that you have a technical background or do you rely on analysts? Or data analysis.
+
+INTERVIEWER 01:34
+
+well i don't have technical background I don't know how to do coding and all that, but in terms of. In my past roles, I was head of compliance. For a [generalized financial institution type]. And I think when it comes to AI, it's all about algorithm and all that, right? So I don't know whether you will consider Python as AI, but. We actually created some dashboards making use of a rule based dashboard using Python. But that is also. People who know how to use python, so I didn't do that myself.
+
+PARTICIPANT
+
+So would you say that. You're mostly operating the outputs.
+
+INTERVIEWER
+
+Yeah I’m a user, yeah.
+
+PARTICIPANT
+
+You use that to make decision. You mentioned that you do rules based. Data, maybe decisions based on rule based. Where do these rules come from? Is it driven by the team or already from the laws of the [generalized country/region of operation] you operate?
+
+INTERVIEWER 02:48
+
+In. Well, I think that. What we do is just like. With. The coalition against [redacted organization name]. Right. And all this. We do have a lot of known information and. We have typology reports from various places. Could it be from the police? Could it be. From NGOs and all that. So, based on. What we know is how we actually develop the rule. Say, for example, using [redacted organization name] as an example. And. Say in [redacted country]. So what we do is that we create what we call the midnight rule as a rule where we see some of our consumers, if they are spending. A lot of most of their spending is after certain hours, then it may trigger some suspicion, or we need to do further review on them, so. That's the kind of rule, basically, we know that. We are aware of certain stories, and so we will build the rules according to the stories that we know.
+
+PARTICIPANT 03:59
+
+Right. These cases. So it's a combination of maybe existing laws as well?
+
+INTERVIEWER
+
+Yep.
+
+PARTICIPANT
+
+And what? The narratives around the case. Okay, but in the dashboard, is there some kind of explanation? Or is it just like a score or a tag?
+
+INTERVIEWER 04:19
+
+Well. That's on using the python. So if you use the python, then you can only do the dashboard. We haven't gone into the automating and doing a rich painting(?) for it. That one comes a different, more complicated process, and. After that. There are also tools out there that actually. Can help us to risk score each of this. This say if we see this kind of pattern, we will still have got to anyway programming to tell the machine to identify and then come up with a risk scoring so that we can prioritize because not every one of them we need to look at otherwise the false alert is just going to be way too much.
+
+PARTICIPANT 05:08
+
+Right. So then how do you detect when you mentioned false rating? Then how do you validate the results then?
+
+INTERVIEWER 05:14
+
+That one is actually also a lot of it. I mean. Every time when we put a rule. We will make sure we write it, articulate it. Why certain rule has been set because. I may be the one setting it, but one day I'm not going to be here. Anymore and nobody knows why I said so. All this put in place and there's proper governance. We actually have an approval process. So someone will say, [redacted case code], I recommend that we have this rule. And then what I do is. That we will rationalize it, and then we'll look at it and say, okay, we'll add this rule in and that's the initial sign of to say a crew go add this rule in. And then just as an example of. The midnight rule. So we initially started with 09:00 p.m. any transaction after 90 every then we went. Then when we did the testing, we went, oh, my goodness. There are so many transactions after 09:00 p.m. It's not suitable, and so we change it to 10:00 p.m. and even with 10:00 p.m. A lot of them. Too much of. Flooding with too much of alerts and then. We start, we basically start to analyze and calibrate and say, okay. 09:00 p.m. we are just getting way too many false alerts. Why don't you try 10:00 p.m. and if 10:00 p.m.
+
+PARTICIPANT 06:45
+
+Is still a lot of it. something like this Right. But this midnight rule, evening rule, is it based on experience or also past cases with other companies that they are more sketchy things happening at night?
+
+INTERVIEWER 07:00
+
+It's based on that. Kind of, basically, this is how. Well, based on reports that we've seen typology. And money mule, for example, is one where. I think one of the things that is quite interesting is that when you use a system like even when you use a system, you still need to have a lot of. Because. The fields are limited. So it still requires a lot of human intervention. Say, for example, We were seeing a lot of alerts, and then. When we get the report, it shows the remarks column. The customer has put certain information in there. These are free format, then it's actually one case that I can share with you. I don't know how you're going to put it in your report. Is that? It's in the free format.
+
+Of course, there were already alerts generated because of certain alerts rules that we put in. But then we were not seeing anything. And then, one of my staff look at it. And he went, hey, look at the remarks column is in the free format. These are numbers that look like phone numbers. So what he did was he just went, oh, I wonder whether these phone numbers are in our system. And so he just put the phone number back into the system. Yeah, and then we found out, actually, because of him doing that. Technology and all that, right? You can use graph technology to do it. But to basically do a network analysis and we actually identify an illegal online gambling ring within our. And that's because somebody was curious enough to ask that question. So then, if you ask me. Can AI do it. I'll say yes. This is after the humans have learned that we have got to use those data. These are used through data points until the day some humans say this is a useful data point. It is not usable. I mean.
+
+PARTICIPANT 09:07
+
+The technology comes in after the human identify is possible, right? And now it became a standard, this network analysis also for your new company?
+
+INTERVIEWER 09:24
+
+The new company. Well, because I do advisory. I think if any of our clients are looking for me to give them guidance on how to set the rules. This is something that I will tell them to do. Remember to also look at basically. These are some of the data points that are, especially in the free format that you are until and unless somebody has seen it and then add it back and give that prompt. To AI to say, if you see this, make sure you put it back into the system to check. Because otherwise you can't see it.
+
+PARTICIPANT 10:02
+
+Need to investigate more. Right. When you work with the dashboard, the network analysis and python-based processes, did you feel that it was too technical? What do your analysts prepare for you? Apart from the dashboard.
+
+INTERVIEWER 10:26
+
+Well. It wasn't anything too technical. I mean, Python is actually quite easy to read. The logic is easy to read. It's just whether or not you have the time to go and sit down there and analyze I would say, it's not too difficult. And I think it is not something that is totally difficult to learn. It's just a matter of finding the time to do it. Gone are the days where you're doing the basic programming and COBOL programming where language is different, and you probably don't even understand half of it.
+
+PARTICIPANT 11:12
+
+Just made it so easier. Then what do you think would make it maybe more better for your role now in advisory? How These complex tools are presented for your clients?
+
+INTERVIEWER 11:32
+
+Actually I have no idea. I think I would say that. The complexity. It really depends on the clients that we serve as well. A small company that doesn't have much resource, much tech resource. They will probably want something really simple. For myself I think it's not so much about even learning how to do coding but it's the ux itself is very important. If it's a tool, even when I look at it, has to be something that is almost foolproof for the user experience and the UI. That UI UX will definitely be the most important for smaller organization. And Canva is very easy to use. It's almost idiot proof. Yeah. Talk about, say, HubSpot. Gosh. I won't know how to use those kind of things because I don't have time to go and study it. We don't have the resource to do it, so I would definitely go for something that is almost idiot proof, but if it's a larger organization, they will go for something that is like, okay, so my website is built on Wix because it's the simplest to use. And I can do all these lego blocks Another, more sophisticated company might say. This wix is useless. I recommend that you build it on WordPress, and I'd be like. I don't have time to use WordPress. Exactly. The level of time. The resource that you have. Big companies can afford the time, and they can hire more people to do it. But for a small company. I will go for something that is easy to use and easy to maintain. So a friend of mine actually developed my website using WordPress, I think. And he said, It's free. You can use it.
+
+PARTICIPANT 13:42
+
+You can take it live. And I went, yeah, sure. Who's going to maintain it for me?
+
+INTERVIEWER 13:49
+
+Not just to start, but also maintain the technology. Definitely having that kind of AI that nowadays is available, it helps a lot.
+
+PARTICIPANT 14:00
+
+Okay, but just going back to the typologies in money laundering. How do you update your knowledge on it? So we mentioned experience and curiosity of the staff, but. What? Are there external ways? I know there are committees and laws, but maybe you can comment on that.
+
+INTERVIEWER 14:27
+
+Well, there are, like, the collision and all that, right? Global coalition to fight financial crime, which is a global one. And. I think the only way that we can continue to keep ourselves updated is having that community that you continue to exchange ideas and exchange knowledge because one single person is not going to know everything, and then. Your community, the network that you have built. Then we continue to go for conferences. Right. LinkedIn is a very good place professionally because a lot of people post a lot of things. Even news goes. Newsfeed. Go on to LinkedIn. I don't even need to go to CNN anymore. Link in has all the feed. Somebody found something about something on CNN if it's important enough. And then, of course, in [generalized region]. We have the [generalized regional body]. Which is a testile (?) Regional body. They do publish their typology once a year. We also have our interaction with ngos. Ngos are the people on the ground who actually would know a lot.
+
+PARTICIPANT 15:42
+
+Yeah like the civil society
+
+INTERVIEWER 15:52
+
+To me now, the civil society is a bit over because it has even become we call the third sector, has become an even bigger player and more important in our role to fight financial crime because they have a lot of information and intel that banks, financial institutions and all that will not have. So it's actually important now for us to work together with the NGOs and also with the government. The government are the policymakers. As well, and they are the most… if you can't get the information, you get the government to give it to you. I mean, to push people to give it to you. Things like this. It's actually a cross. It's no longer. Just reading from books because. When you do research. Invalidated by the time you publish it.
+
+PARTICIPANT 16:43
+
+I think it’s faster yeah.
+
+Yeah, I think that's the difference between normal banking operations like loan, things like that, because money laundering and other financial crime is really, they really need to be fast, otherwise they get caught.
+
+Yeah okay so you mentioned that first humans get curious before and then apply some tool on top of it. But was there a time that, for example, when you applied network analysis, it allowed you to have some changes in your processes? Was there a time that it's vice versa?
+
+INTERVIEWER 17:25
+
+Yeah. It is often that we may think that there are processes that are useful for us. Then. It's actually an ongoing calibration as well. Where we see. Hey, you know, this is actually not relevant.
+
+PARTICIPANT
+
+Ah okay the factor.
+
+INTERVIEWER
+
+Okay. So say, for example, this is a very common thing. An example is that I collect documents and then the documents need to be signed. There are certain [generalized countries] that are still requiring wet signature on the documents, and then you get someone to go and insist on having the document to have a wet signature. By an accountant, certified to copy by an accountant. And then when you certify to copy, by an accountant. Then that document had copied you scan it to me. Does it make sense?
+
+PARTICIPANT
+
+Yeah. Oh, my God.
+
+INTERVIEWER
+
+Does it make sense for you to go and do all. This thing getting certified to copy when they send to me. I don't even know whether it's real or fake.
+
+PARTICIPANT
+
+Right.
+
+INTERVIEWER
+
+AI is a double edge sword, right?
+
+PARTICIPANT 18:38
+
+There's a chance that whatever that has been emailed to me, scanned and emailed to me are fake documents.
+
+INTERVIEWER 18:45
+
+Yeah. So that's where we need to find other alternatives to do those kind of validation, rather. Than to rely on someone getting you a scanned copy of the document.
+
+PARTICIPANT 18:58
+
+Okay, so for this case, it was the tool. That. It was the tool that made you conclude that it's irrelevant? Or not important?
+
+INTERVIEWER
+
+Hmm-hmm
+
+PARTICIPANT
+
+Right. Okay, so just last question for me is if you can rank this, like, five aspects of AI explanations like if you get the risk score or prediction. Or python-based. Like, how would you rank these items in the chat? Maybe why is the most important yeah and maybe just comment you can think out loud it's okay
+
+INTERVIEWER 19:40
+
+I think the ease of understanding the AI is number one. Then number two. Actually. The thing number two is. The cost of implementation. I need to consider. Depending on the size of the organization, it can be as accurate as possible but it's very expensive, so there’s cost-benefit analysis to it. That is the accuracy. Fifth spot(?) compliance to regulation is to me, number five. [laughs] It's the least important of all.
+
+PARTICIPANT
+
+Interesting.
+
+INTERVIEWER
+
+The ease of understanding the explanation would be the most important. Because. These are new concepts that we have actually. Started to look at. There is this thing called. Compliance by design. So that means that you focus on making sure that you comply. Then. Came an evolution people started to look at. When you design a product, you need to look at. The security, so it became security by design. So security by design. When you look at app, you make sure that you have all the security. Features the multifactor authentication, blah, blah, blah, blah blah. So that one is like security by design. It's secure. Then you look at all. This data privacy and all that, right? But now the latest concept is what we call safety by design. The safety by design is actually. just A more holistic approach. Why do we say safety by design? Safety by design here means that it is not just about the security. It's also about making sure that the users know how to use it. That means that there has to be a digital literacy element making sure that the users know how to use it. And then say there's another product that is credit card as an example. It's the most evil(?) finance product. People know how to use it, but then they get them injected as well, so that you increase the level indebtedness to the extent that certain people who may start to become bankrupt because of the use of loans and credit cards. So that means that we need to make sure that when we design a product, we need to consider the safety of the consumers, not just from the perspective of data safety, but also making sure that they know how to use it properly, and then that is on the tool itself and to use the product properly.
+
+PARTICIPANT 22:14
+
+Right. When you put. Yeah. So is compliance the last? Because you start with an internal tool, right? Is that the reason [that] it's not relevant?
+
+INTERVIEWER 22:29
+
+Well, I wouldn't say it's not relevant. It's because. When you start with the ends in mind and if your intention is to create a safe product for your client, no matter how the regulations change, you will not get far…You will not be far from complying. Because. Think about it. If you look at the regulators, which regulator is telling you to do bad things? They want to protect the people they want to protect. Financial system. So whatever that you do, if you have that in mind already. Whatever regulations that come. You know that? You can't run far because your system is already doing the right thing. Even people, regulators, ask you to do it. It’s a very ideal situation.
+
+PARTICIPANT 23:17
+
+Because you have a principle. The principle follows. Like you expect that if a regulation comes out? I already have this principle anyway. Ah, that’s interesting.
+
+INTERVIEWER 23:26
+
+So you won't have to. Worry, because when you think about the regulators, they want to protect the ecosystem. They want to protect the people. Right. And so whatever that has come out, and if you start, when your product starts with that intention. I don't think you can run far from it. Maybe the basics. The basic is that. Say, for example. Your system says that you only allow somebody to spend up to $5,000. And then the regulator say they don't allow people to spend more than $10,000. All you do is you just tweak the limit. You don't have to change the entire infrastructure.
+
+PARTICIPANT 24:13
+
+Okay. Right. I understand. I think that's it for me. I really learned a lot from this conversation because. Your finance aspect is your client. Thank you for your time.
+
+INTERVIEWER
+
+I hope I-
+
+PARTICIPANT
+
+Yes, of course. And, yeah, thank you so much. I've been following you on LinkedIn. If I'm in the region, maybe I will message you again.
+
+INTERVIEWER 24:39
+
+Yeah, let me know. Yes and we can have coffee. Okay.
+
+PARTICIPANT
+
+Thank you. And please recover. Well. Bye bye.
+
+INTERVIEWER
+
+Bye. Bye.
