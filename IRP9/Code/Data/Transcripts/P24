@@ -1,0 +1,213 @@
+PARTICIPANT 00:01
+Okay, so good evening, sir. So my name is [PARTICIPANT NAME]. And as I explained in the email, I will just ask questions about the AI systems, your involvement and all, all details for regarding the [CENTRAL BANK NAME] that are confidential will be anonymized them and also with your name, etc. In private details.So first, may I ask, can you briefly describe your role in the [CENTRAL BANK NAME]?
+
+INTERVIEWER 00:39
+So my name is [INTERVIEWER NAME] I'm a bank officer. So our department focuses on the supervision of financial institutions, but not only financial institutions, basically all the institutions covered by the [CENTRAL BANK NAME]. So it does not comprise of only banks.It also includes non-banks, which for example, are [MOBILE WALLET SERVICE], [NON-BANK FINANCIAL INSTITUTION]. So these are non-banks. So aside from banks, we also cover or supervises non-banks. So what our department do particularly is on the compliance of these institutions with anti-money laundering regulations. So I don't know if you're familiar with [AML REGULATION NAME], but basically we prevent persons or illegal, not illegal actors, bad actors or criminals from using this institution to clean their money. So they might have money from illegal proceeds or from their crime, and they want to integrate it with the bank. They want to make it clean. So that's what we prevent.What we do is we check the compliance of these banks with AML regulations from the [CENTRAL BANK NAME], free from the [COUNTRY NAME] regulations, domestic laws, and also the regulation from the [AML REGULATION OFFICE NAME]. So basically that's what we do, what I do.
+
+PARTICIPANT 02:33
+Okay, and in these supervisory activities, which aspect is AI currently used?
+
+INTERVIEWER 02:44
+Actually, we don't have, when you say AI, the use of AI on our work currently as of now is limited on the generative AI when we use it to analyze some scenarios. But if you're looking for a tool, for example, the machine learning tools, currently we don't have, but we have an ongoing project that is on the pipeline. But the problem with government institutions, especially in the [COUNTRY NAME] is the bureaucracy, and also when you want to get some, when you want to procure something, it's not as easy as we want it, we need it, and we can get it in a few months.But for government, that's something that can go years. But on a positive note, currently the [CENTRAL BANK NAME] management is pushing to have these AI initiatives, wherein we have these tools that can be helpful and they're pushing it to be used across the sector, even the whole [CENTRAL BANK NAME]. So what we have is, I've told you earlier that our work consists of checking whether criminals are using the banks. So our goal is to detect the transactions of customer, whether they are depicting or they are somewhat doing criminal activities, because at the onset or at the face value, you cannot detect those criminal activities because they might use methods or sophisticated methods to hide their tracks. So what we have is, we have developed some tools that can detect whether these transactions
+
+PARTICIPANT 05:23
+Mmhmm.
+
+INTERVIEWER 05:24
+are of criminal activities so we call that red flag parameters or typologies basically there are modus operandi by different crimes so because we you don't have just one crime
+
+PARTICIPANT 05:42
+Yeah.
+
+INTERVIEWER 05:43
+So they have so many ways to hide their money or to do complicated. So we want to easily detect this kind of transactions or this kind of criminal activity.So we develop a tool. As of now, we are using Power BI, but the management is asking us if we can start using Lakehouse because Microsoft have this tools machine learning tool that can help analyze these transactions and it will help easily detect whether this transactions of customer is of criminal activity. So that's one of the tools that we have. But on the current practices that we use mostly on the generative use of AI.
+
+PARTICIPANT 06:59
+Okay. Thank you, sir. So the ones in Power BI, all of them are rule-based flag. Is that correct?
+
+INTERVIEWER 07:10
+Currently, yes. We have developed some alert parameters, red flag scenarios based on our past examinations. So we have accumulated some typologies from our studies and also the past examination, [CENTRAL BANK NAME] examination since we see it firsthand what type of transactions they are doing. We've made it as parameters.We've converted it into a parameter that can be fed into the tool. When a transaction is ingested within that tool, it will gather or it will extract whether this transaction of customer is crime-related.
+
+PARTICIPANT 08:04
+So at the present form, everything is rule-based, for example, thresholds of suspicious transactions or time, etc. But you don't produce a prediction for the scores of suspiciousness score, something like that.Or do you also have that prediction?
+
+INTERVIEWER 08:31
+Currently, we don't have, but the one that the IT is proposing or they're offering is it will have, because it will have machine learning and then it can predict, it can provide alert scenarios that can be tailored or can be proportionate to different types of banks, because not all banks have, they have different sizes, they have different transactions, they have different client profiles. So it's hard doing it rule-based since you cannot target or you cannot tailor fit it to a specific bank. You're always focused on making it general because that's what can you, that's what you're limited to do since rule-based, but what they offer is with the AI it can make parameters proportion to the specific banks.
+
+PARTICIPANT 09:50
+Okay, that sounds promising. So then maybe I would just ask, maybe you can walk me through how you use Gen AI in your supervision work.What data do you put? Yeah, et cetera, example of how you use AI.
+
+INTERVIEWER 10:10
+Okay, so maybe I can relate it to the criminal aspect since that's what I've discussed now. So every examination with the bank, we are given transaction schedules. This transaction schedule is composed of the different transactions of their customers. So it spans up to 1 million customers and when you add their transaction, then it becomes 100 fold. But for the purpose of examination, I've mentioned we have this tool. So this tool is using rule-based. So we already have certain rules. One of the rule that we use is high volume of transaction, high volume or high value. So when we put it in the tool, we can generate who has the highest volume of transaction and who has the highest value. So that's what we take.We take the top 10 and then we extract the transaction that particular customer and then we analyze it whether it would be suspicious or if there is an unusual activity. So what Gen AI can do is it will simply give us the narrative. We can use the different typologies already in place and then feed it into the model. And then it will generate narrative whether this specific customer is the transaction, whether it's really suspicious based on the parameters that we have included. Basically, that's it.
+
+PARTICIPANT 12:33
+So, for example, you have like co-pilot or a GPT, then this co-pilot, does it have access to internet or just internal documents by your team?
+
+INTERVIEWER 12:51
+I don't know. Actually, I'm not using Copilot, but we have been issued with Perplexity.So it has internet. It can have access with internet. So I've also been using the deep research function of Perplexity, since one of our functions is to check whether a customer is doing suspicious. So one of the things that I've used is to conduct deep research on a specific company, whether they are involved on illicit activity or criminal activities. So that's one one function.
+
+PARTICIPANT 13:39
+Okay, and then so when perplexity gives this narrative, do you trust the output or do you do further validation? Can you walk me through that?
+
+INTERVIEWER 13:51
+For example, on the deep research, so I always, I always include in my instruction to provide the links to where the model get the information. So we don't want getting information that basically hallucination.So since our work requires complete accuracy, we don't want to give banks and misinformation or hallucination, we don't want to give them false information. So it is necessary that the result will have a source or an independent source.
+
+PARTICIPANT 14:52
+Okay, and so at present, does perplexity give you an explanation of why this is the narrative? Or just the source or just the source link?
+
+INTERVIEWER 15:10
+Yes, because most of my instruction includes giving the legal basis and also some the prudential expectations or the sorry expectation and when I do use the AI make sure that it only use the regulations that is applicable for example it should only use the [MANUAL OF BANK REGULATION] or the manual of regulation for banks as issued by the [CENTRAL BANK NAME] so it gives the explanation on its thought process based on my instruction so I always make it make sure that it does not take sources or basis from other than what I've instructed it
+
+PARTICIPANT 16:25
+So yeah, it's based on the instruction and then how do you ensure that the answer is accurate after it gives you the result?
+
+INTERVIEWER 16:38
+So my instruction contains that it will take the exact text of the [MANUAL OF BANK REGULATION]
+
+PARTICIPANT 16:46
+Um. Sorry what's [MANUAL OF BANK REGULATION]?
+
+INTERVIEWER 16:47
+and since basically
+
+INTERVIEWER 16:50
+Ah manual of regulation for banks.
+
+PARTICIPANT 16:54
+Okay.
+
+INTERVIEWER 16:55
+So when it provides the legal basis, I'm already familiar with the with the [MANUAL OF BANK REGULATION] since I've been doing this for almost 10 years. So I know when it's taken from [MANUAL OF BANK REGULATION] or not. So that's how...
+
+PARTICIPANT 17:18
+It it aligned with your experience, expertise.
+
+INTERVIEWER 17:22
+Yes
+
+PARTICIPANT 17:22
+That's how you dictate whether it's accurate or not.Yeah. Okay, thank you. And then I just wanted to ask because banks are already required to report like the high volume transactions for the like STRs, et cetera. So do they also give you their own analysis or do you do everything like from scratch again to validate their results?
+
+INTERVIEWER 17:52
+So in terms of CTR or STR, I think we need to differentiate the large transactions. Currently, we have issued separate circular on the large payout, but this is referring only to cash withdrawal from 500 thou to 1 million. And CTR is all transactions that are more than 500,000. So banks or even non-banks are required to report to the [AML REGULATORY BODY ACRONYM]. Every time they have a transaction that's more than 500,000.And the STR or the suspicious transaction reports is also different. So this one is any amount that is considered as suspicious by the bank. So all these three, when we're doing the examination, we independently validate this. So we don't we don't use what they give us as a Bible truth. We still validate it based on their raw transaction, their transaction schedules, because oftentimes they have unreported transactions. So that's what we basically do during examination. We validate the transaction schedules from the source and then check if they have reported it to the [AML REGULATORY BODY ACRONYM] based on the required reporting.
+
+PARTICIPANT 19:25
+Okay, and then this type of checking, this is where you use Power BI or not.
+
+INTERVIEWER 19:35
+Um, not because
+
+PARTICIPANT 19:39
+Excel, maybe, or what tools do you use?
+
+INTERVIEWER 19:43
+Oh, yes, Excel, because they go in, yes.
+
+INTERVIEWER 19:46
+yes you can just Vlook up the transactions
+
+PARTICIPANT 19:53
+Right. Okay. And then I wanted to ask when banks use AI also, when they do their own investigations, like, is [CENTRAL BANK NAME] interested in how they use the tools?
+
+INTERVIEWER 20:12
+So we have this thematic review conducted, but not on our department. It's conducted by the [OTHER SUPERVISION DEPT ACRONYM] or the [SPECIALIST SUPERVISION DEPARTMENT NAME]. So they have this thematic review. And I think the result was published, it's called [THEMATIC REVIEW NAME].Basically, the result was that the banks have been using AI. And currently, we did [CENTRAL BANK NAME] did not issue any new circular regarding AI framework, because the present framework, the governance, the circulars that the [CENTRAL BANK NAME] issued already incorporated this new technologies. So, for example, the IT risk, risk governance, data privacy, and even consumer protection, these requirements are already embedded on the current policies that we have. So based on that thematic review, we, the [CENTRAL BANK NAME] are not necessarily forced to issue another or new issue a new framework for AI. Since, as mentioned, it's already incorporated in the current framework, but on the use of the banks on AI, we're not really preventing them. If it can help them do their investigation faster, then we're not really after the process on the back end, but on the result. Because these are criminal activities. What we want from the bank is to be more conservative. On the conservatives, so if they see something suspicious, we want it to be reported right away.
+
+PARTICIPANT 22:35
+Okay, so was there an instance already , that in the report, they say that, okay, these are our filings based on the rules, and these are AI detected? Do they report it this way? Or they just give you one whole...
+
+INTERVIEWER 22:53
+There's no... indication whether they have been using AI or not but we can see it during walkthrough when they present the transaction monitoring system that they have you they are using especially on the fraud monitoring system since the requirement of the [CENTRAL BANK NAME] for our fraud monitoring system is that they can detect fraud real-time so basically you cannot expect manual intervention when doing this you want on a second seconds interval minute interval that you can detect whether the certain transaction is fraud related and only machine can do that so that's most of their the use of AI especially on the fraud side, the fraud monitoring side, especially the big banks, they have been using these AI mostly on the detection of fraud
+
+PARTICIPANT 23:59
+Right. Okay. And this is under your division, Papo, the fraud monitoring.
+
+INTERVIEWER 24:05
+Fraud is under also [OTHER SUPERVISION DEPT ACRONYM] because for F8, our department is focused on the money laundering. Fraud is handled by [OTHER SUPERVISION DEPT ACRONYM] and also by consumer protection unit.
+
+PARTICIPANT 24:27
+So for, but there is no walkthrough for what they use to detect money laundering.
+
+INTERVIEWER 24:41
+Okay, so we are also, basically you cannot separate from AML because part of AML is when a fraud happens it needs to be reported as suspicious transaction so it will hit or it will be incorporated with the AML compliance but the difference is for AML monitoring you are they are not required to do it real time so most of the investigation conducted is goes through 60 plus one because when an alert is generated the banks have 60 days to investigate whether this transaction are suspicious or not and when they discover that this is in fact suspicious they have one day reported to the [AML REGULATORY BODY ACRONYM] unlike fraud wherein at the second they know that this is in fact fraud they need to stop the transaction.
+
+PARTICIPANT 26:00
+Yeah. All right. So in this case, you are also invited to go to this walkthrough?
+
+INTERVIEWER 26:11
+Yes, because most of their system are the same, because it's still the same transactions they're monitoring just different timelines, different turnaround times.
+
+PARTICIPANT 26:29
+Okay. So you mentioned that as a supervisor, as a bank officer from the [CENTRAL BANK NAME], yes, you are not really so much concerned with how did they build the model, but more on the result.Can you tell me what you expect from their report? Like, are there changes in your expectation when AI is in their report, or is it the same?
+
+INTERVIEWER 27:02
+Okay, so the first thing that is important for us as regulators is the accountability. So on the final decision, human decision makers must remain responsible for the decision that these models have made, especially on the reporting of suspicious transactions because you cannot fault an AI if they misreported or have reported maliciously reported people because when you maliciously report someone that someone might file a case against you and who will be accountable when that happens? So we make sure that the accountability rests with the human responsible for the decision making.And also second would be the fairness and bias because these models embeds data or design and it may use unfair risk score because some part of decision or even in saying that a certain customer is suspicious rest on a fair judgment. So even as regulators, we always use judgment in analyzing certain transactions, whether they are suspicious or not. So that's what we want to see on these AI models, whether they are really fair and whether they have certain biases. And maybe last is the auditability and traceability. So of course we want to see how did these model came up with their decision to file a suspicious report or not.
+
+PARTICIPANT 29:04
+Okay. So have you received such report, already sir? Or they don't really, as you mentioned, they don't really say that this is with the aid of AI.
+
+INTERVIEWER 29:22
+Yeah, no, and we don't have that.
+
+PARTICIPANT 29:24
+or it's not required. So if you can describe what does the report require from the banks?
+
+INTERVIEWER 29:42
+for the suspicious transaction reports basically it's the line of transaction and then narrative on why is it suspicious
+
+PARTICIPANT 29:55
+And then what are the requirements for the narrative board, just a justification.
+
+INTERVIEWER 30:01
+As to who is the person? When is the transaction conducted? Where is it conducted? How is the transaction conducted? And why is it a suspicious transaction? So,
+
+PARTICIPANT 30:21
+the major details. So this is for, yeah, this is for transaction.And then you, what you mentioned earlier, sir, the accountability, fairness, auditability, this is the expectations for the model itself. Yes. And this is your, and of course, as your perspective as an officer, but this is not really within the [SUPERVISION DIVISION ACRONYM] or Financial Supervision. [Regarding that expectation,] is it more on the other division again? [OTHER SUPERVISION DEPT ACRONYM]?
+
+INTERVIEWER 31:05
+Um, no, it's the same.
+
+PARTICIPANT 31:09
+as it is the same.
+
+INTERVIEWER 31:12
+the same system.
+
+PARTICIPANT 31:13
+But currently this is not being evaluated by [CENTRAL BANK NAME].
+
+INTERVIEWER 31:19
+they're currently evaluated but not on the specific AI but on the whole
+
+PARTICIPANT 31:28
+Process? Okay, so the explainability aspect of the AI, we can say it's embedded already that you have to explain your whole process anyway, whether AI or not.
+
+INTERVIEWER 31:45
+Yes, that's why I've mentioned earlier that the current framework does not necessarily need to have a specific regulation against explainability AI because it's already embedded on our current supervision framework. We already require, even though they have been using manual or AI monitoring tools or systems.
+
+PARTICIPANT 32:11
+Okay, so I think last question is that in your specific role, where do you see AI helping financial supervision? You mentioned before the, I guess, tailoring the analysis to the size of banks.That's the pipeline. But do you have maybe other perspectives or like wish lists?
+
+INTERVIEWER 32:41
+I think everything pertaining to AI is on our wish list, but if we have, we will have a top one. I think it's still the transaction monitoring because a lot of the times that have been spent by the examiners are on the analyzing this transactions, whether they are suspicious or not.And most of the majority of the time spent is doing that analysis. So if we can shorten that one, it really will be a big help with the examiners.
+
+PARTICIPANT 33:28
+Okay, so just to clarify only before we end, what is the relationship between your role and [PROJECT/PERSONNEL CODE]?
+
+INTERVIEWER 33:38
+Sir [PROJECT/PERSONNEL CODE]?
+
+PARTICIPANT 33:42
+Or is he in a different?
+
+INTERVIEWER 33:53
+[PROJECT/PERSONNEL CODE] is more on the admin I think.
+
+PARTICIPANT 33:59
+Okay, yeah, he's building the tools, but for financial supervision, but so it's not really the same workflow. Just to understand the organizational...
+
+INTERVIEWER 34:15
+Yes.
+
+PARTICIPANT 34:15
+Okay, sir. I'll just stop the recording here.
+

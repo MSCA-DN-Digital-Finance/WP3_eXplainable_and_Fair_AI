@@ -1,0 +1,340 @@
+INTERVIEWER 00:00
+
+Okay, so can you briefly describe your role in [Bank Name]? 
+
+PARTICIPANT 00:17
+
+Firstly, I'm currently I'm area manager and from actually I'm in this position three weeks or something, three weeks last from April. And yeah, I'm responsible for internal tools. It means that I'm catering from, let's say, from business or actually I'm in business as well, but from channels. Channels are like face to face meetings, incoming flow, different incoming flows, outcoming flows, more different like proposals or how to make more changes what they would like in our system, but we are what we are currently are using. And then I would be between in like business people and IT and I'm gathering all together a line across to the [REGION]. And then we have discussion with IT side about these IT developments, how to prioritize them and set the backlog and the backlog and the future view as well. Yeah, quite shortly.This is something that I'm a new in this position, but I think. 
+
+INTERVIEWER 01:37
+
+So three weeks in the current position, but in total, how many years of experience in like finance or bank management do you have? 
+
+PARTICIPANT 01:47
+
+Ten years
+
+INTERVIEWER 01:49
+
+Okay, yeah. And you mentioned that there are some IT development that you have been talking about with the other department. How do you interact with the systems? Can you elaborate first? 
+
+PARTICIPANT 02:05
+
+Sorry, ma'am, may you like be more? I didn't understand correctly. 
+
+INTERVIEWER 02:11
+
+So you mentioned that you talk also to the IT department for development of, I'm not sure, what are these that they are developing. So maybe you can talk about your interaction with them. 
+
+PARTICIPANT 02:28
+
+Okay, from this perspective, usually I'm asked business what are the requirements, what they would like to change or implement. And then I just forward these requirements to IT. From technical perspective, I'm not aware of everything, but how they are like implementing and what kind of changes they are doing in the system. Or from IT side, I mean. But yeah. 
+
+INTERVIEWER 02:56
+
+But what are these tools that the IT department helps your side? 
+
+PARTICIPANT 03:03
+
+what we are using, you mean, yeah? Yeah, yeah. OK, mainly these are like, let's say, we are using internal tools where all the customer data is storage, where employees like using, more like not using, but inserting customer data, customer contracts are there, all this customer statement, this account statement, all the information what the customer has in our bank, let's say, contracts, accounts, different services what the customer are using. This is in one, let's say, overall, it's in one platform what is include different services. And employees are using, frontline employees are using inserting the information, sending tasks to another unit if another unit in moment is described in process and these kind of things. I hope this is OK. 
+
+INTERVIEWER 04:10
+
+Yes and for the you mentioned that yes these are information from customers the customers that you handle are these personal accounts or business accounts or both?
+
+PARTICIPANT 04:24
+
+Both actually we have legal entities and private customers as well. Mainly private customers because by a customer part is definitely bigger and the flow is bigger if you compare with corporate customers. 
+
+INTERVIEWER 04:40
+
+Right. And okay, thanks. And with the tools, whether internal or external that is offered by [Bank Name], are you aware that any tools are powered by artificial intelligence? 
+
+PARTICIPANT 04:56
+
+Something, but not in my area, I think, because as I mentioned, I'm responsible for internal tools, but my background, I worked previously in frontline, let's say, and there, yes, we have like, let's say, customer conversation tools, or different platform, not different platform, but we are using for customer, queue or customer or system environment, how to manage the incoming flow on this platform. This is something what is using, like virtual assistant is using I tool, but I'm not aware of detail. 
+
+INTERVIEWER 05:43
+
+Okay, so from the customer side, they can ask preliminary questions. Is this on the app or website or both? 
+
+PARTICIPANT 05:54
+
+Both. Website. I have this virtual assistant there, but this is something what this you didn't like to say. As all these answers are made by like what customers are asked from us, this is something but we are creating different answers for those questions and it's like human part at the moment that human is creating the answers but it is something what is human created in the system and system is okay artificial or whatever it is like right answers based on customer question. 
+
+INTERVIEWER 06:35
+
+Okay, so the it's like 
+
+PARTICIPANT 06:38
+
+a moment. 
+
+INTERVIEWER 06:39
+
+like the source of all answers of course is made by the staff 
+
+PARTICIPANT 06:39
+
+human
+
+INTERVIEWER (cont.)
+
+and then the bot or virtual assistant will arrange the questions. So maybe we can focus on that tool, the customer conversation tool. Are there any instances that the virtual assistant gave a I don't know confusing answer or inconsistent answer and can you explain one or two situations? 
+
+PARTICIPANT 07:16
+
+Okay, the current situation we're facing that customers ask some question and virtual assistant, for example, doesn't understand it. But okay, customer like adding some additional information, but current solution is that this virtual assistant doesn't understand, not like taking this conversation as a one conversation. But each sentence, what customer is typing, it's a separate sentence for the virtual assistant. And this is like issue with what we would like to improve or actually we would like to change it because this is not the feedback on customer sizes are also not good at the moment. But this is the main thing, what is very bad, I would say. And also, there is like, as I mentioned that everything's made by human. And it means that if there is not, and not all the time, virtual assistant doesn't understand how customer prefaced the sentence or the question because there is so many different ways to ask something. And the people are also very, each one is very different than from that perspective, it doesn't work very, very well, let's say. 
+
+INTERVIEWER 08:41
+
+Okay, so yeah, I understand like the virtual assistant’s memory does not update. Okay, yeah, that's really difficult and maybe frustrating for the customer. So in that case, what happens next? They refer to a human agent?
+
+PARTICIPANT 09:01
+
+Usually, if a virtual assistant is not able to answer, then yeah, the flow is directed to the human. It means there is like three different options to call, to write bank messages, or in case there is like a channel is open for chat, there is also like a chat opportunity, but live chat already then. 
+
+INTERVIEWER 09:26
+
+Okay, so based on the questions of the customers, what type of questions or situations do you feel that it would be nice to have an explanation to why the virtual assistant made this reply? 
+
+PARTICIPANT 09:47
+
+Even at like a menu area or what kind of, I would say that easy things, it's not even related with iBank that customers are typing, but even in case the customer is calling in, then these easy and very basic services should handle the virtual assistant. That's why I would say, if for example, I lost my bank card, I need to replace it, it is something what I think the virtual assistant or I should handle themselves, it shouldn't need any human interaction at all, because everything is written, all the data is there, just order a new card. All these simple questions, I don't know what mainly should be handled by virtual assistant, I think, but this card is very easy to explain, I would say. 
+
+INTERVIEWER 10:43
+
+Right. But with the with how the bot or virtual assistant is built for your role, you don't have any role in building the virtual assistant or just the response?
+
+PARTICIPANT 11:02
+
+Usually, what I did previously, it's not any more in my responsibility but in previous role, when we checked all these virtual assistant responses, then we reviewed the answers and update the information and we worked this way that we have in bank, actually, we have content managers, virtual assistant content managers, this kind of role we have. And actually, they are like going through one, they have opportunity and access for this solution, how to say, where they are seeing all these answers, what virtual assistant gave and also what is like succeed, what to say, I did succeed, right? Or this one was virtual assistant is like struggling and then they reviewed these answers as well and updating and understand what happened based on customer question, you may need to improve some answers and mark some words that virtual assistant understand, okay, this word meaning this and this and something like that. I don't know if you understand, it's so tricky. 
+
+INTERVIEWER 12:16
+
+It's okay, I got the, I'm imagining the situation. 
+
+PARTICIPANT 12:21
+
+Okay, but yeah, previously, but now we are in this moment that we would like to change this, I don't know, engine, let's say this way, and yeah, this is in process and I'm anymore not so much aware of this project. 
+
+INTERVIEWER 12:45
+
+So for now, if the virtual assistant makes a mistake, you don't really know why the response is like this. It's just like trial and error. When you said, for example, you said to me that it makes a wrong response if they don't understand how it's prefaced. So when you said that to me, that's just your experience with the virtual assistant, right? 
+
+PARTICIPANT
+
+Yes
+
+INTERVIEWER (Cont.)
+
+So there is really no one explaining in the system or in the theme, like why did the virtual assistant say this? 
+
+PARTICIPANT 13:25
+
+We just observe ourselves, think ourselves, maybe because of this, maybe customer used another word, okay, maybe something was typing totally incorrect, maybe, use some slang words or whatever, and yeah, but yeah, no, I mean like notification or no, this part, no. 
+
+INTERVIEWER 13:55
+
+Okay, so maybe we can focus on this when I ask the next question. So when I say like explainability, I will refer to this like, why did the virtual assistant make this decision? Because I think that's where the AI can also improve with itself. So with this situation, with the customer interaction, what specific, let's say, information would be useful for you to understand why, like, what things do you want to know about the virtual assistant when it makes a response? 
+
+PARTICIPANT 14:38
+
+Okay, it makes a response and it's not a success response, you mean this?
+
+INTERVIEWER 14:42
+
+Yeah. 
+
+PARTICIPANT 14:44
+
+Okay for me as like for example I'm like owner of this tool I would like to improve the tool understand you mean this perspective, yes? 
+
+INTERVIEWER 
+
+Yes, yes.
+
+PARTICIPANT
+
+Not for not for example not I as a customer but I as like a system like. 
+
+INTERVIEWER 15:03
+
+Yeah in your role. mostly in your role, but of course, since your role also concerns taking care of the customers, of course we cannot separate them, you can act for them as well. 
+
+PARTICIPANT 15:16
+
+Yeah. Okay, but I, as a service owner, for example, yes. Yes. Okay. Yeah, definitely. For me, it's interesting to understand why, let's say, AI didn't manage, and what are these, like, the issues or challenges, or why is AI facing this something? Yeah, it's some report or some notification or something for me to understand why this conversation is not successful, let's say, from this perspective. 
+
+INTERVIEWER 15:57
+
+Right. And do you think that the customers can also play a role in making this explanation? 
+
+PARTICIPANT 16:06
+
+Absolutely, as a customer is like educating or other to improving the system every day then yes the role is also the customer role is actually I think the biggest part from my side that's the role is big in this case when they're using it because we as a service should somehow motivate our customers to using this engine otherwise it's not possible to improve it. 
+
+INTERVIEWER 16:38
+
+Right. And of course they are the ones feeding the questions and possible different ways to ask the question. 
+
+PARTICIPANT 16:48
+
+Absolutely, right. If you have many difference, we have actually very, very wide customer portfolio, let's say, from young persons to, I don't know, 80 or something, and our market share is very big, then yes, from this perspective, it's crucial to motivate to use this kind of tool to improve our services. 
+
+INTERVIEWER 17:18
+
+But okay may I just ask if the responses what language are the responses made I mean when preparing.. the human side? 
+
+PARTICIPANT 17:29
+
+In the human side, in three languages, [Foreign Language A], English, and local. 
+
+INTERVIEWER 17:37
+
+May I ask what is the local one? 
+
+PARTICIPANT 17:39
+
+Okay, I'm working in [Type of Country Group], but as this tool for, we are working across [three countries], then each country has their own local language, like [Local Language 1, Local Language 2, Local Language 3], and in parallel [Foreign Language A] and English. 
+
+INTERVIEWER 17:58
+
+And so the responses are in three languages, but of course the customer can also ask in mix, correct?
+
+PARTICIPANT 18:08
+
+absolutely they can mix and what is like okay [Foreign Language A] is not anymore so I don't know popular let's say but anyway the amount or share of [Foreign Language A] customers is quite that magnificent in all countries okay maybe some of them it's a different but anyway we have got many and in [Foreign Language A] you can type different way one way you can type with [Alternative Script] and another way that you are typing in this like I'm using the letters but it's like [Foreign Language A] and virtual assistants should understand both way in [Alternative Script] and in like [Primary Script]
+
+INTERVIEWER 19:02
+
+Well, yeah, that's that's really messy (?)
+
+PARTICIPANT 19:07
+
+but I think this is [Foreign Language A] specific yeah other languages we don't have this kind of situations but yeah [Foreign Language A] is really 
+
+INTERVIEWER 19:18
+
+of the characters. I understand. Okay, so let's imagine that these explanations for the virtual assistant making a correct or wrong decision is available. How do you imagine it is presented to you? You mentioned a notification, so would you prefer them being short, in that sense? 
+
+PARTICIPANT 19:48
+
+Okay, this is something I would not wanting this notification, but, okay, as a service owner, some reports should be up here. Something is related, like, what is the customer segment? Maybe there is different, I don't understand, it should be like a structured way built. What maybe there is any patterns why the virtual assistant doesn't succeed. And yeah, I would prefer, yeah, notification from this perspective, something is happening, but not it's an online, but maybe like weekly to understand or create some report that I have opportunity to dig in, to understand what happened and what, if there is some pattern or something like that, why the engine succeed, I would say this way. 
+
+INTERVIEWER 20:47
+
+Right. And in the normal reports that you inspect, they are mostly texts or also does it help you if there are charts maybe, some visuals? Usually, mostly. 
+
+PARTICIPANT 21:03
+
+Currently, usually we are using these graphs that there are like, let's say, how to say, different understand the success rate, the response is... And yeah, we're using these kind of graphs at the moment. 
+
+INTERVIEWER 21:26
+
+OK, so at present there's already like a dashboard for the virtual assistant. 
+
+PARTICIPANT 21:33
+
+I'm not so aware of any more of that topic. 
+
+INTERVIEWER 21:38
+
+Okay. So can you mention some charts that are in this dashboard? So you mentioned success rate. 
+
+PARTICIPANT 21:46
+
+Excellent. I'm sorry. 
+
+INTERVIEWER 21:49
+
+No problem, no problem. And then, OK, just last two questions, I think.So are there any internal service-level standards for the responses, for example? Like how fast things like that has to be followed? 
+
+PARTICIPANT 22:11
+
+Yeah, it's actually, I'm not aware of that, do we have like, yes, we have a KPIs for virtual assistant, but, but, but what are these precise KPIs, I'm not sure. Yeah, I know that we have something, definitely. This response rate, we are like, we would like to understand how many conversations we had, how many of them were successfully, how many, like, guided to the human. Yeah, from this perspective, and also we see this, okay, this is already like live chat, but availability of live chat, live chat, and that's with vector system is 24/7, but the response rate is main thing, but other KPIs I'm not aware of. Okay. Definitely some there is, but there are a lot more. 
+
+INTERVIEWER 23:11
+
+Okay, no, no problem. Okay, so just last question, I'm gonna paste something on the chat. Wait a minute. So, if you can just maybe rank these five considerations for, again, we can have the chatbot in mind, the chatbot explanations. And if you think that this is not complete, there is something else that we should consider. You can also let me know. So, maybe we can rank it like one to five. Maybe one is most important. 
+
+PARTICIPANT 23:53
+
+diversity of explanation, speed of generating explanation. Okay, to put them in, in priority order, it is okay, every, every sentence, okay, most important five is lost. 
+
+INTERVIEWER 24:09
+
+So these are the again the explanations of why the VA chatbot is successful or not. 
+
+PARTICIPANT 24:19
+
+understand, okay, okay, please, okay, these are like 1, 2, 3, 4, 5, ... occurrence of explanation, speed of connect, easy of understanding, ... it means that if it's ... I evaluate this engine, I understood, or what? 
+
+INTERVIEWER 24:40
+
+you understand if it's if you can understand easily the explanation of why the why the chatbot made a wrong or correct answer okay so that can be reasons why 
+
+PARTICIPANT 24:59
+
+Just a moment. 
+
+INTERVIEWER 25:05
+
+So we can have that, because there's no tool yet. This is more imaginary. Yes. 
+
+PARTICIPANT 25:11
+
+Mm hmm. 
+
+INTERVIEWER 25:12
+
+Because in bigger organizations, I think, they already have an explanation of why, you know, certain AI applications are correct or wrong. So. okay no rush
+
+PARTICIPANT 25:30
+
+yeah it's okay for me it's important easy to understand also is accuracy of explanation and alignment with interest regulation these are like three most i would say but for them i would add like fives but if each of them like you it can it can be displayed that for now for me then it's like easy for understanding these five okay and accuracy of explanation issues have four
+
+INTERVIEWER 26:24
+
+sorry one is the most important one is okay then okay okay reverse so number one is easy
+
+PARTICIPANT 26:33
+
+easy to understand. Two is alignment with industry regulation. Okay. And three is accuracy of explanations. Okay. 
+
+INTERVIEWER 26:47
+
+I think this last is speed and cost. 
+
+PARTICIPANT 26:51
+
+Mm-hmm, I just think maybe cost and time speed, sorry. 
+
+INTERVIEWER 26:58
+
+and then speed okay yeah right okay thank you so much I think I'm I'm okay now thank you so much for your insights really this is this is good for me 
+
+PARTICIPANT 27:12
+
+Okay, yeah. I don't have so much, unfortunately, like, experience with, I only, we had in Hackathon, I think, two or a month ago, almost, when we, we actually generate one AI engine for, it was just, for example, how to improve our services and a degrees, employee's resource. And this is quite, yeah, then I faced first time this LLM engine, or how to, how you call it, call it, and it was quite, for me, it's like, for me, it's opened my eyes to understand how it's really, how it's really impact and improve our daily life. It is possible to improve. 
+
+INTERVIEWER 28:09
+
+Right. So, okay, just to follow up, the AI engine that is new is about, what again, employee resource you mentioned. 
+
+PARTICIPANT 28:17
+
+Oh, no, no, it was just hackathon. We just made some prototypes and the chairs of the ideas, how to improve our services. It was just, let's say, some, let's say, it was a little bit fun, fun like conference or training or something.And we are gathered all together with different teams and just every team trying to find solution for hackathon. Okay, that's, yeah. 
+
+INTERVIEWER 28:49
+
+That’s cool but each team is just business background or also with programmers?
+
+PARTICIPANT 28:57
+
+Each team has an IT person who really like developed this prototype, business side as well, business who made these requirements, and I think six persons in teams, like every team has six persons, six employees, and all together they put one of these IT guys there, usually like made this engine and prototype in real life, and we presented. 
+
+INTERVIEWER 29:29
+
+Right. That's really cool. Okay. Thank you so much again, [Participant Name]. I'm just gonna stop the recording. 
+

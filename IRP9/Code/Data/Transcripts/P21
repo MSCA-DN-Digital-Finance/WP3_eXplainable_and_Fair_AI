@@ -1,0 +1,528 @@
+PARTICIPANT 00:00
+Okay, so first of all, can you briefly describe your role in [CENTRAL BANK]?
+
+INTERVIEWER 00:08
+Okay, so I'm handling since this is AI related, so I think I will focus on the AI aspect of my role. So I'm handling the, I'm part of the [FINANCIAL SUPERVISION SECTOR], [INNOVATION TEAM]. So we handle all the innovation projects of the sector. So that includes the ideation, prototyping, and eventually the development of these projects. So yeah.
+
+PARTICIPANT 00:43
+So, is there a name of the team? A specific…
+
+INTERVIEWER 00:49
+So we've instituted…constituted...a committee that really works on these innovation projects. So it's the [FINANCIAL SUPERVISION SECTOR] [INNOVATION COMMITTEE].
+
+PARTICIPANT 01:05
+Okay.
+
+INTERVIEWER 01:06
+So just to add just for transparency purposes, this is not [CENTRAL BANK] [CENTRAL BANK] -wide. So it's just our sector who has it as far as I know.
+
+PARTICIPANT 01:17
+The [FINANCIAL SUPERVISION SECTOR]?
+
+INTERVIEWER 01:20
+[FINANCIAL SUPERVISION SECTOR] yeah.
+
+PARTICIPANT 01:21
+Ah okay, that's cool. Then what are the types of supervisory or oversight activities that involves AI so far? Or projects?
+
+INTERVIEWER 01:36
+Okay, so yeah, it's project-based but when we talk about supervisory activities, we have a project that's dedicated on the conduct of examination. So it's an interim solution for the overall project envisioned which would be which would encompass the report writing, the examination report writing and then the scoping for the examination. So the interim solution is using available Microsoft applications tools that there are no AI side because that would form part of the overall project where there is ongoing ideation and then also discussing with prospective vendors. So I hope that answers your question.
+
+PARTICIPANT 02:45
+Yeah, yeah. And then the [FINANCIAL SUPERVISION SECTOR] team. Who are your main stakeholders?
+
+INTERVIEWER 02:57
+internally or externally?
+
+PARTICIPANT 03:01
+Uh, can be both.
+
+INTERVIEWER 03:03
+Okay, internal is the [CENTRAL BANK] management, so [CURRENCY BOARD], because they are the ones reading, who will approve the report. This is report of examination, external these would be financial institutions under the supervision or oversight of the [CENTRAL BANK]. So this includes [FINANCIAL INSTITUTIONS] such as pawn shops, money service businesses.
+
+PARTICIPANT 03:35
+Okay, and then [REDACTED NAME], would you describe your background as technical or more finance or both?
+
+INTERVIEWER 03:46
+Technical then it is only here in [CENTRAL BANK] that I became finance.
+
+PARTICIPANT 03:50
+OK, so like information, computer, engineering?
+
+INTERVIEWER
+computer, engineering.
+
+PARTICIPANT
+OK, interesting. So currently, what are the current AI used in [CENTRAL BANK]?
+
+INTERVIEWER 04:05
+We have a generative AI, so those are virtual assistants.
+
+PARTICIPANT 04:14
+Oh okay, and then um...
+
+INTERVIEWER 04:16
+I'm sorry, just to provide additional input. So it is both, there is internal, VA, so then there is also external facing. So for the consumer, so it’s called [VA NAME].
+
+PARTICIPANT 04:33
+And external…okay, so for the internal what is the role of the VA?
+
+INTERVIEWER 04:44
+Okay, so we have a VA for speech writing.
+
+PARTICIPANT 04:48
+Okay
+
+INTERVIEWER 04:50
+So, it is trained to the tone of the head of our [SECTOR NAME], and the tone and language of the [EXECUTIVE]. Then we also have VA to look into regulatory, the policies, the regulations, so that for our users, there is no need to look for… if you want to look into sustainability, you can just prompt the VA “what are the issues relating to sustainability” and it will provide you a summary of all these policies and then that's [CENTRAL BANK]-wide, that's [CENTRAL BANK], and
+
+then we also have another for just our sector, our sector guidelines. So, we have our supervision guidelines, internal only to the sector. By the way, I mentioned that we have two, right? The one that I am explaining with the writer…. that's internal to the sector. So, we call that [SECTORAL VA], it's G-A-B-A-I, [SECTORAL VA], and then,
+
+PARTICIPANT
+That’s clever.
+
+INTERVIEWER
+So, yeah, and that's for the sector, meaning it is not available [CENTRAL BANK]-wide. But there are VAs not necessarily related to supervision, but available [CENTRAL BANK]-wide, so administrative agents, and then the external facing would be to our external stakeholders, like if you want to report a consumer incident, protection incident, so we have a VA for that.
+
+PARTICIPANT 06:39
+OK, let’s focus first on the internal. Is it like RAG? It only has access to internal documents?
+
+INTERVIEWER 06:50
+Exactly, it is really RAG.
+
+PARTICIPANT 06:53
+Internal docs okay… and same for [SECTORAL VA] but external? Or is it only for financial supervision only? Or [FINANCIAL SUPERVISION SECTOR] plus [CENTRAL BANK] docs?
+
+INTERVIEWER 07:04
+[FINANCIAL SUPERVISION SECTOR] plus [CENTRAL BANK], plus [CENTRAL BANK] docs, but users are only from [FINANCIAL SUPERVISION SECTOR].
+
+PARTICIPANT 07:12
+Okay, and then, currently, with the internal, how do you test if the output is okay? If it is really is from internal docs.
+
+INTERVIEWER 07:25
+So one, I think I'll answer that in two ways. One, the knowledge source of the agent is grounded based on issuances. So the agent will only look at those.
+
+So that's the first thing. Then second, we did UAT first before being deployed to all. So in UAT, we flesh out all the issues, concerns pertaining to whether these are the correct issuances, when a user prompts this, is the agent correct? We also followed a…a very rule-based. Our approach became very rule-based UAT session. This will be the rating of the user if the user sees this component. Then we added it.
+
+PARTICIPANT 08:29
+Ah so there is a rubric?
+
+INTERVIEWER
+Yes
+
+PARTICIPANT
+So even how the user rates has a rubric? OK. Sorry, what is UAT?
+
+INTERVIEWER 08:41
+Sure, it's user acceptance test or user acceptability test.
+
+PARTICIPANT 08:48
+OK, and then I'll….
+
+INTERVIEWER 08:50
+Then all the challenges in UAT, we addressed them first before deployment.
+
+PARTICIPANT 08:57
+Okay, and then I'm going to talk to [VA NAME]. That one is not in your sector, right?
+
+INTERVIEWER 09:07
+Yeah, it is [CENTRAL BANK]-wide.
+
+PARTICIPANT 09:10
+So, okay. Let us go back then to GenAI. Copilots and other off-the-shelf. What documents do they have access to? Is it all like internal plus web?
+
+INTERVIEWER 09:30
+It’s really project-based. So there are projects that only have access to internal, some have both like [SECTORAL VA]. Oh wait, you mean external to the [CENTRAL BANK] not external to our [SECTOR NAME]?
+
+PARTICIPANT 09:49
+Yeah, yeah, external web site, internet, internet.
+
+INTERVIEWER 09:54
+Well, then no.
+
+PARTICIPANT 09:54
+Okay.
+
+INTERVIEWER 09:55
+So, all the agents are grounded in that they cannot access the web. Or web search.
+
+PARTICIPANT 10:02
+Okay, so, so your role, sir [REDACTED NAME] is both developer and validator? Is it correct for me to say this?
+
+INTERVIEWER 10:17
+Yes. Correct and then also maybe aside from that, since I am also the one driving the creation of the framework, so governance of the framework, road map for our. Because we are recently created, the committee. So basically, we are still in the nascent stages of putting all of these frameworks, then, while simultaneously developing these projects. But we are in collaboration and in coordination with our IT office.
+
+PARTICIPANT 11:06
+Okay, okay. Sorry, I left behind this question…what about the speech writing, how is that evaluated? That VA?
+
+INTERVIEWER 11:18
+So its reference would be…what is the source on why it was able to generate that speech. So the user will see that the agent based them on a certain issuance, or infographic by the [CENTRAL BANK]. It gathered those all to generate the speech.
+
+PARTICANT 11:53
+OK, so the VA contains multimedia?
+
+INTERVIEWER 11:58
+There are also like that.
+
+PARTICIPANT 12:00
+There are videos also?
+
+INTERVIEWER 12:02
+Only transcripts.
+
+PARTICIPANT 12:07
+Okay, transcript of past speeches, okay. So on the user acceptance test, I am very, very interested in that because the topic is really on explainable AI. So maybe you can comment on challenges during the training, the testing. I guess, like what have been the popular questions, the biggest difficulties reported by the users?
+
+INTERVIEWER 12:44
+What is it? Are we looking into the tech side or the session itself? I’m sorry.
+
+PARTICIPANT 12:56
+Ah because you are the middle. Actually, I face the same thing with my research, so we can divide this internal engineering team into issues.
+
+INTERVIEWER 13:13
+All right, maybe one would be the cut, the available data so as you may know, [GOVERNMENT AGENCY] only recently transitioned soft copies, digital copies. So the very old old regulations may not be covered that are still referenced by the users. The user always asks why do we not have these? Because it's beyond the cut off of the agent.
+
+PARTICIPANT 13:55
+Yes.
+
+INTERVIEWER 13:56
+That that's the number one that's the technical, because that's beyond our control. But there's a really a trust(?) that the relevant past issuances can be digitalized and included but they are still subject for clearance. Second is the confidentiality of these documents. So we have data inventory classification in the [CENTRAL BANK] and mostly from our sector we have classified them, only a few are general really, but a majority of our documents are classified as restricted or confidential. Now, if a document is classified as confidential, access third-party access to these documents shall undergo an [CURRENCY BOARD] approval. So a bleedy justification you will need go through…It’s not that okay I have a project then I will use this, there are many…That is on the tech side that are issues challenges faced.
+
+PARTICIPANT 15:16
+Okay then are there are many metrics for the government to say if there is a correct source or is it manual? How is it done?
+
+INTERVIEWER 15:33
+There is a rubric, right? During the U.A.T., the tester manually checks it. Based on the rubric, for example for the reference material. If that reference material is shown, then there is plus 1 point. If you can click it, plus one point. If you can download it, plus one point. That is how it is done. It is really detailed.
+
+PARTICIPANT 16:07
+Do you think I can get that rubric, if ever?
+
+INTERVIEWER 16:12
+Okay.
+
+PARTICIPANT 16:13
+Of course, you can have it cleared first.
+
+INTERVIEWER 16:15
+Yeah okay, I will have it cleared first.
+
+PARTICIPANT 16:18
+It is really just interesting that the user even has a guide. Okay so after that, how do you aggregate the ratings? Then are those ratings are assigned to one model or one task?
+
+INTERVIEWER 16:37
+Mm, okay.
+
+PARTICIPANT 16:38
+How do you process it on your side?
+
+INTERVIEWER 16:49
+So we look at it one by one, especially, for those that have failed. We have a threshold of three below, then we will look at the reason if it is valid because. Of course, during the UAT, there is a learning curve for the tester. One, for the agent, two, for the instructions. Maybe they tagged it as a failing mark but for us, it is not really the case. So there is a layer like that, or we have a lens. But those which are tagged as really failing. Those are the ones we need to validate and address on the tech side. One, do we need to add prompt instructions so that the agent will not give a certain response? Like that. We address(?) it technically or we can also add a reference material that we haven’t covered but should have.
+
+PARTICIPANT 17:47
+Okay, okay. So, apart from the rating. On the internal tech, there is no built in metric? There is no given like confidence score? Or?
+
+INTERVIEWER 18:04
+We have a star rating. Every response, the user is prompted if it is 4 or 5star? Then based on the…then we can look at it on the back-end.
+
+PARTICIPANT 18:21
+Yes, but that is for the user. But before you deploy from your side, there is no score? For example, all ratings are user input?
+
+INTERVIEWER 18:33
+Yes.
+
+PARTICIPANT 18:34
+I understand. Okay, very interesting. That is cool. Regarding the speech, is it the same?
+
+INTERVIEWER
+Yes
+
+PARTICIPANT
+That there is a 5 star?
+
+INTERVIEWER
+Yes
+
+PARTICIPANT
+Okay then maybe because you mentioned governance, I will go through that because that is unique to regulatory. I have 3 audiences with the phd, public, [FINANCIAL INSTITUTION] and then [CENTRAL BANK]s. So we are here okay. Can you describe if there is an overarching framework in [THE COUNTRY] and or that you follow? What are those? And maybe describe the process of the framework that you mentioned within the [FINANCIAL SUPERVISION SECTOR] also.
+
+INTERVIEWER 19:32
+Okay, alright. Unfortunately, I couldn’t say that [THE COUNTRY] has a framework. So we always anchor the frameworks either in the US or Europe. So with that, the best practices are anchored there in coming up with a governance framework. For us, we did it in such a way. Yes, we adhere to the best practices, but also they are reflective of our current practices. So first we look into our process. What are the process followed first by the [CENTRAL BANK]? Then once, first, because, just to be transparent, we are still proposing these…and they are not approved yet.
+
+So what we did as an exercise is we look at the first, since, we are simultaneous, we have all these projects then we are catching up with all these…so based on what we already do, what are the do’s and don’ts for these when we look into best practice that the other international communities set.
+
+Then based on these best practice, we take those that we are doing correctly. Then we set aside the challenges. We post it as challenges and not as wrong or we do not term it as that, as challenges. Why are they becoming a challenge for us, for our current process?
+
+So we present the best practices, but also, we do not exclude the practice that for the proposed framework, that we are doing.
+
+So that when we propose it to the top management for clearance. They can see, ah this is what we do, but we should not. Because maybe we do it, but the other sectors, we are not aligned.
+
+Because they are doing what should not be done.
+
+PARTICIPANT 21:58
+Yeah. Okay. And I think it makes sense to frame it as challenge because it's very infant and it is simultaneous. Like it cannot be a final verdict.
+
+INTERVIEWER 22:13
+Correct. Like saying you are already wrong.
+
+PARTICIPANT 22:16
+Yeah, yeah, yeah. And I want to ask if there is something already within [CENTRAL BANK], the concern…are they concerned also when the supervised [FINANCIAL INSTITUTION]s use AI or currently they have a free pass?
+
+INTERVIEWER 22:36
+That is also looked at, specially, does it form part of their business model? Because it should be that…their incorporation of AI, should be backed by business models. Because maybe they are using it, because there are cost implications for that, and where will they get that? Of course, from earnings, and products and services, which may impact the public. So this is the lens that the [CENTRAL BANK] always take. It needs to be evaluated if it is aligned with your business model, and why is it like this? Like that. Always oversight.
+
+PARTICIPANT 23:27
+consumer, yeah, consumer side, but within your division? It is not?
+
+INTERVIEWER
+Not anymore
+
+PARTICIPANT
+Later, maybe if you can recommend, which [DIVISION NAME] within the [CENTRAL BANK] focuses on this? Just to go back, because you mentioned that the framework is reported to the [CURRENCY BOARD]. It can be mix on the stakeholders outside your tech team. What are the challenges when presenting the tech? You mentioned earlier that there is a learning curve. Maybe you can describe it yeah.
+
+INTERVIEWER 24:13
+Maybe I will anchor on the first presentation to the [EXECUTIVE] [TIME]. The main challenge was to laymanize the process and also highlight the explainability of the results. Because that is always, well, to be fair, our projects, because it is just the start, it is only an updating so…it is not in the end term yet. Hence, the questions like explainability are not yet…clear. So I think, since that is our experience, that is the number one challenge when presenting to the top management since they will not delve into why are you using decision tree? Why GBM? They do not have that anymore. It is more of, why is the result like this or not like this?
+
+Like, over…big picture is what they want as opposed to the tech side of how did you come up with this result. Why the model, why this model?
+
+The challenge…we said a lot, but the challenge really is to have an explainability that is laymanized in a way that anyone can understand.
+
+PARTICIPANT 26:01
+Yeah, now that's interesting. So, more…how did you present it to them..more narratives or like?
+
+INTERVIEWER 26:13
+A vis…there is a narrative portion, but very little descriptive analysis. More on really, the, we really based it. Since we showed, what do you call this, the variable importance. We showed the weights of these variables, and it is really clear, which variable has the biggest? Those were the questions geared towards.
+
+PARTICIPANT 26:53
+Ah feature importance. So do you use Shapley or LIME, correct?
+
+INTERVIEWER 27:04
+We really do not show them anymore to the management, because they do not understand. So it is really just bar graph.
+
+PARTICIPANT 27:11
+Interesting. Bar graph. Okay. Can you please explain in detail first then how did you present? So now, it is inverted. I am also interested in the tech. What is it exactly that you laymanized? Maybe the type of models behind the RAG, et cetera.
+
+INTERVIEWER 27:40
+Okay, these are not related anymore to the…
+
+PARTICIPANT
+To the AI?
+
+INTERVIEWER
+The Gen AI. Different. I'm talking about the ML project then that have been highlighted, because it is the favorite of the [EXECUTIVE]. The way we did it is first we internally present it to our principals. So these would be directors and up. And based on our discussion, it's very technical. Meaning, SHAP, why for the feature importance, why is it leading to positive vis-a-vis negative. So we showed it with the reds and the blues and the in-betweens. So no…if that is how you showed it and you are not familiar and you do not know how to read them, it opens a lot of questions and distrust in the process.
+
+That really is it. We really felt it that when we present it this way, how a data scientist would present it, they would not appreciate it. One, they do not appreciate, because they do not understand. And then, you will only show it, but basically, it is not the key or what you want to highlight. But it will be highlighted because the fact that they do not understand the graphs that you presented. So that is on the onset, we realized that those plots will not work. Hence, we resulted to…we decided to make use of the simple graphs. The bar graphs. Usually, we really just use bar graphs. So for feature importance, we did not use the SHAP. And then the bee plots. Because the ideal would have been bee plots, because you would see the strong, the polarized sides, but since they do not like, they cannot understand. We resorted to just the simple graphs. So that is the story of why we used simple graphs.
+
+PARTICIPANT 30:03
+OK, interesting. So going back just. You mentioned GBM and decision tree. What are the models in the pipeline. You mentioned that there are decision trees, that are whitebox. Are there blackboxes?
+
+INTERVIEWER 30:26
+Um. Their understanding is that even those are black box because there is no explainability.
+
+PARTICIPANT 30:33
+Yeah, oh, okay. Yes.
+
+INTERVIEWER 30:35
+So the team is working on that, on the explainability side.
+
+PARTICIPANT 30:41
+OK, so for the ML pipeline, if it's OK to ask, what is the goal of that? For those you used SHAP, what for?
+
+INTERVIEWER 30:56
+It's really to, we call it [PROJECT NAME], analytics for likely events of risk and trouble. It's an early warning tool to signal financial distress of a single [FINANCIAL INSTITUTION].
+
+PARTICIPANT 31:13
+Early warning system. All right. That's interesting. Then, what are the models under it? Is that it GBM or are there others being tried?
+
+INTERVIEWER 31:26
+We tried, we were instituting auto-ML. Then, I will get back to you on that.
+
+PARTICIPANT 31:39
+Okay. All right. So, I think, okay, now I am okay with that. But on the user, no the [CURRENCY BOARD] side, since they are the ones who requested the ML? Do they have a preference for a type of model? Do they understand if something is interpretable or not?
+
+INTERVIEWER 32:12
+Yes. They understand the high level of ML and AI. Specifically, our [EXECUTIVE], since he came from academic background, he really understands the model. But based on our, my perspective, they still do not look into the models used. They are really concerned with the results exactly.
+
+PARTICIPANT 32:48
+I guess their background is more on economics so they are familiar with white box, regression and advanced regression, but let's say, we add ML, do they understand that the SHAP is only an estimation of the model? Did you still say that to them?
+
+INTERVIEWER 33:18
+No, to be honest. We did not get there. There is no discussion on the model. Nothing. On the results right away. They are like that. Straight to the point. What have been your results and why? Those are the line of questioning to us.
+
+PARTICIPANT 33:36
+Gets, gets. And then, what, you mentioned distrust before? Did the reception change of the presentation when you changed to bar graphs?
+
+INTERVIEWER 33:51
+Yes, because it was easier to understand. The distrust coming from our principals. Before we present to the senior management, we presented first internally to our directors. So the distrust came from the internal team really, that it will really not…and not from the tech development.
+
+Like from new, when we presented to them, it was a new set of information. So the distrust is because there is no explainability and they do not understand the graphs that we used. That.
+
+PARTICIPANT 34:35
+Okay, okay, the challenge is a lot. Okay, maybe, on the two, or I guess all the ML and RAG, VAs, which task would you say where explainability matters the most?
+
+INTERVIEWER 35:05
+ML really.
+
+PARTICIPANT 35:07
+The early warning?
+
+INTERVIEWER 35:09
+Yeah.
+
+PARTICIPANT 35:10
+Why did you say so?
+
+INTERVIEWER 35:15
+Okay, let me phrase it this way, any project that entails prediction, so if it's a predictive analytics using ML or other statistical method, it really needs an explainability…because you need to convince…is it correct? Why?
+
+PARTICIPANT
+Yes
+
+INTERVIEWER
+So you need to convince your audience to take or to believe your results and in order for you to make them believe your results or to really understand your results, you must be really be able to explain…the result is this because this, this, this. Without that, it will not be an effective project and it will not be approved. So that yes! It cannot be used.
+
+So after all these months of developing it, the end, it cannot be used because they are not convinced…the senior management. So what a waste of resources.
+
+PARTICIPANT 36:24
+What a waste.
+
+INTERVIEWER 36:26
+Yes. What a waste.
+
+PARTICIPANT 36:27
+So, when we look at all ongoing and pipeline projects, it is the ML that needs explainability
+
+INTERVIEWER
+Yes
+
+PARTICIPANT
+If we rank them, then the speech VA, are lower?
+
+INTERVIEWER
+Yes
+
+PARTICIPANT
+I guess it really reflects the impact, so to say. Short description, can I request, on the inputs of the early warning?
+
+INTERVIEWER 37:04
+Early warning?
+
+PARTICIPANT 37:06
+Early warning system on the financial distress.
+
+INTERVIEWER 37:09
+Okay, so we have the we have [FINANCIAL INSTITUTION] submissions. So under the [FINANCIAL REPORTING PACKAGE], so that is what we use.
+
+PARTICIPANT 37:21
+Okay, and these include reports, analytics of [FINANCIAL INSTITUTION]s or are they docs?
+
+INTERVIEWER 37:31
+And you say how they submitted, there is already a pipeline. They only submit…Some are documents. Yes correct, doc forms. Then [CENTRAL BANK] compiles them on a periodic basis. Because there are really many reports.
+
+PARTICANT
+I can imagine. And then for this one, on the performance, sorry because we jumped to explainability right away. How do you evaluate the performance?
+
+INTERVIEWER 38:12
+Okay, so we have set KPIs. We have accuracy, the F1, all of that. And then we have aside of the statistical measurement, we also have efficiency.
+
+PARTICIPANT 38:31
+Okay. Can you please describe that just to…
+
+INTERVIEWER 38:38
+I do not have it memorized. Let me just find the document.
+
+PARTICIPANT 38:51
+So, yeah, F1 is in recall, but you also have false positive?
+
+INTERVIEWER 39:00
+AUC. Is it correct?
+
+PARTICIPANT 39:02
+AUC, yeah, okay. For me I am really also learning by doing. Because I am really an economist. I do not know how I got here.
+
+INTERVIEWER
+Wow. Welcome to AI.
+
+PARTICIPANT
+Yes, but because the project is on explainability. There is really need for understanding on both. So on the job, I am trying to learn the pipelines, but very high level, very high level, just to bridge the two.
+
+INTERVIEWER 39:43
+So, the efficiency, it's timely data driven insights of key risk areas of [FINANCIAL INSTITUTION]s. So, the target outcome for us here is faster detection and reporting of risk areas.
+
+PARTICIPANT
+Risk areas, meaning?
+
+INTERVIEWER
+Sorry what is that?
+
+PARTICIPANT
+Risk areas as in aspects of finance? Activities?
+
+INTERVIEWER 40:10
+Yes, financial. Yes, exactly. Financial accounts of [FINANCIAL INSTITUTION]s.
+
+PARTICIPANT 40:20
+And then, OK, so these are presented…so again just to…your flow as a team. All these KPIs internal, what are the ones left when it comes to the director?
+
+INTERVIEWER 40:35
+Actually, this is it. These are the KPIs. We measure the project after it is done. They are not…in development. We consider these because for example, efficiency, we can’t measure it as of…while we are developing the tool.
+
+PARTICIPANT 40:59
+Okay, this is after.
+
+INTERVIEWER 41:01
+Yeah, so the KPIs would feed into once the tool has been developed.
+
+PARTICIPANT 41:08
+Okay, so your accuracy, F1, et cetera, they are, you are measuring those, but when you present to the directors, they are gone or still some are left?
+
+INTERVIEWER 41:23
+When we talk about statistical measurement, it is within the baseline…threshold.
+
+PARTICIPANT
+Then when it come to [CURRENCY BOARD], it will be gone?
+
+INTERVIEWER
+Yes.
+
+PARTICIPANT 41:48
+So I have some for you to rank. I will put it in the chat. Five aspects of AI deployment, if you have…oh, I mean one as most important, then five as least. Then if you can comment, even just as verbal ranking, why that one would be above the other. As a project whole.
+
+PARTICIPANT 42:15
+Ah as a project.
+
+INTERVIEWER 42:17
+So one would be an ease of understanding. Because it is so hard…going back to the earlier argument on convincing. So for me, that is the most important. Is it right, 1 is most important?
+
+PARTICIPANT 42:40
+Yes.
+
+INTERVIEWER 42:42
+Number two would be accuracy. Because you should have all these data, these model. Next question. If a [FINANCIAL INSTITUTION] is tagged for [PROJECT NAME], it is tagged as financially distressed. How accurate is the tagging? But that is on the level of the model. Because we still institute the human in the loop. So it is not purely AI will decide, but at least there is comfort level that the accuracy of the model developed is good to begin with. So at least, even if the [FINANCIAL INSTITUTION], oh even if the model says it is not financially distressed, there is some comfort that it is not.
+
+PARTICIPANT 43:42
+Is there label on past data on the distress and not?
+
+INTERVIEWER 43:47
+Yes, we created our description of own financial distress.
+
+PARTICIPANT 43:58
+Right. So there is labeled data. Okay. Interesting. Okay.
+
+INTERVIEWER 44:02
+And then compliance, three, because the project will not be pushed through if it is not compliant to some requirements and standards set. Speed, because the management. When is this? It should be like this, like that. You have to balance out…You want to have a good model being developed, but also you have to be able to have something by the end of…something like that. And then lastly is cost.
+
+PARTICIPANT 44:42
+Yeah, because I think like with your role these are relevant okay. Maybe, just last comments. If you see anything's a future of AI in [FINANCIAL SUPERVISION SECTOR] specifically.
+
+INTERVIEWER 45:03
+[FINANCIAL SUPERVISION SECTOR], my, really is…it's really augmenting how we do things. Because now admittedly, it's still all manual. Even if there is optimization done, it is still manual labor. So for me, I wish, I'm envisioning a utopia where AI could assist supervisors in the administrative sense so all the scheduling they need, the document they want to find, and tag. AI would do all those. They will compile all those found by it so the job of the supervisor would only be high level. It would be judgment of whether this [FINANCIAL INSTITUTION] is doing good or bad, or in between. No, in betweens, I want to correct, just good or bad. Something like that. AI should really be value adding. And it cannot replace the good judgment of the supervisor, but we should introduce it to the mundane.
+
+PARTICIPANT 46:35
+Which is really the bulk of the work.
+
+INTERVIEWER 46:39
+Yes.
+
+PARTICIPANT 46:40
+Okay, let me just stop.
+

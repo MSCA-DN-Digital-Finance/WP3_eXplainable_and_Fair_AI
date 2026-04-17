@@ -1,0 +1,236 @@
+PARTICIPANT 00:01
+
+All right. So first, can you briefly describe your role at your company?
+
+INTERVIEWER 00:07
+
+Yeah, so I'm the CEO and founder of \[company\]. I focus on the general task of product development, product scoping. In addition, I do prototypes with some clients, so I stay really in touch with technology. But obviously, my main job is to lead the team and to oversee the client acquisition also and onboarding. Oops, sorry.
+
+PARTICIPANT 00:44
+
+Bless you. Can you describe also a bit the range of the clients that you serve the industry?
+
+INTERVIEWER 00:54
+
+So we focus really on SMEs, because we see that there we can get the biggest impacts the fastest. So it has really to do with this.So anything from 50 employees to around 2,000 employees, which is now the biggest company we serve, we are doing it like industry agnostics. But we have partners that help us to implement it with certain industries. So for example, now we are with the biggest fiduciary organization of \[COUNTRY\]. We are launching, let's call it, a seemed platform. So we have the platform for the needs, and it's available to all the people. And then we offer a systematized onboarding. We also work with \[INSURANCE INSTITUTIONS\] a lot. And we are in talks with \[FINANCIAL INSTITUTIONS\] now also to be onboarded. But it's a little bit more difficult to get everything going, and the processes are a little bit taking a long time.
+
+PARTICIPANT 02:32
+
+I would imagine that for \[FINANCIAL INSTITUTIONS\], yeah.
+
+INTERVIEWER 02:34
+
+Yes.
+
+PARTICIPANT 02:36
+
+Right. So maybe for the rest of the interview, we can focus on those fiduciary institutions and the insurance, like, so can you describe the AI tools that you offer them?
+
+INTERVIEWER 02:52
+
+So basically what we do is like in the most basic sense we are really like an open AI clone. So we have a chat that is really focused on \[COUNTRY\] companies and \[COUNTRY\] SMEs. So everything is like really running in \[COUNTRY\] and we change the user interface in such a way that it really benefits most to the \[COUNTRY\] companies in this let's call it specialization of the tool.For example, we have the libraries of the \[COUNTRY\] law in a RAG that they can access to generate the answers. We create like custom, we call it constructors, so it's agents. So we create agents on our low-code platform for them and with these companies to help them for example answer customer emails to check for insurances if they have fully covered already or if these clients have like coverage holes for like a pension fund for example. It's also mostly to go to documentations to read on the right faster and answer a client's email. So it's like a it's a different thing. So what we actually do is we really help also interchange management. So they find the use cases and we help them then implement these use cases. It's kind of a differentiator of us that we don't say like hey here we have this fully automated AI system which will enable you to fire 10 percent of your people and then make everybody happy. What we say is like hey we really need your help, you need to change your organization to really make sense of AI.All approaches will not work and will just be expensive and in the end you don't have a output and then we work with these clients and then also to really start small see hey where can it help and usually we have them for industry and some use cases that work for them very well and then we help them to onboard it and and use it but usually it's a process that takes a while. Now for the fiduciaries it's really about for example the tax law and they have like kind of a standardized magazine which like a magazine where they publish
+
+PARTICIPANT 06:07
+
+insights?
+
+INTERVIEWER 06:09
+
+All these fiduciary reports like, for example, in 2025 in the \[COUNTRY REGION\], the tax laws change this, you need to interpret the law now in this such way. And so they really give the fiduciaries my guidance on how to actually use work with the law. And now we build an agent over this. So you can easily digest this information in a faster way and help this fiduciaries to stay up to date.Also, we are creating like an agent that helps to analyze the, sometimes I have difficulties with the English words, but I find it with the yearly accounting, not the yearly reports, because then you need to give an assessment, you need to analyze. It's usually for most smaller companies, let's say, like...
+
+PARTICIPANT 07:19
+
+Like the audit?
+
+INTERVIEWER 07:20
+
+The audit. Yeah. It's not so hard and it's copy paste from last year, and then you need to check some stuff. This works now very well with \[company\] our agent to actually write the first draft. But again, it's only a tool for an accountant to also double check, but most of the cases it works. So these agents then we build together with them. So it's not, it's not its own startup, let's say, or or product they buy. It's like we show them how to build it. And obviously we build some of them, and then we give them the templates, we work with them to optimize it. But for us, it's very important that they keep the control over the technology and the process. And it's not a black box. Yeah.
+
+PARTICIPANT 08:20
+
+Okay, so in that sense, going towards XAI in the context of \[company\], what does that mean, explainable AI in this context of RAG and agents?
+
+INTERVIEWER 08:37
+
+It was very interesting to see on this Monday, like a couple of weeks ago, the presentation and discussion about it, also to see that we are on the right way when it comes to explainable AI. So that basically with the next large language models, you're very limited to explainable AI and also that like typical technical parameters that you can give out, we really don't really help to explain what the AI is doing, like how it did, let's say in classical machine learning. And so that you need to...
+
+PARTICIPANT 09:29
+
+Sorry, can you enumerate those, the parameters that don't work?
+
+INTERVIEWER 09:35
+
+I mean, what you could do is like, hey, you can give the probabilities of the words itself that the AI has generated. So that's, for example, something you can put out. Then I saw some companies, what they are doing, they're using also LLMs to then touch the output in a way. I believe that all these approaches are basically a nothing burger (?), a little bit, and they can give you like an idea, maybe they can give you some hard numbers, but in the end, they're not really relevant or you cannot trust it at all.We now have also like a case, for example, where a client wanted to work with us. Say, okay, rate, for example, grant proposals and score it with an LLM on such and such a parameter so it helps us with the decision. We were able to build an agent system that works very well, so it's very repeatable to results, even over different models, like different LLMs that we put in the background, so we got the same numbers. We also get similar grant requests, a little bit written differently. We get also the same output, so it works quite well. Now, what they wanted, for example, also is a second run where it says, why did you come? Why did you get your rating? We said, hey, no, that's not how it works. We should not do this because obviously the LLM will always give you an answer. It will always give you a reason why it rated this grant request on this and it has actually nothing to do with the number it gives you on the rating. I mean, in the end, it's a little bit like humans. If you need to rate something, and then you ask, hey, why did you get your rating? Those two values are not necessarily connected in the end, but we say, I think it gives you more of a certainty which you should not have. So there we say, hey, no, you really need to check it. You really need to read it and you need to find the reason yourself why you got this rating.Because even if it works, that's the problem in 95% of the time.
+
+PARTICIPANT 13:06
+
+Yeah, there is one. Yeah. Okay. Okay.So just to interject a bit. So you also have this problem working with your clients that they they think that the explanation is the answer of the LLM.
+
+INTERVIEWER 13:22
+
+Yep.
+
+PARTICIPANT 13:23
+
+Correct. Because that's also what I when I talk when I do these interviews. Yeah, I think it's it's a loaded the term explanation. But because LLM is already human like to talk to Yeah, they they really think that the explanation is when you ask them. So going towards this direction, you said the the numbers, the probability of words, etc, don't work for your context. So what what is what do they ask in in exchange, your clients, what what is more relevant for them?
+
+INTERVIEWER 14:02
+
+What we really say is you need to, what is much more relevant, that you understand the sources, the context, actually. So what was the input data?Did you really understand what the input data is, that you can always see it, you also can always see the reference. In addition, we teach them,
+
+PARTICIPANT 14:24
+
+and they can see it. OK.
+
+INTERVIEWER 14:25
+
+Yeah, no, always. And we also, we teach every from our clients only to get on the platform, we, we have like a mandatory onboarding course, which takes about minimum three hours, where we show them how to prompt, we show them how to build their agents, and they will always have access to the agent system prompts. So they, so they are in charge.And they're in control and they can optimize that because there is really the what we say in German is like "where the music plays" I mean this, how you make this LLM-based AI system is through system prompt. Any AI startup system you find that is currently on the market is basically a system prompt and a UI around it and maybe some connectors (?) and what we say is like hey, to really have explainability, you as a user, you really need in a in a company context, I mean, you don't not not to get cookie receipts, obviously, for your grandma over, over Christmas, but in a professional context, you should really control the system prompts from the beginning until until the end, because no company normally would even dream about to, to, let's say, not be in control of such processes. And at the end, you describe processes in the system prompts. And you, you should really understand what's happening there. And you should always be in control, how to, how to change it. And that is really our approach. And also, we show them, hey, what happens when you change here? What happens when you change there? Also guide them through the frustration that it gives. Because that's very important to also then experience the limits and experience what happens when you have different data. So that's really our approach to explainability to and we think there's no other way, honestly.
+
+PARTICIPANT 16:41
+
+Right. Yeah.So what I'm understanding, I mean, this is also what I got from your presentation in \[CITY\], last time, that explainability is more of a process, really, when you work with your clients than a metric, right? Is that correct to say?
+
+INTERVIEWER 16:59
+
+Yeah, it's absolutely correct, yeah.
+
+PARTICIPANT 17:05
+
+Yeah, and then so you work with the insurance agents, do you also see any difference with like the roles that you work with that like, for example, when you talk to their founder, do they differ in the explainability needs? Because I can imagine that the agents would have more work that are more involved with the AI than the managers.Did you see that difference working with companies with the SMEs?
+
+INTERVIEWER 17:41
+
+Yes, of course. I mean, it's like to understand what AI is doing and also to build these agents, sometimes you need to collect a lot of data. What is my company actually doing? You need to describe the process and stuff like this. And a lot of managers, they're not used anymore to do like work in this kind. So that we always have a gap.So usually we really say, hey, we need to speak and work with the people at the front. So for example, really the people in customer support to build these agents because they actually know what's happening. Or we need to speak with the salespeople. We need to speak with the marketing people that actually have a task that could be supported with AI and then work with them to build the systems. And we have it now in our process. If it's okay, I will steal this phrase from you. It's a really good one. We have it ingrained or our customer success. We have this in our program, how to engage the senior level in these workshops, how to work with them. Because usually, they're not used to work in such style and small like meetings and they can discuss and ask questions and stuff like this. And everybody needs to have an answer. And that's not what we offer. What we offer is really like, hey, we help you to get there, but you need to do the hard work because it's important you understand. And so we take this into the process, how to engage them and how to keep them happy through this process. Because usually the other people, they're quite happy with the process because they see AI helps me a lot. But top management, they need to be coached a little in this process. And we do this by kind of forcing them to do the work because we
+
+PARTICIPANT 20:10
+
+Okay, they also sit down on the process.
+
+INTERVIEWER 20:14
+
+It's how we do it because we really believe otherwise you cannot learn. You can talk for hours and days and have 200 PowerPoint slides, but if you never did it...
+
+PARTICIPANT 20:31
+
+Yeah, it will not, it will not be observed.
+
+INTERVIEWER 20:34
+
+Nope.
+
+PARTICIPANT 20:36
+
+Yeah, that's that's true. Also, AI tends to, of course, have a lot of terms as well. But if you don't do it, then the terms might get mixed, I assume.And then if you do it, maybe you don't even need the term because you know the process.
+
+INTERVIEWER 20:53
+
+It's exactly what we say and we are putting really a lot of effort into this step in our onboarding. We are like really now many hundred times and we are really improving these workshops and the slides and how we approach different situations.We are really learning step by step by step because for us it's like now becoming a key differentiator and the most important part of our IP actually on how we do this process and in the end it has a lot to do with explainability or the lack thereof.
+
+PARTICIPANT 21:46
+
+Right. I just have a question because I'm not familiar with the \[COUNTRY\] context because it's not \[EUROPEAN UNION\]. So is there a regulation that's specific now with explainability in \[COUNTRY\]?
+
+INTERVIEWER 22:03
+
+no no okay so it's more like
+
+PARTICIPANT 22:06
+
+hygiene process for you.
+
+INTERVIEWER 22:09
+
+It's a hygiene process, yes, but also it's the success of the actual return on investment for our clients really needs this explainability because in the end it's why projects fail because it doesn't do what you want and what you need is like an understanding on how to now do the next steps because it never works as you want in the first try and so you really need to really we need to address it like from the start so they then they can work if they understand it they can explain why they get such an answer then they can work together with us on on how to make it better and get a better result otherwise you're stuck in the infinite loop with cases that don't give the expected outcome
+
+PARTICIPANT 23:20
+
+Bye.
+
+INTERVIEWER 23:20
+
+you will never be able to fully reduce it to zero. So you need an understanding of people really using it. Why did you get this result?
+
+PARTICIPANT 23:32
+
+Mm hmm. So because, okay, the product success is tied to explainability. You don't need the regulation telling you to have explainability.
+
+INTERVIEWER 23:45
+
+No, really not. We are now in the process of conforming with ISO 42 or 43, I think, with the ISO for the explainability. And then we are also working on the certification for the \[EUROPEAN UNION\] AI Act, which is basically quite easy for us, because we have this mandatory training that people need to go through and we have a lot of focus on it. So that's why we do it.And on the other hand, it's like a little bit \[COUNTRY\] culture, or maybe \[CONTINENT\] culture. So, I mean, for example, in \[COUNTRY\], nobody would even think of fully automating HR decision process based on AI. I mean, that's deeply American. I think culture revision is the start-up. But here in \[COUNTRY\], I never heard of such thing, and people are more like, yeah, but then maybe it helps you to pre-read, maybe it helps you to do a first filtering or gives you some indications, like stuff like this, but never fully automated.And if something in the \[EUROPEAN UNION\] AI Act, for example, it states it basically, okay, you need to explain it if you fully automate. But if you don't fully automate and you keep this human-in-the-loop approach, it's a completely different approach, I guess.And the other only thing that really affects us and our clients is also like large-scale emotional profiling, which is not something we had any case of, but we inform our clients say, that's not okay. So to...
+
+PARTICIPANT 26:01
+
+mean emotional profiling like sentiment or yes sentiment
+
+INTERVIEWER 26:04
+
+Thank you.
+
+PARTICIPANT 26:06
+
+So because it was not meant for that, the tool is not meant for that.
+
+INTERVIEWER 26:11
+
+I mean, you can, yeah, the tool is not meant for that. And there really is a clear border on how you should not use it.You can use it obviously on a case by case basis, but you cannot use it fully automated in a big scale. You can always use it case by case. So I could analyze our talk now and say, hey, what is this about me and that's okay. But not if I do it for all the calls, all my employees, for example, with all the clients.
+
+PARTICIPANT 26:48
+
+or decision making.
+
+INTERVIEWER 26:49
+
+Yep.
+
+PARTICIPANT 26:50
+
+Okay, so I'm down to my last question. So I mean, I just, if it's possible that you can run these items and comment why they are why you arrange them a certain way.
+
+INTERVIEWER 27:04
+
+Yep.
+
+PARTICIPANT 27:05
+
+Maybe one first item is more most important based on your role and of course your clients, I would say now.
+
+INTERVIEWER 27:14
+
+Good question. With ease of understanding, speed of generating explanation, cost of implementation, compliance to regulations, accuracy of explanations.Yeah, so I mean for our clients, I don't know if it's because it's a bubble or not, but
+
+PARTICIPANT 27:43
+
+Or maybe you can answer as the CEO of \[company\], but I guess it's all it's all embedded in it.
+
+INTERVIEWER 27:51
+
+Yes, yes. I mean, compliance to regulations is a hard factor, so they ask for it, but then they forget it. But if I would tell them like, hey, we are not compliant with the regulations, they will not use us.So probably this is the top, I guess. Yeah, speed of explanations and accuracy of explanations, so we don't really do these explanations. I mean, in the end, or not in an automated way, so it's more of a process. And yeah, if you look at it in terms of the process, I would say it's important, because the process takes anyway a long time. But I think the ease of understanding, it's hard for me to rate it. So ease of understanding, I mean, we really do this training, and we put a lot of effort to make it easy. And it's important that it's easy. So I will put it on the top, but on the other hand, we also force these people to, like the ones, the AI ambassadors in this company is how we call them, that the training is around eight hours in total or more.
+
+PARTICIPANT 29:34
+
+Mm-hmm.
+
+INTERVIEWER 29:35
+
+So I would not say we get the clients that are happy with an easy explanation, but they want to go deep. But on the other hand, it's important that we do this training very easy, if you understand what I mean.So I put it on the first kind, on the first rank.
+
+PARTICIPANT 30:00
+
+Now I'm learning a lot from this talk because, of course, the other, let's say, more classical AI ones, as we talked about, it really applies to them because they have metrics. But if XAI is a process, yeah, then the whole onboarding, then feedback that's also part, that's the whole time frame.Right, right. And you don't anyway give a certainty in the LLM because you have good prompt engineering too?
+
+INTERVIEWER 30:41
+
+Yeah, so we always say it's never correct and you need to check manually. There's no other way.So we really say this out from the first sales call to every customer question. If they're not happy with it then maybe we are really the wrong
+
+PARTICIPANT 31:08
+
+It's not a match.
+
+INTERVIEWER 31:09
+
+It's not a match and also we are going very well with this approach because a lot of our competitors they promise something different usually and they fail usually and so for us it works really well in terms of this year.
+
+PARTICIPANT 31:35
+
+Right. Okay, so I can stop my recording here.
+

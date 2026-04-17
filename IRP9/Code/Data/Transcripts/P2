@@ -1,0 +1,278 @@
+INTERVIEWER 00:00
+Thanks. All right, so as I've said in the email, this interview is really like a pre-data gathering for my real data gathering. So I want to know what are basically the options that the users, participants of my survey, should be able to choose from. Because I want to map out the requirements of making explanations for AI systems. And I'm talking to basically everyone, like people who code and also who do not code, so that we can make guidelines on how to best present AI explanations. So now, can you briefly describe your role at [redacted bank]? And how do you interact with AI systems, if any? 
+
+PARTICIPANT 01:01
+Okay, so I'm head of the department that is called [DEPARTMENT NAME]. And the focus of the department does change over time. And since early last year, most of the focus has been on generative AI application development. What we are doing is that we are focusing on [SEGMENT]. So the title of the department is wider, but it's part of [SEGMENT] management in the [BANK NAME] [REGION]. So in the [REGION], there's three countries that do the customer facing business and from holding perspective, the segment management and channels and different support functions that are here. And what we do in practice is we develop the applications on the platform that is provided by our [INTERNAL ENTITY]. So our [INTERNAL ENTITY] and all data analytics area is probably providing us a platform. And then we do the, well, we understand the business requirements. We have one business analyst and two data scientists. And then we try to build the applications that our internal customers are facing. I mean, let's call customer employees are using at the moment. So we're focusing on internal tooling.
+
+INTERVIEWER 02:27
+Okay, thank you for that. So you, you, can you just expound on the applications you are building, is it like what are the range of the functions like customer support, I understand, but what else are in
+
+PARTICIPANT 02:46
+We support our own internal customers in the sense that the employees and the use cases range from different kinds of assessments that are needed for the loan origination process like for [SPECIFIC USE CASE: SUSTAINABILITY], we need to do an assessment. Then we are trying to help out in [SPECIFIC USE CASE: UNDERSTANDING REGULATIONS]. We try in the sense that we expect for the first interview at use case to go live in end of [PROJECT-SPECIFIC TIMELINE], but since last year, we have been looking at things. What else? When customers send us unstructured information, then at different stages we have tried to use robotics or robotic process automation [RPA] to help out in processes, but things are so unstructured that there have been not high enough success rates. But now we are looking into different things in terms of generative AI so that maybe 80% we can help out with and then the remaining 20% humans will look into because with RPA it's almost one or zero, that it fails or it works, but in our case it can be that it works at this level and we are able to give some assessment that seems that everything is fine or will flag that no, nothing works, but at least we are able to guide a little bit how much to focus on when they review something. 
+
+INTERVIEWER 04:22
+Thank you. And so you mentioned you're head of the department, but are you also involved in development of the applications or more project management side? 
+
+
+PARTICIPANT 04:37
+Yeah, well, currently, I am also acting as the AI product manager. So holding together or thinking through what are the business requirements, even doing this product, the owner role of holding together the JIRA board, looking at the Q&A in terms of the ground truth data set, the proposing the design of the application, because also we don't have a designer. So we developers and we have business and then I'm in the middle that has an opinion of the design. And then this would be here, here, there, how to, well, how to have feedback. Well, of course, it's a bit, you know, regular that you have thumbs up and down. And then we later look at the logs and then, then things like this. And also creating this kind of ground truth data set, as I also have background in corporate financing overall. So it's easy for me to have an opinion of what are the good quality answers. So this Q&A data set generation as well. And then based on this, the team development team will create these evals. So one is that they create this kind of factfulness and this kind of statistical, like language model based evaluation that what is the truthfulness and what was the accuracy, etc. But when we create this ground truth data sets, what is a good Q&A answer based on the sample materials, then we and the business will have an opinion of what are good quality answers, also with business, but even this kind of practical work of, of this kind of testing how the solution works before we give it to business testing. 
+
+INTERVIEWER 06:18
+Okay, so you're kind of like in the middle of the tech and the business side of the company of the department, right? 
+
+PARTICIPANT 06:29
+And ultimately, we expect to have a separate product manager, area manager for this area. But as we're at the beginning, then, well, I'm just acting role and then we'll see how much and what kind of role we need. Because it was a bit new area as well that it wasn't very clearly defined but actually this kind of person needs to do because we are sitting between [INTERNAL ENTITY] and business business. And then it's a different shape of activity than our historical IT development. We just write business requirement and wait for the PI planning and whatever happens just when things are developed in the [INTERNAL ENTITY]. But now we do actually development ourselves. So it was a little bit of shaping the role as well that we really do what does [INTERNAL ENTITY] do and how do we interact that running the product approval process and the risk assessments seems to be on our table as well that whatever risks there are from IT perspective and user perspective and how to mitigate the risks.
+
+INTERVIEWER 07:29
+Okay, so when you mentioned the language model or some model that provides whether a response is accurate, is this available for all use cases now? 
+
+PARTICIPANT 07:43
+Well, we need to implement it for use cases so that we have monitoring in place for ourselves. What we do is both we showed the user that this answer came from this and this place in a document and what is the calculated relevant score, which is one thing that we showed to the users. But also for ourselves, we keep track of this kind of testing of the system, what is the factualness score when we change the question and answer or we change the model from one to another, then we check what is the calculated cost of the answers. So we are using some different open source frameworks, how to do this kind of LLM as a judge kind of approach. There's an answer, the LLM model itself checks that the answer really come from the source or it didn't and things like this. These are all automated checks that we implement. 
+
+INTERVIEWER 08:47
+Sorry, can you name some of these frameworks if maybe you can type them or if it's hard to. 
+
+PARTICIPANT 08:55
+I think the two of them that I recall straight out of that, but what we're actually using is, where is the chat is here? So it's [FRAMEWORK NAME] and [FRAMEWORK NAME] that we have been using.
+
+INTERVIEWER 09:07
+Okay, and you already mentioned some metrics like factualness score. Is there another metric that you use to evaluate the performance? 
+
+PARTICIPANT 09:20
+Yeah, so that's the thing that [FRAMEWORK NAME] itself had a couple of options, but as we're at the beginning, then there was... It wasn't called relevance, but that's the thing that...
+
+INTERVIEWER 09:35
+Okay, I'm checking. 
+
+PARTICIPANT 09:39
+But that's the thing that maybe I should send it later because I have seen the course, but it hasn't really sunk in that well, that the faithfulness actually. Anyhow, maybe I should send later because there were two options to check that did the answer actually contain the same information that was in the sources? 
+
+INTERVIEWER
+In the input, okay.
+
+PARTICIPANT
+ And if the language model would create the question based on the answer, does it match closely with the question that was asked? So this kind of reverse checks that I'm trying to explain with something that we haven't really started to use, but we are setting them in place to go to production before we actually do it. 
+
+INTERVIEWER 10:27
+OK, and since you tried these two frameworks, would you have, would you? Do you prefer to have more metrics than what's offered? Like, is there something missing? Like, just considering your role as the head? Like, is there something nice to have? That's not there, yeah. 
+
+PARTICIPANT 10:53
+I think that the frameworks themselves are pretty okay. It's sometimes even more that it's hard to choose. I don't know how to choose between that. In theoretical side, there's different Shapley score, or was it LIME, etc., that theoretically are good to implement. But I'm coming a bit more from business side, so it's something hard to understand that, okay, what is really relevant for generative applications. And then the different developments that somebody is saying that this is good and something else is good. And like, yeah, so it's more that there is nothing that somebody says that definitely would go for this because in the bank, there are a couple of options, because I wrote you [FRAMEWORK NAME] and [FRAMEWORK NAME]. But that's the thing that these are two options that different use cases have tried out. And it's not kind of finalized that definitely this or this is definitely better.
+INTERVIEWER 11:56
+Mm hmm. And okay. 
+
+PARTICIPANT 12:03
+It's more that it's not a matter of choice that there's not enough choice. It's more of trying to understand what's really relevant. 
+
+INTERVIEWER 12:13
+Okay, maybe can you expound on some maybe just the priority metrics for you? I mean, just for your role that you'd keep track for yourself. 
+
+PARTICIPANT 12:24
+Mm-hmm. Well, that's the thing that, well, accuracy, and I think it was called some, I think it was faithfulness that, well, the answer really, really comes from the source, not that it was somehow generated. What is the, well, in finance, we are looking at some memos and something, so there are some financial metrics that we try to help in the chatbot for people to understand. This is the source material, some memo, so for the user to talk to the memo, so if we sometimes do say that if it's as easy as using Control-F and going to the material, please don't use an AI assistant for this, but still, if people ask that, what is the forecast, I don't know, depth-to-width ratio or depth-to-service coverage ratio or something that build a number wouldn't be made up. Yeah, exactly. That score would be as high as possible, but there's always a trick that it's not very easy to get these kind of levels a lot above 90%, which is ridiculous. In some cases, when we do one approach, we have seen 100% quite often, but sometimes it's not consistent that it does vary, so what we mostly are concerned with is that the answer would really be based on any effects that are in the source. 
+
+INTERVIEWER 13:52
+Okay, but can you can you enumerate again the types of data that are inputted so you said financial memos but are also some laws financial regulation?
+
+PARTICIPANT 14:06
+Oh, it's true, because yes, we do have these kind of internal guidelines and these external guidelines. So how to help people understand the internal and external regulations to do their business? Well, actual business, that, you know, plenty of different. For example, there is an  [EXTERNAL REGULATION NAME] on loan origination. Of course, it's so high level that we don't always check that our business... 
+
+INTERVIEWER 14:31
+What is it called? 
+
+PARTICIPANT 14:33
+ [EXTERNAL REGULATION NAME] on loan origination. 
+
+INTERVIEWER 14:36
+Loan origination. 
+
+PARTICIPANT 14:38
+Yeah, so I write it down somewhere… 
+
+INTERVIEWER 14:41
+Yes, thank you. 
+
+PARTICIPANT 14:43
+So yeah, so [EXTERNAL REGULATION NAME] who is writing guidelines, which are actually more like laws. 
+
+INTERVIEWER 14:51
+Okay. So not a recommendation. 
+
+PARTICIPANT 14:53
+But our supervisors are checking that are you following the guideline? Well, what change the way applications can do is that, well, when there is external guideline, please write an internal guideline. Of course, it's not as easy as this. But at the same time, we have had on [INTERNAL ENTITY] level at least this kind of tool in place that helps to validate whether the internal guideline is meeting external guidance requirements. So it's kind of semantic based or content based evaluation that the generative AI tool is doing.
+
+INTERVIEWER 15:32
+So there's a separate, I guess scoring for this, the internal versus external guideline. Or it's just a QA process?
+
+PARTICIPANT 15:44
+Well, that's the thing that this ultimate, the evaluations do not care, is it which kind of solution because you can implement this kind of faithfulness check that the answer really contain information from the source wherever. 
+
+
+INTERVIEWER 
+And whichever source. 
+
+PARTICIPANT
+Yeah, so that's the thing that, of course, the importance can be different. But at the same time, most of our applications or all still have a human expert looking through the outcome. Not that there's a very junior person that doesn't understand that what was written, but it is still so far like a helpful solution that we're not worried that it's 99.9%. But it's more that you get over the hurdle of no kind of first assessment or first writing. So you get something that is okay. And then I'm not sure. We haven't populated from scratch still things, which is well, it is still a use case, but it's something of a hurdle that don't want to still write internal guidelines with intensive AI yet it's more of a review. Is it okay? How is it okay to give some assessment? So in that sense, if we would have some automated systems without human experts, then the factfulness scores or faithfulness scores would need to be very, very, very, very high. Currently, so that you know, it's okay enough that the 80, 90% or so I'm saying some numbers, is it really that level? But that's the thing that then we know that when you have 1000 cases still, you know, in 100 or more, more times person will see something that they need to correct. But it's fine because they have done or the solution has done most of the work. But this wouldn't be the thing that, you know, 90% of transactions went well, and 10% didn't. So this doesn't fly in case of this kind of automated systems. 
+
+INTERVIEWER 17:49
+Right. Can you walk me through? For example, a result is not factual or the model invented an answer. How do you ratify this? Do you go for each result or how do you modify it? 
+
+PARTICIPANT 18:12
+Yeah, well, during testing, we, yes, look through quite a lot of things. 
+
+INTERVIEWER 18:23
+Mm-hmm. 
+
+PARTICIPANT 18:23
+One of the approaches has been that we run through some standard questions. 
+
+INTERVIEWER 18:30
+Mm-hmm. 
+
+PARTICIPANT 18:31
+And we get some answers. And then we ourselves read the source material and then assess that, OK, this came from correct place. So it's like super manual network. If then it's possible to do this also in an automated way that we get some automated score. And then the third is that when things are in production, of course, we do this kind of assessment. We'll be hunting them at the policy because we don't have anything in the production. But sometimes run the automated evaluation again, plus that we rely on user feedback that is it OK or not? Of course, people are upset when things are not correct. So that's why we hope to get the feedback. But at the same time, we cannot assume that people just do duplicate work, that they use the assistance and read the source materials every time. So there wouldn't be much value of the assistance when we assume that people go and fact check everything during daily use. So it's a heavy reliance on testing phase that we get the solution up and running with a sufficient level of quality. And also guiding the users not to do fact fighting that much. So we still rely on the assistance to do this kind of thinking, how when things could be done in a better way or get feedback or this kind of helping tool, but not that what is at this rate in this place.Well, there are techniques to make sure that the pipeline actually works, that it gets the correct number one way or another. So in. So yeah.a
+
+INTERVIEWER 20:16
+Right. I just want to go back again to the use cases. You mentioned that, okay, there are assessments for the products. Is that correct? Assessments for sustainability? Is that for the financial products?
+
+
+
+PARTICIPANT 20:31
+Well, it's more this kind of corporate customer assessment. How do their sustainability activities align with our position statements? 
+
+INTERVIEWER 20:45
+Mm-hmm. 
+
+PARTICIPANT 20:46
+There the corporate customers have different reports that they say what they're doing and how they're doing and then our solution assesses how well do the activities go together with our position statements or how well through the activity seem to be, that is a comprehensive like this and this and then how far they are in doing xyz.
+
+INTERVIEWER 21:14
+Okay. And then for automating processes, does this include because I was able to talk to another colleague of yours about preparing emails, like automating the response? Is that part of the things in your use cases? 
+
+PARTICIPANT 21:31
+No, because that I mean this [SEGMENT] era where we do not have this this channels that speak to external customers.
+
+INTERVIEWER 21:39
+Yeah, it's more special. 
+
+PARTICIPANT 21:42
+Of course, we have heard of this angle and I support fully that channels would, for example, do it. Yes, because also as a corporate area, we are buying the service from channels to speak to the customers. 
+
+INTERVIEWER 21:54
+right okay so this is more specific on like the high level customers as you said yeah 
+
+PARTICIPANT 21:59
+Because think that when actually I say more but when we do assessment on customers then well we get the sustainability reports of the customers and in case of corporates then we're helping the corporate managers that speak to the customers or the specialists that do the sustainability assessment so that we know how they're doing and then we're able to take into account and speak to customers that okay are you doing this and this thing in that way but this email preparation yes as well sounds very good and also in our case in some of our departments are getting inbound not directly but you know they get lots of documents we haven't started looking into it but it still seems a use case that to assess that is the package that the customer sent comprehensive or not the like a list of things that they should have sent to us and did they send everything in terms of the items and also to check that was the content actually as expected I have even heard sometimes that due to time pressure the name of the file makes sense but the content not yet
+
+INTERVIEWER 23:05
+No, right, I guess that's okay. 
+
+PARTICIPANT 23:10
+the trick that how to help out with this assessment faster than the email coming in. Our queue is I don't know this long and then when in one week or so our employee is able to start going through that okay all the items are there and what is in the content then they send back a question to the customer that okay you have missed this and this and this and also this content actually should be improved so speed up this process of course is very much relevant but we haven't gotten to this to this as well. But definitely the kind of this preparatory topics is very much relevant to actually look into the future. 
+
+
+INTERVIEWER 23:49
+Do you have any idea how much data is the model like learning from like the data corpus or something? 
+
+PARTICIPANT 24:00
+But what we do is that, at least in the current stage, we are not training models. So what we do is that we take the large-language models that are on the market. Is it open source or some proprietary ones that have been said that it's OK to use, but you can use cases? And then we try to see that if we do this kind of system prompt or over-guidance, this RAG solution that we include some guidelines and documents from internal knowledge base, that if we somehow use the publicly available model and set up our system prompt, our questions, our documents in a way that the quality is good enough, that we don't go back and train the language model itself. I would expect that some banks have gone to the route that they take similar models that they train on, I don't know, all the relevant financial ratios that are needed. Because also, we have seen that without giving context, then asking for one or another topic, the model doesn't, of course, know the bank abbreviations. And then even speaking about TSCR, so it was just one example that is not consistent. So it sometimes speaks about one thing, another thing. Of course, this TSCR is SREP(?) ratio, but it's a little bit more specified in our use cases what actually is meant when you mean this. There are some angles what to look into. But that's the thing that it is one option to go for to make sure that the language models know all the abbreviations, for example, or hypothetically to train something on our data. But no, we just try to tailor the application between the language model and the outcome that we expect so that it works well enough. So this kind of RAG database, the VC-VC vector database, and then the question and answer sets, et cetera. Not question and answer, just like filling the questions so that we get the answers. 
+
+INTERVIEWER 26:26
+Yeah, I understand. Okay.So just for my last question, I just need you to rank the items on the chat. Let me just send it. But maybe I want to confirm, is faithfulness also accuracy in your definition? 
+
+PARTICIPANT 26:49
+Yeah, yeah, so that there's different angles that there can be both(?) so that precision and the faithfulness and accuracy, somehow they are different. But this is the thing that it gets into the level of detail and then correctness. And so that's the thing that also things to choose from. But would you okay, so yeah, just
+
+INTERVIEWER 27:20
+This one is more considering your role, really, yeah. But if there's a factor missing, we can also add it. 
+
+PARTICIPANT 27:36
+By ease of understanding, is it that the answer is well-written? 
+
+INTERVIEWER 27:43
+Yeah, you can understand the explanation. 
+
+PARTICIPANT 27:47
+Oh, the explanation itself. 
+
+INTERVIEWER 27:48
+These are related to explanations, creating the scores. 
+
+PARTICIPANT 27:57
+Oh, no. Everything's super important. 
+
+INTERVIEWER 28:02
+It's really hard. I'm forcing everyone to just... 
+
+
+PARTICIPANT 28:08
+Okay, well at the back I will try to copy it in notepad so that I can move the things around and does it all make sense? Okay, so let's say that the first one should be highest importance. 
+
+INTERVIEWER 28:34
+You can also add the the factor if you want because this is part of the survey that I will ask a range of employees, too, if you think there's something else 
+
+PARTICIPANT 28:50
+One thing with explanations is what we have done as a technique is simply to show the source. So the explanation isn't more than sometimes showing where the answer is from. 
+
+INTERVIEWER 29:11
+Right, so then we can just think about it hypothetical. If we were to have an XAI model, like what's important for you, even if it's not yet like there. Like, yeah. 
+
+PARTICIPANT 29:49
+And now I think that when you give a list, then it's hard to change the order. If it would be randomly generated, maybe it's easier. Because if you already give a ranking, then maybe people keep the same ranking that they don't want to change it. Because now when I had a look and then I didn't change very much. I just put alignment with regulations first because this is a must anyhow. 
+
+INTERVIEWER 30:22
+Right, that is that is true also the thing with being a I guess like the one that put more effort but you can we can also just talk about it why you put the first two ones maybe on top. 
+
+PARTICIPANT 30:38
+Because one thing is that if we don't follow [GUIDELINES], we'll get the fine, or we'll need to stop doing something. So it is a given anyhow. And I would say that the [GUIDELINES] are not that hard to follow as well. We will need to somehow time prioritize them. But it's hygiene for us. And why I put cost of implementation at the moment to the last was in case of [SPECIFIC USE CASES], we don't have that big of a scale that we would create a separate major cost from running explanations. If you have, I don't know, 1 million responses, then maybe something like can make a difference of 100,000 euros. But that's I think that in our case, we have…
+
+INTERVIEWER 31:41
+That's really a good insight for me because it will depend also on the type of organization and client. 
+
+PARTICIPANT 31:52
+because we are not avoiding explanations currently due to any cost considerations. And what we have seen is the total accuracy of explanations. I still kept it there, although I was wondering what does it mean, but if explanation isn't accurate, then it's just a double issue. At first, the answer is so-so, and then also the explanation goes in a strange direction. So it's like, what's going on? So it creates some kind of strange mix of false positives and negatives, and I don't know what even was happening. The answer is fine, but explanation is saying that it's not fine, and vice versa. But at the same time, you know, maybe it's also fine. It's just as a feeling, it seems that, you know, explanation should be as accurate as possible. 
+
+INTERVIEWER 32:37
+Of course, I understand, yeah. 
+
+PARTICIPANT 32:40
+And then why I kept speed ahead of ease of understanding is that, well, from the use cases that we had, it seems somehow that giving something faster gives a better feeling to the users than how easy the answer is. Because also, in our case, when we provide the entire section or sections where the answer is coming from, people are not that much worried that it's not very easy to read the citation. That it loses some form of things sometimes we have seen. And then it's not very nicely taken out because it's taken out directly from the…
+
+INTERVIEWER 33:21
+from the regulations. 
+
+PARTICIPANT 33:24
+From the sources, something. So it's not that we are just much worried. And at the same time, some kind of formatting gets lost, because you know, convert things to vector database and back and forth. So that's the thing that, you know, ease of understanding is almost lost. People are happy that there is some explanation. And if they really, really need them, they take the time that they want something faster. 
+
+INTERVIEWER 33:46
+right okay so now the current explanation is like a snapshot of the source or a link to the file or 
+
+PARTICIPANT 33:56
+much so that it is saying from from which file and then it shows the extract. 
+
+INTERVIEWER 34:02
+Okay, so even for your side and employees using the model, it's the same, what you're seeing is the same, or I mean, there's an extra layer of interface maybe?
+
+PARTICIPANT 34:16
+Like I said, we just keep in the log what the user saw. So an entire citation block and everything like this. But of course, this kind of language, LLM as a charge, we don't show the customer because, well, not customer, or internal customer. Yeah, that's a good idea. We keep it for our internal validation that, okay, that's a set of questions. We run the evaluation and see that everything is still fine. And when we would swap out the model from one to another, we see that the data quality go better or worse. So we do this kind of benchmarking, not with every interaction that there is with application, but with some frequency. 
+
+INTERVIEWER 35:06
+Mm-hmm. 
+
+PARTICIPANT 35:07
+But this kind of explanation is what we showed to business. Then this is the same that we would have a look at it later. But we don't see the speed of explanations. It's more than the user sees. And in our case, the evaluation just runs somewhere. Of course, if it would run a couple of days, we would get annoying. But I don't think we are worried that it comes with 10 seconds. It's just that we let it run. And then we look at the answers later. So the speed is also less enough. For a user interface, it's important to give everything fast. But for our evaluations, it doesn't matter. Does it come in one minute, or maybe even 10 minutes? Or I don't know. We would press the button in the evening and come in the morning, because we don't have this kind of operational life systems. Because if it would have evals on life systems somehow, transactions, and something, then of course, it would be a different set of requirements. So I'm not saying it was, in our case, it's this kind of non-transactions. And in our case, something adrift or something like this. We would have a look at it later. And we still have people, let's say, in the middle. 
+
+INTERVIEWER 36:19
+right okay thanks so much um maybe i'll just have a follow-up on email if it's possible to like know the metrics that you follow from the other one 
+
+PARTICIPANT 36:34
+So I think currently we settled on using [FRAMEWORK NAME], but [FRAMEWORK NAME] wasn’t (?) even tested because there was no...
+
+INTERVIEWER 36:43
+Yeah, because I mean, I'm on the web page and there's like, there's really a lot of here available metrics for Nvidia agents, natural language and SQL, because if you could just maybe like send me which ones you are actually using, that would be really helpful. Yeah. 
+
+PARTICIPANT 37:08
+Thank you. 
+
+INTERVIEWER 37:08
+All right, so that's for me. Let me just. 
+

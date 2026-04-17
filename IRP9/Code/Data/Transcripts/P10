@@ -1,0 +1,276 @@
+PARTICIPANT 00:00
+
+I'll plug in the battery so that I don't have any issues here.
+
+INTERVIEWER 00:05
+
+Okay.
+
+PARTICIPANT 00:14
+
+All right, I'm all yours.
+
+INTERVIEWER 00:15
+
+All right, thanks. So can you briefly describe your role at [redacted company] and maybe also describe the company in brief?
+
+PARTICIPANT 00:25
+
+Yeah, right. Just maybe a little bit of history on myself. The last 19 years I've been working for per [redacted bank], so an international bank insurance group present in [a set of European countries]. And I've been mainly working in B2B propositions, so providing professional services from one financial institution towards another one. And three years ago there was the idea of the CEO of [redacted bank]. We are doing quite a lot of things within [redacted bank] in artificial intelligence. We see that it's creating a lot of value, a lot of value definitely in financial crime fighting. Why shouldn't we set up a company that is really taking the AI technology that is built within [redacted bank] and bring this towards other financial institutions. So making sure that the developments that were done within the group, that we can productise them and put them into the market. And so I've been involved the last three years in first the setup of the company called [redacted company]. So we're a 100% daughter of [redacted bank], but we're not a banking company. We're a technology company and really focused on financial crime fighting. And within financial crime fighting focused on everything which is linked with transaction monitoring. As you may or may not know, there are tremendous challenges in transaction monitoring, a big number of false positives. So the current systems, they are generating really a lot of noise for the banks, but this noise, it needs to be treated by the banks, hence extreme budgets that are needed. But we also see a lack of performance to identify money launderers. So we have seen initially that if you apply artificial intelligence, that you get from a statistical point of view an outperformance towards the traditional technology. I think this is already a good point to start to make a business case of what we can do. But for me, it is very crucial. And I've had discussions with, let's say, 65 European banks, mainly in the last three years, is that next to the pure technology component linked with it, trust is extremely important. And trust is important for me in all the different buyer personas that we were encountering in our go-to market. So in the AML set up, this is both within the bank, but also towards the regulator. You need to perfectly explain how your AI technology is working, not from a black box perspective, but really from a full transparency. And this is not yet the explainability, but more the transparency of the models that you can properly explain towards a regulator, a national bank, how these things are working. So this mainly into the interaction between a bank and a regulator. And you see that still quite a lot of banks are still struggling with this to properly explain in a simplified way what artificial intelligence is. So I think there's still a lot of need for demystification to properly explain in a simple way what it does and what it doesn't do. On the other hand, what I also see is it is also, I think a bit in the user adoption, it is critical that the users of this technology, which is AI-powered, that they have comfort in the system. On the one hand, this comfort will be given by a lot of model risk management, validation, the very, very statistical things that needs to be done.
+
+PARTICIPANT 04:54
+
+But there's also armies of investigators who will be using these two links. And there you need in a rather, I think, explainable way give your translate your AI scores into a proper explainability. In the case of [redacted bank], for instance, in [a specific European country] alone, it's 400 people who are working with in transaction monitoring. So what we are currently doing is we are screening all the clients. We are giving them a score, which is giving a propensity of suspiciousness in the context of money laundering. So a score between 0 and 100, you divide it in certain buckets. But then the score is being translated with the use of Shapley values into an explainability that is reusing some of the features that have led to the, why is this client here more suspicious? It could never be the case that this would be black box to say, ah, a client, [redacted name], myself, I have a score of 95%. And that it's not clear for an investigator why this is. So we try to make it very clear, OK, a client will have a certain score. But this score is linked with a number of features which are linked to the behavior of this client in transactions that will contribute to this score. So I think from an AI perspective, so transparency is very important a lot in the communication between a bank and a regulator. But explainability, for me, extremely important in the adoption of end users of artificial intelligence. And also, banks have this responsibility to report on suspicious transactions towards the regulator. And well, they will need to explain, why is this? It's because of this and this client. They were making a lot of nighttime cash deposits in certain areas. And you need to properly explain it before you give this to the regulator. I think we have seen in the [a major European market] a recent find on the usage of AI in transaction monitoring. That was for a [a European bank]. And there you see that one of the, how do you call it, reproaches, I don't know, (?), that the regulator was making towards the bank was the lack of consistency, the lack of explainability on how a number of alerts were handled by the bank. So I don't know if all of this is a bit clear to you what we're doing, why we're doing these things and on the importance of explainability.
+
+INTERVIEWER 08:12
+
+Yeah, that's really, you covered a lot of things already that are my next question. So maybe I just want to clarify again. So [redacted company] has a, it's essentially you have one product, which is making the client's course propensity to money laundering, correct?.
+
+PARTICIPANT 08:33
+
+Indeed. But this is just the AI component. And behind the AI component, there are a number of algorithms in supervised learning, in anomaly detection, in network analysis. And we are currently in our proposition, combining a bit legacy technology, which is more rules-based, where you have a number of rules that you need to configure traditional programming. And this, we are combining with artificial intelligence. And we are making some kind of a pyramid of it, where we can enable banks to hibernate quite a lot of the noise coming out of typical rule-based systems, where we allow lower due diligence on a number of things that are not so relevant, normal due diligence on those things that are relevant from a rules perspective. But we added with additional explainability and a model way towards those triggers, and also a number of insights that we just are bringing to the surface, thanks to artificial intelligence, because there you will look at more complex patterns in money laundering. So it is two types of technology, legacy technology, AI technology, and the AI technology is, of course, built on a number of algorithms where we're taking in transaction data, client data, historic source in order to train it and product data.
+
+INTERVIEWER 10:06
+
+Okay, maybe just
+
+INTERVIEWER 10:08
+
+if I able this technology legacy technology because it has legitimacy in the past or?
+
+INTERVIEWER 10:17
+
+I think it's like a tech term legacy, like old systems, correct?
+
+PARTICIPANT 10:25
+
+All systems, it's just traditional technology where you define a number of scenarios with a limited number of parameters. You will, for instance, say, I need to investigate my high-risk sectors, for instance nightshops, and I want to investigate in my nightshops all the transactions above X amount. So very, very much rule-based, whereas in our more data-driven way, we are looking for data. We're looking for patterns, irrespective of what the consequence might be. So we're combining both of them together.
+
+INTERVIEWER 11:09
+
+Yeah. And then you sell this product to banks, right? They apply it and they have to explain the regulators why they rank the particular client in this way, right? So explanation need is between the bank and the regulator.
+
+PARTICIPANT 11:27
+
+Well, this is an important explanation need. The other explanation need is towards the investigators who are doing the day-to-day job. They want to know, I have here a client [redacted name] with a high risk scoring. What is the reason behind it? Because we have seen in your data points that you're acting very anomalous as a professor. You're not acting like other professors and we see that you're closely connected with [another client] who has a high risk score. So we will propagate a little bit of her risk to you. And based on the historic reports that a bank has made, we will see in the data points that yeah, your behavior is a little bit like other money launderers that we have seen in the past. So you definitely need it for internal adoption, but also in external validation, but explainability towards a regulator.
+
+INTERVIEWER 12:34
+
+But what exactly is your role in this explainability chain? So you provide the model, right? So do you kind of support those people in their explainability needs? What are you doing?
+
+PARTICIPANT 12:46
+
+Yeah, so we have a blueprint of a number of models where we know from experience and deployment within [redacted bank] that we can, if we apply them towards the local data of a bank, that we can get to valuable insights. So we know the relevant data points, we know the relevant features that needs to be used in order to do anti-money laundering, and we are providing as a technology company, a data service, a data science as a service for other financial institutions. So what we will do, we will give our cloud-based, we will use our cloud-based environment with a number of blueprint models, algorithms with relevant data points. We will connect it with the data of the customer. So for instance, a [a German bank] in [a European country], a [a Portuguese bank], we will always train it with the local data. And when I say we, we will make the connectivity towards the data, we will source the data, we will train a number of different models, our data scientists will then also make an evaluation towards the client. Here I have a set of 100 different models and I see from a number of curves that I'm making that these model, it would be best fit for purpose. And then after this training, we are giving insights to the clients. And so all the clients in the portfolio of our B2B bank, which is a B2B client, which is a bank, we will score and explain all the, and give an explainability of the reasons of this money laundering towards the other financial institution.
+
+INTERVIEWER 14:39
+
+Yeah, but how exactly do you give this explainability?
+
+PARTICIPANT 14:43
+
+It's based on Shapley values, so I'm not a data scientist by nature.
+
+INTERVIEWER 14:52
+
+Basically, you give the list of scores and tell which factor has the highest weight in the result.
+
+PARTICIPANT 15:00
+
+Absolutely. Yeah. Yeah.
+
+INTERVIEWER 15:02
+
+Okay, but then you said that you see some relationship between those scores and client's behavior? So you make kind of an assumptions that this relationship exists. Is it based on any theoretical knowledge and your experience? Why should there be this relationship?
+
+PARTICIPANT 15:22
+
+Oh, but these are just link analysis that we are doing. So we are taking all the client data, all the transaction data. And so basically, we have the three different models that we can offer as a service towards the client. So firstly, the pure supervised models, where we will look at historic events that will identify trends in data on the one hand, very generic, but also more specific. So we have seen that we have identified a number of patterns in data that can lead to money laundering, social fraud, physical fraud, these kind of things. So really, historic observations. So this is one of the models that we're training. Another one is really the anomaly detection. So again, on the entire set of clients, we will make a number of clusters. We will see what is the expected behavior of a client. And we will do a scoring of all the clients of the bank in this. And the third model that we're offering, it's really link analysis, where between different nodes, we will see if there are transactional links between them or more contractual links. Like for instance, we have a corporate structure with an ultimate beneficial owner, with owners, et cetera, et cetera, or more in a marriage relationship. So all these models, we are training them. We have the possibility on these individual models to, of course, always a scoring and an explainability of the reasons of the suspiciousness. And we also have the possibility to combine all of this in a more stacked model, in an ensemble model, where we are creating a blend of the different models together in order for clients to have like one score of a client and not say, here, my client [another client], she has a 50% in anomaly, 90% in supervised learning. But we make more of a blended score of this. And so this is what we're really offering into the market. So you could consider us a little bit as like a data provider, but really linked on the data that we receive for the client, we augment it with usage of artificial intelligence. And what we deliver is a probability of risk scoring and explainability.
+
+INTERVIEWER 17:59
+
+Right. Apart from the scores, do your client usually request more types of explanations? Is there anything missing you think in the current setup?
+
+PARTICIPANT 18:13
+
+What I feel a bit for myself is that our data science team, they have opted to use these Shapley values. I see for me, it is not always intuitive enough towards a user to properly explain it. So there, I think I see some, I see some room for improvement. This on the one hand, and I think also what we're very good at is in order to identify that a client is showing suspicious behavior, what is a bit more difficult is to give a very proper explainability why a client is not suspicious. So it's easier to identify that something is wrong rather than identify that there is nothing wrong or nothing anomalous towards a client.
+
+INTERVIEWER 19:16
+
+Right, so just going back to the Shapley values if the client that is not satisfied with this like how do you have a workaround for it? Do you have produce more reports for them for example?
+
+PARTICIPANT 19:32
+
+Yeah. So these are a bit of personal opinions where I say that I think it could be it could be improved. I would be more thinking of making it much more even human readable than just a combination of a number of features. So we're thinking of a number of things in large language models in order just to make these Shapley values just more humanly understandable. And it's like a bit like if a human would need to explain it that we can also present it in this way towards an investigator.
+
+INTERVIEWER 20:17
+
+All right, to have a more conversational presentation of why is the client this way, that way.
+
+PARTICIPANT 20:25
+
+Absolutely.
+
+INTERVIEWER 20:27
+
+The story around the factors.
+
+PARTICIPANT 20:29
+
+Indeed, indeed.
+
+INTERVIEWER 20:31
+
+Okay. And can you tell us if there was a time that the results didn't like raise, did not meet the expectations, for example, of the client, do they also go back to you for that?
+
+PARTICIPANT 20:49
+
+I think the results are very promising. Of course, you will need quite a data-rich environment in order to make all this work. So for smaller financial institutions with less history, with less data points, it's just a little bit harder there. I think you need to be smart in the type of models that you propose, the supervised learning, more anomaly detection in order to bypass this. I think what I see in the market, one of the biggest hurdles is to provide enough comfort towards the regulator that you can properly use it and that you can promote it to production. This is not always a very rational objection that they are making, but a little bit more like an emotional objection. You're putting a lot of comfort in a machine to do things. So it's always been a very, very human business where investigators are doing things. So there I see some resistance. And for me, you're probably aware of this European AI Act, where there are a number of requirements on AI systems. And I really do believe, in order to make a success of artificial intelligence in financial prime fighting, that some of the requirements that are there for high-risk systems, invalidation, inexplainability, any human in the loop, that these are extremely crucial things in order to make it work. So I'm directly against overregulation, but I think in the mindset of a proper usage of technology, I really do believe in some of, and for me it doesn't need to be regulation. It should be common sense that you need to do these things in order to make a success out of artificial intelligence. I think this is on the one hand, I think on the other hand, a bit atone from the top. AI should be supported by top management. If this is not done, forget about it. It won't work.
+
+INTERVIEWER 23:14
+
+Right. With this regulation in mind, did your company alter anything in the process or add something that you offer to your clients?
+
+PARTICIPANT 23:23
+
+And for me, because we are really born out of a bank, the things that are needed to bring this conflict, not only from a technology perspective, but from a documentation perspective, from a governance perspective, maybe a little bit the boring things around it that are that crucial within a financial institution. I think these things have been put in place initially by the solution went went live. So we only saw the text of the AI act after it was already developed. But I think it's crucial that we have this knowledge. A lot of tech providers, I do believe that they are bringing incredible innovative technology into the market, but often a little bit too innovative, not explainable enough, a little bit too black boxy in order to find the adoption onto the market. Also, in my discussions with [redacted bank] Compliance, they say, if I have an extremely performant model, which is a bit harder to explain towards a regulator versus a medium performing algorithm, which is perfectly explainable because we're just explainability and you really need to balance it off towards performance. Performance is not the first measure to select tooling.
+
+INTERVIEWER 25:04
+
+Performance. Can you define in your context what does it mean?
+
+PARTICIPANT 25:09
+
+Performance is a reduction of operational cost, so a reduction of false positives and it's also effectiveness, finding new types of money laundering.
+
+INTERVIEWER 25:21
+
+But I'm interested in this discussion about “explainable enough”. Because you say if the tool is not explainable enough, it is problematic. But I mean, when is this explainable enough? Like if regulators says, okay, we understood everything, thank you. Or some criteria for you just to understand, okay, this tool is more explainable than the other. Because it kind of sounds a little bit subjective. So of course there is a trade-off between performance and explainability all the time. But when would you say, okay, this is explainable enough?
+
+PARTICIPANT 25:59
+
+Yeah. For me, this would be if it passes the test of the model validation framework that we have in place, I think initially within [redacted bank] and later also with other financial institutions.So you will see, is it appropriate what it's doing? What are the data sources? If I look at my pure sample testing, this validation, do I get enough comfort of it in order to say I can validate this solution? I think this is basically it.
+
+INTERVIEWER 26:44
+
+Mmm.
+
+INTERVIEWER 26:46
+
+Just going back to the, you said there are basically three models that you offer for each of them, like the trends, scores, link analysis in the ensemble are all being presented in Shapley scores or there are other types of explanations available.
+
+PARTICIPANT 27:10
+
+Yeah, for the link analysis, I don't know what kind of technique that is used in order to provide the explainability.
+
+INTERVIEWER 27:18
+
+Right. But for the rest, it's the feature importance?
+
+PARTICIPANT 27:23
+
+It is. It is.
+
+INTERVIEWER 27:24
+
+Right. Okay. And when you offered the service to the bank, how did it change their implementation having the ensemble? Like did they sanction or report more transactions than usual?
+
+PARTICIPANT 27:42
+
+Well, I think the reasons why financial institutions are using it, they differ. I think what we see with some tier two financial institutions is currently they don't really have the human resources in order to capture everything that they should be capturing, so they are mainly looking at artificial intelligence to be much more scalable than they were before. So it will also be a bit about additional effectiveness, whereas I think for bigger financial institutions, in a lot of cases there's a business case behind the [unintelligible]. I was in an event in [a European country] yesterday, and let me just check here for a second. In [a European country] alone, there are 13,000 people working in financial crime fighting. This is just way too costly for [a European country's] banks. They need to control this cost, so there will also be a business case driver, and it will really depend a little bit on what is the need of a financial institution to either pull more on the efficiency point of view or rather focus on the effectiveness point of view. From our perspective, we see that there was a tremendous benefit in applying artificial intelligence in financial crime fighting, but I cannot disclose what this has been.
+
+INTERVIEWER 29:22
+
+But what other variables were added that is not covered in rules based that made it, I guess, more beneficial? Does that include, like, when you mention behavior data, is it like their apps' behavior?
+
+PARTICIPANT 29:42
+
+It's not really linked with apps’ behavior, so we're mainly looking at transaction data, client data, about suspicious transactions, about historic events, I mean about product possession, but I think what you refer to, this will be more used in a fraud context rather than in an anti-money laundering context. It makes perfect sense to use this in fraud and anti-money laundering. This is a pure ex-post responsibility that banks have in order to identify suspicious behavior so that the criminal networks can be identified. It's not the idea.
+
+INTERVIEWER 30:25
+
+Yeah, right. So it's still transaction data, but beyond the rules, it's the complex patterns that you mentioned, mostly the benefits from there that are outside the rules. Okay. Do you have more questions, [INTERVIEWER]?
+
+INTERVIEWER 30:43
+
+Yeah, so from your experience, do you observe that, for example, investigators in the bank require different type of explanations and regulators or basically as a scheme is the same how you explain as a result of the model.
+
+PARTICIPANT 30:58
+
+No, so it's been the solution has been deployed currently over five different [European countries]. And there, the setup, the explainability, it is it is it is very much the same. Of course, we have our [another European unit] clients, we can do it in Cyrillic script. But I think from from a content perspective, nothing has changed. Of course, I think we're also commercially focusing on the [European market]. We're also having now AML regulation, which will be applicable immediately to all the to all the member states. So we're having a European level playing field. So I wouldn't see any any substantial differences there, country by country.
+
+INTERVIEWER 31:43
+
+For example, could you observe that regulators, for example, said, OK, we need some additional part of explanation for explanation, or as they did have some specific requirements in comparison to investigators? So investigators said, OK, so we need here is one piece missing in your explanation.
+
+PARTICIPANT 32:04
+
+Yeah, so I think currently culturally there's differences between the different national regulators of course. Now with the AML authority, there will be more of a level playing field in this this this perspective so going forward next to the difference I think I think it will be a really a different setup of the different regulators across [a European country] but I'm not that operationally involved so I wouldn't know for sure.
+
+INTERVIEWER 32:44
+
+Mm hmm. Okay, cool. Right. But is it correct what I'm getting just because of the interest of the banks to scale with AI? Is it an indication that they also move away from what the just the rules say or what normal financial theory rules say about money laundering?
+
+PARTICIPANT 33:10
+
+For me, it's not moving away from, it's really augmenting. So the traditional technology, it is there. It is there to stay for definitely a number of years, but the traditional technology had a number of pain points, both inefficiency and effectiveness, which now needs to be overcome with the augmentation of an artificial intelligence layer. We have seen in the [European market], it is too early to say AI will replace what we currently have much more in an augmentation mode.
+
+INTERVIEWER 33:47
+
+But in anti-money laundering circles, is the approach to catching them like the theory of money laundering? I'm not sure if there is. Has it changed since AI has come into place? Thank you.
+
+INTERVIEWER 34:08
+
+Did you discover new factors?
+
+PARTICIPANT 34:10
+
+Yeah, I think that's that's really the benefit of it. You see, I think, for a human brain, it is so difficult to visualize a network. It is so difficult to find anomalies in behavior. Is a [generalized student description] acting like other [generalized student description]? It is it is a bit too complex for a human mind to to identify this.And so this on the one hand, on the other hand, we see a lot of criminal use of artificial intelligence, mainly in the fraud domain. And it will be important to fight fire with fire. If you see the trends in in fraud schemes happening across [a generalized region], it's really, really scary. So the only way to to act to this is to also really beef up on the technology in order to to to fight it.
+
+INTERVIEWER 35:12
+
+Right? Because otherwise it's too costly to have a representative maybe of each country to tell how how money laundering works in each context. Okay, so I'm down to my last question. I'm just I want to ask if you can rank these features relating to explainability. Maybe one is the most important five is the least and you know as you think we can just also converse why would you place them in such order just think loud with us. Yeah.
+
+PARTICIPANT 35:49
+
+I don't really see them in front of me. It pops off on the screen. But where is it right now?
+
+INTERVIEWER
+
+It should be like a chat bubble. OK, yeah, yeah, yeah, I see it right now. So you want me to rank them?
+
+INTERVIEWER 36:05
+
+Yes, but you can also just think aloud as you rank them.
+
+INTERVIEWER 36:11
+
+1 as the most important and 5 as the less important
+
+PARTICIPANT 36:28
+
+For me, one and two will be a bit the one and two that you have there on the accuracy and really the ease of understanding. I think the accuracy will be extremely important in the validation of the models and the ease of understanding will be very important in the adoption of the system and the effective usage by the staff who will be using it. I think when it comes to the cost and the speed of this generation, I think from a technology perspective we've been doing a number of very interesting things in order to try to really optimize this by machine learning operations. There's a number of technology enhancements that really will facilitate this. Of course, they are important, but I would consider them more as foundations or building blocks that you need to have, but this will not determine, do I like it or don't I like it? It's like a hygiene factor rather than a, how do you call it, a satisfier. So one and two are satisfiers, the cost and the speed for me hygiene factors and the compliance with industry regulation, I think it is crucial that those models are doing what they are built for. So the appropriateness is very crucial, but for me, this is not so much linked with the explainability.
+
+INTERVIEWER 38:17
+
+But you mentioned the EU AI act, so it seems to be kind of an important framework for you, right? Yeah, absolutely. But it's a regulation, I suppose, no?
+
+PARTICIPANT 38:29
+
+Yeah, indeed. But for me, this is more into what will contribute to the success of artificial intelligence in financial crime fighting. And I think there the importance of the human factor, the importance of a control framework, the importance of documentation, the importance of governance. I think all these things need to be done. And explainability, it will run a little bit for me as a red thread in between all these things.
+
+INTERVIEWER 39:01
+
+No, fair enough.
+
+INTERVIEWER 39:02
+
+Okay, thank you. Right, so I think we're good. Thank you so much for your time and hope you get
+
+INTERVIEWER 39:09
+
+Very informative, thank you so much.
+
+PARTICIPANT 39:11
+
+No, right. Any, any ideas? So what, what are the next…
+
