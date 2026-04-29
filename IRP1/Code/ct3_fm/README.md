@@ -13,13 +13,13 @@ The pipeline is **hash-addressed, restartable, and modular**, with a strict sepa
 
 generators.py
 ↓
-create_data.py
+create_trajs.py
 ↓
 artifacts/trajectories/<generator>/<run_hash>/
 ↓
-create_preds.py (Chronos inference)
+create_preds_{model}.py
 ↓
-artifacts/trajectories/<generator>/<run_hash>/predictions/
+artifacts/trajectories/<generator>/<run_hash>/predictions/model/
 ↓
 create_metrics.py (CT3 metrics)
 ↓

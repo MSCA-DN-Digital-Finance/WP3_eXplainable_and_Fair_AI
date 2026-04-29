@@ -8,7 +8,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 
 import numpy as np
 
-from generators import (
+from generation.generators import (
     random_walk_with_drift,
     ar1_with_noise,
     harmonic_oscillator_with_noise,

@@ -7,8 +7,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict
 import numpy as np
 
 
@@ -121,7 +120,7 @@ def harmonic_oscillator_with_noise(
     T: int,
     *,
     A: float = 1.0,
-    omega: float = 2.0 * np.pi / 50.0,
+    wavelength: float =  50.0,
     phase: float = 0.0,
     offset: float = 0.0,
     sigma: float = 0.1,
@@ -142,7 +141,8 @@ def harmonic_oscillator_with_noise(
         raise ValueError("A should be >= 0 (use phase shift if you want sign flips).")
 
     t = np.arange(T, dtype=float)
-    signal = float(offset) + float(A) * np.sin(float(omega) * t + float(phase))
+    wavenumber = 2.0 * np.pi / wavelength
+    signal = float(offset) + float(A) * np.sin(float(wavenumber) * t + float(phase))
 
     noise = gaussian_noise(T=T, sigma=sigma, seed=seed_noise)
 
@@ -151,7 +151,7 @@ def harmonic_oscillator_with_noise(
         "T": int(T),
         "params": {
             "A": float(A),
-            "omega": float(omega),
+            "wavelength": float(wavelength),
             "phase": float(phase),
             "offset": float(offset),
             "sigma": float(sigma),
@@ -165,7 +165,7 @@ def harmonic_oscillator_with_noise(
     return out
 
 
-# Optional: a simple registry + factory (useful for experiment configs)
+
 GENERATOR_REGISTRY = {
     "rw_drift": random_walk_with_drift,
     "ar1": ar1_with_noise,
@@ -173,11 +173,6 @@ GENERATOR_REGISTRY = {
 }
 
 
-def make_generator(name: str):
-    try:
-        return GENERATOR_REGISTRY[name]
-    except KeyError as e:
-        raise KeyError(f"Unknown generator '{name}'. Available: {list(GENERATOR_REGISTRY)}") from e
 
 
 # Optional: counterfactual utility helpers
