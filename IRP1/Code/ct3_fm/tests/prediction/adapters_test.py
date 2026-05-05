@@ -38,26 +38,39 @@ chronos_input_testdata = [
             "timestamp": np.tile(pd.date_range("1750-01-01", periods=5, freq="h"), 2),
             "target": [0.0, 1.0, 2.0, 3.0, 4.0, 0.0, 1.0, 2.0, 3.0, 4.0]
         })               
-    ),
-        # Case 2: 1 sample, 2 dimensions
-    (
-        np.array([[[0., 0.], [1., 1.], [2., 2.], [3., 3.], [4., 4.]]]), # input sample
-        pd.DataFrame({ 
-            "item_id": [0, 0, 0, 0, 0],
-            "timestamp": pd.date_range("1750-01-01", periods=5, freq="h"),
-            "target": [0.0, 1.0, 2.0, 3.0, 4.0],
-            "var1": [0.0, 1.0, 2.0, 3.0, 4.0]
-        })               
-    ),
+    )
 ]
 
 
 @pytest.mark.parametrize("input_data,expected_df", chronos_input_testdata)
 def test_chronos_input_adapter(input_data, expected_df):
+    """"
+    Verifies that the adapter correctly transforms a 3D NumPy array into the expected Chronos DataFrame format.
+    This test checks both the structure and content of the resulting DataFrame against a predefined expected DataFrame for each case.
+    """
 
     actual_df = chronos_input_adapter(input_data=input_data)
 
     assert assert_frame_equal(actual_df, expected_df) == None
+
+
+@pytest.mark.parametrize("input_data,expected_df", chronos_input_testdata)
+def test_chronos_input_adapter_columns(input_data, expected_df):
+    """
+    Verifies that the adapter produces the exact columns required by Chronos.
+    """
+    actual_df = chronos_input_adapter(input_data=input_data)
+    
+    # 1. Check if the required core columns exist
+    required_cols = ["item_id", "timestamp", "target"]
+    for col in required_cols:
+        assert col in actual_df.columns, f"Missing required column: {col}"
+        
+    # 2. Check if the total set of columns matches expectation
+    # This catches if extra dimensions (var1, var2) were mapped correctly
+    assert list(actual_df.columns) == list(expected_df.columns), (
+        f"Column mismatch! Expected {list(expected_df.columns)}, got {list(actual_df.columns)}"
+    )
 
 
 ############ CHRONOS OUTPUT ADAPTER TESTS ############
@@ -68,6 +81,7 @@ chronos_output_testdata = [
         pd.DataFrame({ 
             "item_id": [0, 0, 0, 0, 0],
             "timestamp": pd.date_range("1750-01-01", periods=5, freq="h"),
+            "target_name": ["target"]*5,
             "predictions": [0.0, 1.0, 2.0, 3.0, 4.0]
         }),
         np.array([[[0.], [1.], [2.], [3.], [4.]]]) # expected output
@@ -78,6 +92,7 @@ chronos_output_testdata = [
         pd.DataFrame({ 
             "item_id": [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
             "timestamp": np.tile(pd.date_range("1750-01-01", periods=5, freq="h"), 2),
+            "target_name": ["target"]*10,
             "predictions": [0.0, 1.0, 2.0, 3.0, 4.0, 0.0, 1.0, 2.0, 3.0, 4.0]
         }),
         np.array([[[0.], [1.], [2.], [3.], [4.]], [[0.], [1.], [2.], [3.], [4.]]]) # expected output

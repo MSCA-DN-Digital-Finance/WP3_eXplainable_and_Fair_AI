@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 
-from typing import Dict, Any, Tuple
 
+
+#################### CHRONOS ADAPTERS ####################
 
 def chronos_input_adapter(
     input_data: np.ndarray
@@ -41,9 +42,6 @@ def chronos_input_adapter(
                 "target": input_data[i, j, 0]
             }
             
-            # Dynamically add extra columns for additional features
-            for k in range(1, n_features):
-                row[f"var{k}"] = input_data[i, j, k]
                 
             df_list.append(row)
             
@@ -55,38 +53,32 @@ def chronos_output_adapter(pred_df: pd.DataFrame) -> np.ndarray:
     Converts a Chronos prediction DataFrame back into a 3D NumPy array format (Samples, Time Steps, Dimensions).
     
     Parameters:
-    - pred_df: A Pandas DataFrame with columns ['item_id', 'timestamp', 'target'] and possibly additional feature columns.
+    - pred_df: A Pandas DataFrame with columns ['item_id', 'timestamp', 'target_name', 'predictions'] and possibly additional feature columns.
     
     Returns:
     - A 3D NumPy array of shape (n_samples, time_steps, n_features) where:
       - n_samples is the number of unique item_ids.
       - time_steps is the number of unique timestamps per item_id.
-      - n_features is the number of columns in the DataFrame minus 2 (for 'item_id' and 'timestamp').
+      - n_features is 1.
     
     Note:
     The function assumes that the input DataFrame is properly formatted and does not perform extensive error checking.
     """
 
-    # Get unique item_ids and timestamps to determine dimensions
-    item_ids = pred_df['item_id'].unique()
-    timestamps = pred_df['timestamp'].unique()
+# 1. Extract the unique IDs to find N
+    n_samples = pred_df['item_id'].nunique()
     
-    n_samples = len(item_ids)
-    time_steps = len(timestamps)
-    n_features = pred_df.shape[1] - 2  # Exclude 'item_id' and 'timestamp'
+    # 2. Extract only the prediction values
+    # We sort by item_id then timestamp to ensure the flat array 
+    # matches the (N, T) order perfectly.
+    values = pred_df.sort_values(['item_id', 'timestamp'])['predictions'].values
     
-    # Initialize an empty array to hold the results
-    output_array = np.zeros((n_samples, time_steps, n_features), dtype=np.float32)
-    
-    # Fill the array with values from the DataFrame
-    for i, item_id in enumerate(item_ids):
-        item_data = pred_df[pred_df['item_id'] == item_id].sort_values('timestamp')
-        output_array[i, :, 0] = item_data['predictions'].values
-        for k in range(1, n_features):
-            output_array[i, :, k] = item_data[f'var{k}'].values
-            
-    return output_array
+    # 3. Reshape into (N, T, 1)
+    # -1 tells numpy to figure out the 'T' dimension automatically
+    return values.reshape(n_samples, -1, 1).astype(np.float32)
 
+
+##################### TIMESFM ADAPTERS ####################
 
 def timesfm_input_adapter(input_data: np.ndarray) -> list[np.ndarray]:
     """
