@@ -48,52 +48,35 @@ def load_chronos_model(model_id: str = "amazon/chronos-2") -> Any:
 
 
 def load_timesfm_model(model_id: str = "google/timesfm-2.5-200m-pytorch") -> Any:
-    """
-    Loads and compiles the TimesFM model for CPU inference.
-
-    This function optimizes the PyTorch backend for Intel/AMD CPUs and 
-    configures the forecasting head with robust constraints (positivity, 
-    quantile crossing fix, etc.).
-
-    Args:
-        model_id (str): The HuggingFace model hub ID.
-                        Defaults to the 2.5-200m version.
-
-    Returns:
-        model: The compiled TimesFM model ready for .forecast() calls.
-    """
     import timesfm
     import torch
     
     # 1. Optimize Float32 performance for CPU.
-    # "high" or "medium" allows the use of TensorFloat-32 (on supported CPUs) 
-    # or optimized BLAS libraries, providing a boost over "highest".
     torch.set_float32_matmul_precision("high")
 
     # 2. Load the model weights.
-    # TimesFM 2.5 200M is a medium-sized model; ensure your ThinkPad has 
-    # at least 16GB of RAM for a comfortable experience.
+    # Note: Use the class method directly.
     model = timesfm.TimesFM_2p5_200M_torch.from_pretrained(model_id)
 
     # 3. Configure and Compile the model.
-    # Compilation optimizes the execution graph for your specific hardware.
+    # The .compile() method prepares the TorchScript/Inductor graph.
     model.compile(
         timesfm.ForecastConfig(
-            max_context=1024,              # Max history the model can look at
-            max_horizon=256,               # Max future steps it can predict
-            normalize_inputs=True,         # Recommended for stability
+            max_context=1024,
+            max_horizon=256,
+            normalize_inputs=True,
             use_continuous_quantile_head=True,
-            force_flip_invariance=True,    # Ensures [1, 2, 3] yields same logic as [3, 2, 1]
-            infer_is_positive=True,        # Useful for most physical/economic metrics
-            fix_quantile_crossing=True,    # Ensures 90th quantile is always > 10th
+            force_flip_invariance=True,
+            infer_is_positive=True,
+            fix_quantile_crossing=True,
         )
     )
 
-    # 4. Explicitly move to CPU and set to eval mode.
-    # Though .from_pretrained usually handles this, we be explicit for the registry.
-    model.to("cpu")
-    torch.set_grad_enabled(False)
-
+    # 4. REMOVED model.to("cpu") 
+    # The wrapper handles device placement. 
+    # For inference, just ensure grads are off globally if needed, 
+    # but TimesFM's forecast method usually handles this internally.
+    
     return model
 
 

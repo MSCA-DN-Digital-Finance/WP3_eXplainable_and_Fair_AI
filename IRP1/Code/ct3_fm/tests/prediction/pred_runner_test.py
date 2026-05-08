@@ -1,58 +1,162 @@
 import pytest
 import numpy as np
-import sys
+from unittest.mock import MagicMock, patch
+from pathlib import Path
+import json
+import yaml
 import os
+import sys
 
+# 1. PATH SETUP
 src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 if src_path not in sys.path:
     sys.path.append(src_path)
 
-from prediction.pred_runner import run_prediction
+from prediction.pred_runner import run_prediction, get_exp_id_from_meta, get_prediction_params
 
-from prediction.adapters import chronos_input_adapter, chronos_output_adapter, timesfm_input_adapter, timesfm_output_adapter
+############### TESTS FOR get_exp_id_from_meta ##############
 
-
-############ PRED_RUNNER TESTS ############
-
-def loader(model_key: str = "mock model"):
-    # Mock loader that returns a dummy model object
-    return "mock_model"
-
-def chronos_inference(model, formatted_input, horizon=3):
-    # Mock model that adds target column as predictions column
-    pred_df = formatted_input.copy()
-    pred_df["predictions"] = pred_df["target"]
-    return pred_df
-
-testdata = [
-    # Tensor is (Samples, Time Steps, Dimensions)
-
-
-    # Case 0: Chronos adapters end-to-end test
-    (
-        np.array([[[0.], [1.], [2.], [3.], [4.]]]), # input sample
-        loader,
-        chronos_input_adapter,
-        chronos_inference,
-        chronos_output_adapter,
-        np.array([[[0.0], [1.0], [2.0], [3.0], [4.0]]]) # expected output       
-
-    ),
-]
-
-
-@pytest.mark.parametrize("input, loader, input_adapter, model, output_adapter, expected_output", testdata)
-def test_pred_runner(input, loader, input_adapter, model, output_adapter, expected_output):
-
-    """Tests the end-to-end prediction flow using the run_prediction function with mocked components."""
+def test_get_exp_id_from_meta_success(tmp_path):
+    """Test successfully extracting experiment_id from meta.json."""
+    # Setup: Create a directory with a valid meta.json
+    meta_data = {"experiment_id": "exp_01", "other_info": "data"}
+    (tmp_path / "meta.json").write_text(json.dumps(meta_data))
     
-    spec = {
-        "loader": loader,
-        "input_adapter": input_adapter,
-        "inference_fn": model,
-        "output_adapter": output_adapter
-    }
-    actual_output = run_prediction(model_spec=spec, data=input, horizon=3)
-    assert np.array_equal(actual_output, expected_output)
+    exp_id = get_exp_id_from_meta(tmp_path)
+    assert exp_id == "exp_01"
 
+def test_get_exp_id_from_meta_missing_file(tmp_path):
+    """Test behavior when meta.json does not exist."""
+    # tmp_path is empty by default
+    exp_id = get_exp_id_from_meta(tmp_path)
+    assert exp_id is None
+
+def test_get_exp_id_from_meta_corrupted_json(tmp_path):
+    """Test behavior when meta.json contains invalid JSON."""
+    # Setup: Write invalid JSON text
+    (tmp_path / "meta.json").write_text("{ 'invalid': json }")
+    
+    exp_id = get_exp_id_from_meta(tmp_path)
+    assert exp_id is None
+
+def test_get_exp_id_from_meta_missing_key(tmp_path):
+    """Test behavior when file exists but key 'experiment_id' is missing."""
+    meta_data = {"wrong_key": "oops"}
+    (tmp_path / "meta.json").write_text(json.dumps(meta_data))
+    
+    exp_id = get_exp_id_from_meta(tmp_path)
+    assert exp_id is None
+
+
+
+############## TESTS FOR get_prediction_params ##############
+
+def test_get_prediction_params_success():
+    """Test retrieving valid prediction params."""
+    mock_cfg = {
+        'experiments': [
+            {'id': 1, 'prediction': {'input_length': 200, 'output_length': 1, 'gap': 1}},
+            {'id': 2, 'prediction': {'input_length': 100, 'output_length': 5, 'gap': 0}}
+        ]
+    }
+    
+    # We patch the 'load_config' wherever it is imported in your pred_runner file
+    with patch('prediction.pred_runner.load_config', return_value=mock_cfg):
+        params = get_prediction_params(Path("fake_path.yaml"), exp_id=2)
+        assert params['input_length'] == 100
+        assert params['output_length'] == 5
+
+def test_get_prediction_params_missing_section():
+    """Test error when ID exists but 'prediction' block is missing."""
+    mock_cfg = {
+        'experiments': [{'id': 'no_pred', 'name': 'Missing Section'}]
+    }
+    
+    with patch('prediction.pred_runner.load_config', return_value=mock_cfg):
+        with pytest.raises(ValueError, match="found but missing 'prediction' section"):
+            get_prediction_params(Path("fake.yaml"), exp_id="no_pred")
+
+def test_get_prediction_params_not_found():
+    """Test error when experiment ID does not exist."""
+    mock_cfg = {'experiments': [{'id': 1}]}
+    
+    with patch('prediction.pred_runner.load_config', return_value=mock_cfg):
+        with pytest.raises(ValueError, match="not found in configuration"):
+            get_prediction_params(Path("fake.yaml"), exp_id=999)
+
+
+
+############### TESTS FOR run_prediction ORCHESTRATION ##############
+
+def test_run_prediction_orchestration(tmp_path):
+    """
+    Tests discovery, execution, and skipping logic with patched inference.
+    """
+    # --- 1. SETUP CONFIG (Same as before) ---
+    config_path = tmp_path / "experimental_config.yaml"
+    config_data = {
+        'experiments': [
+            {
+                'id': 1,
+                'prediction': {'input_length': 24, 'gap': 0, 'output_length': 24}
+            }
+        ]
+    }
+    config_path.write_text(yaml.dump(config_data))
+
+    # --- 2. SETUP DIRECTORIES & DATA ---
+    run_1 = tmp_path / "run_01"
+    run_2 = tmp_path / "run_02"
+    
+    for r in [run_1, run_2]:
+        r.mkdir()
+        np.savez(r / "trajectory.npz", x=np.arange(100, dtype=float))
+        meta_data = {"experiment_id": 1, "seed": 42}
+        (r / "meta.json").write_text(json.dumps(meta_data))
+
+    # Pre-fill run_02 to trigger skip logic
+    pred_dir_2 = run_2 / "predictions" / "mock_model"
+    pred_dir_2.mkdir(parents=True)
+    (pred_dir_2 / "predictions.npz").write_text("already exists")
+
+    # --- 3. EXECUTION WITH PATCHES ---
+    # We mock the MODEL_REGISTRY to allow "mock_model"
+    # and mock the inference_pipeline to return a fake array
+    fake_preds = np.array([4, 5, 6])
+    mock_registry = {"mock_model": {"some": "spec"}}
+    
+    with patch("prediction.pred_runner.MODEL_REGISTRY", mock_registry), \
+         patch("prediction.pred_runner.inference_pipeline", return_value=fake_preds) as mock_pipe:
+        
+        run_prediction(
+            model_name="mock_model", 
+            exp_config_path=config_path,
+            root_dir=tmp_path
+        )
+
+        # --- 4. ASSERTIONS ---
+        
+        # Verify skip logic: run_02 skipped, run_01 processed
+        assert mock_pipe.call_count == 1
+        
+        # Get the call details
+        # mock_pipe.call_args returns a tuple: (args, kwargs)
+        args, kwargs = mock_pipe.call_args
+        
+        # 1. Verify the model_spec (first positional arg)
+        assert args[0] == {"some": "spec"}
+        
+        # 2. Verify the data (passed as a keyword arg 'data')
+        assert "data" in kwargs
+        assert kwargs["data"].ndim >= 2 
+        
+        # 3. Verify the horizon (passed as a keyword arg 'horizon')
+        assert kwargs["horizon"] == 24
+
+    # 5. Verify Output Files
+    out_file = run_1 / "predictions" / "mock_model" / "predictions.npz"
+    assert out_file.exists()
+    
+    with np.load(out_file) as d:
+        np.testing.assert_array_equal(d["yhat"], fake_preds)
 
