@@ -1,9 +1,10 @@
 # Generation Step
 
-This step handles the data generation step.
+This directory handles the data generation step.
 
 ## Module Dependency
 
+The plot below shows the dependencies between the modules in this directory.
 
 ```mermaid
 graph LR
@@ -14,8 +15,10 @@ graph LR
 
 ## Data Flow
 
+The plot below shows the flow of data between files in this directory. Note that `experiment_config.yaml` is located in the root directory.
+
 ```mermaid
 graph LR
-    exp_conf[experiment_config.yaml] --> create_traj[create_traj]
-    create_traj --> out_root[artifacts/trajectories]
+    exp_conf[experiment_config.yaml] --> create_traj[create_traj.py]
+    create_traj --> out_root[artifacts/trajectories/...]
 ```
