@@ -21,7 +21,6 @@ The plot below shows the flow of data between files in this directory. Note that
 ```mermaid
 graph LR
     exp_conf[experiment_config.yaml] --> create_preds[create_preds_modelname.py]
-    create_traj --> out_root[artifacts/trajectories/...]
     out_gen[artifacts/trajectories/...] --> create_preds
     create_preds --> out_pred[artifacts/trajectories/.../preds/...]
 ```
