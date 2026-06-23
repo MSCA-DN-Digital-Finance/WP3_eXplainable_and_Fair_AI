@@ -1,39 +1,52 @@
 # CT3 Experimental Codebase – Workflow Overview
 
-This repository implements **CT3 (Counterfactual Twin-Trajectory Test)** experiments for probing **model sensitivity** of time-series foundation models (Chronos-2) under controlled generator interventions.
+This repository implements **CT3 (Counterfactual Twin-Trajectory Test)** experiments for probing **parameter sensitivity** of time-series foundation models under controlled generator interventions.
 
 The pipeline is **hash-addressed, restartable, and modular**, with a strict separation between:
-- data generation
-- model inference
-- metric computation (CT3)
-
----
-
-## High-level workflow
-
-generators.py
-↓
-create_trajs.py
-↓
-artifacts/trajectories/<generator>/<run_hash>/
-↓
-create_preds_{model}.py
-↓
-artifacts/trajectories/<generator>/<run_hash>/predictions/model/
-↓
-create_metrics.py (CT3 metrics)
-↓
-artifacts/ct3/*.csv
-
+- generation
+- prediction
+- analysis
 
 Each stage can be re-run independently without recomputing previous stages.
 
+## Repository Structure
 
+The codebase maintains a strict one-to-one mapping between implementation and test coverage.For each component in `src/`, its corresponding test will be found at the exact same relative path in `tests/`.
 
-How to get started:
+```bash
+├── src/                    # Source code for the CT3 pipeline
+│   ├── generation/         # Counterfactual trajectory generation
+│   ├── prediction/         # Chronos-2 and TimesFM inference logic
+│   └── analysis/           # CT3 implementation and 
+│
+└── tests/                  # Unit tests
+├── generation/             # Tests for generator functions
+├── prediction/             # Tests for model inference pipeline
+└── analysis/               # Tests for analysis metrics & outputs
+```
 
-- install ct3-core conda env
-- open vs code with code .
-- in powershell execute ./run_all or .run_all -Setup to install other conda envs for chronos and timesfm inference
+## Getting Started
+
+### 1. Environment Setup
+First, ensure you have the core environment installed, then open the workspace:
+```bash
+# Install the core environment (adjust command if you use an environment.yml)
+conda activate ct3-core
+
+# Open the project in VS Code
+code .
+```
+
+### 2. Initialization & Execution
+
+From your VS Code PowerShell terminal, run the automation script. This will handle remaining environment setups (for Chronos and TimesFM inference) and execute the pipeline:
+
+```bash
+#First-time setup and run:
+./run_all.ps1 -Setup
+
+#Subsequent runs:
+./run_all.ps1
+```
 
 
