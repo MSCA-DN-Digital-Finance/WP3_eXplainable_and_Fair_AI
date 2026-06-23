@@ -20,9 +20,9 @@ The codebase maintains a strict one-to-one mapping between implementation and te
 │   └── analysis/           # CT3 implementation and 
 │
 └── tests/                  # Unit tests
-├── generation/             # Tests for generator functions
-├── prediction/             # Tests for model inference pipeline
-└── analysis/               # Tests for analysis metrics & outputs
+    ├── generation/         # Tests for generator functions
+    ├── prediction/         # Tests for model inference pipeline
+    └── analysis/           # Tests for analysis metrics & outputs
 ```
 
 ## Getting Started
