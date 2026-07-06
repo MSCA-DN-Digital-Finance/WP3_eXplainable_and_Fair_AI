@@ -3,10 +3,10 @@ This file contains functions used to compute the parameter statistics for each g
 
 """ 
 
-from pdb import run
 from typing import Dict, Any
 import numpy as np
-
+from scipy import signal
+from statsmodels.tsa.ar_model import AutoReg
 
 Run = Dict[str, Any]
 
@@ -51,52 +51,68 @@ def beta_hat(run: Run, eps: float = 1e-12) -> float:
     Model-implied AR(1) beta:
         beta_hat = sum(x_t * yhat_{t+1}) / sum(x_t^2)
 
-    Measures how strongly the model's forecast depends on the current state.
+    Measures the autoregressive parameter for the forecasted trajectory.
     Requires:
-      - run["x"]     : full level trajectory
-      - run["yhat"]  : 1-step-ahead level forecasts
-      - run["t_idx"] : indices such that yhat[i] predicts x[t_idx[i] + 1]
+
+      - run["yhat"]  : forecasted trajectory
 
     Args:
         run (Run): An instance of the Run class containing the trajectory data.
-        eps (float): A small value to prevent division by zero.
     
     Returns:
         float: The model-implied AR(1) beta.
     """
-    x = np.asarray(run["x"], dtype=float)
     yhat = np.asarray(run["yhat"], dtype=float)
-    t_idx = np.asarray(run["t_idx"], dtype=int)
 
     # check if the lengths of x, yhat, and t_idx are compatible
-    if len(x) < 1 or len(yhat) < 1 or len(t_idx) < 1:
+    if len(yhat) < 1 :
         raise ValueError("Input arrays must not be empty.")
     
-    # check if the lengths of x, yhat, and t_idx are the same
-    if not (len(x) == len(yhat) == len(t_idx)):
-        raise ValueError("Input arrays must have the same length.")
+    # Fit an AR model with a lag of 1
+# trend='c' includes a constant/intercept if your data isn't mean-centered
+    model = AutoReg(yhat, lags=1, trend='c').fit()
 
-    # x_t aligned with yhat
-    x_t = x[t_idx]
+    # Extract the beta coefficient for the first lag
+    # index 0 is the constant (intercept), index 1 is the lag-1 coefficient
+    beta = float(model.params[1]) 
 
-    denom = float(np.dot(x_t, x_t))
-    if denom < eps:
-        raise ValueError("Denominator is too small, potential division by zero.")
+    return beta
 
-    return float(np.dot(x_t, yhat) / denom)
-
-def average_power_spectrum(run: Run) ->  tuple[np.ndarray, np.ndarray]:
+def dominant_frequency(run: Run) ->  tuple[np.ndarray, np.ndarray]:
     """
-    Computes the average power spectrum of the trajectory for a given run by computing power spectra per window and then averaging them.
+    Computes the dominant frequency of the trajectory for a given run by computing the power spectrum and finding the frequency with the highest power.
 
 
     Requires:
-      - ?
+      - run["yhat"]  : forecasted trajectory
 
     Args:
         run (Run): An instance of the Run class containing the trajectory data.
     
     Returns:
-        tuple[np.ndarray, np.ndarray]: The average power spectrum of the trajectory.
+        float: The dominant frequency of the trajectory.
     """
-    pass
+    
+    yhat = np.asarray(run["yhat"], dtype=float)
+    t_idx = np.asarray(run["t_idx"], dtype=int)
+
+    # check if the lengths of yhat and t_idx are compatible
+    if len(yhat) < 1 or len(t_idx) < 1:
+        raise ValueError("Input arrays must not be empty.")
+    if not (len(yhat) == len(t_idx)):
+        raise ValueError("Input arrays must have the same length.")
+
+ 
+    frequencies, power = signal.welch(yhat, fs=1)
+    dominant_freq = frequencies[np.argmax(power)]
+
+    
+    return dominant_freq
+
+# Set up parameter statistics registry
+
+PARAM_STATS_REGISTRY = {
+    "prob_positive": prob_positive,
+    "beta_hat": beta_hat,
+    "dominant_frequency": dominant_frequency    
+}
