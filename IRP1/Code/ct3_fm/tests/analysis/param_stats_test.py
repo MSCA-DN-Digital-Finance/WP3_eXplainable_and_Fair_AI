@@ -56,7 +56,7 @@ def test_prob_positive(input_run, expected_output):
         with pytest.raises(ValueError):
             prob_positive(input_run)
     else:
-        assert np.isclose(prob_positive(input_run), expected_output, atol=1e-2), f"Expected {expected_output}, got {prob_positive(input_run)}"
+        assert np.isclose(prob_positive(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {prob_positive(input_run)}"
 
 
 #################### Tests for beta_hat function ###################

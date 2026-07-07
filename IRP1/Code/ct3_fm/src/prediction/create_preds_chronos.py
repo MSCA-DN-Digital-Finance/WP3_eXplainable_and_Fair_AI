@@ -1,7 +1,7 @@
 from __future__ import annotations
 from pathlib import Path
 
-from prediction.pred_runner import run_prediction
+from pred_runner import run_prediction
 
 # This gets the directory where THIS script lives
 script_dir = Path(__file__).resolve().parent 
@@ -17,7 +17,7 @@ def main():
     run_prediction(
         model_name=model_name,
         exp_config_path=CONFIG_PATH,
-        root_dir=Path("artifacts/trajectories")
+        root_dir=Path("../../artifacts/trajectories")
     )
 
 

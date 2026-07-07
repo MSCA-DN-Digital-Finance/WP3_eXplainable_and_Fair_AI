@@ -98,7 +98,7 @@ def test_run_prediction_orchestration(tmp_path):
         'experiments': [
             {
                 'id': 1,
-                'prediction': {'input_length': 24, 'gap': 0, 'output_length': 24}
+                'prediction': {'input_length': 24, 'output_length': 24}
             }
         ]
     }

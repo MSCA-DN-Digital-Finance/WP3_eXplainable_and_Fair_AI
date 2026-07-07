@@ -2,9 +2,9 @@ import numpy as np
 import json
 from pathlib import Path
 from typing import Any
-from prediction.sample_builder import build_samples
-from prediction.inference_pipeline import inference_pipeline
-from prediction.model_factory import MODEL_REGISTRY
+from sample_builder import build_samples
+from inference_pipeline import inference_pipeline
+from model_factory import MODEL_REGISTRY
 import sys
 
 root = Path(__file__).resolve().parent.parent
@@ -127,7 +127,7 @@ def run_prediction(
 
         # 3.2 Build samples
         try:
-            x, _ = build_samples(trajectory, input_length=prediction_params["input_length"], gap=prediction_params["gap"], output_length=prediction_params["output_length"])
+            x = build_samples(trajectory)
         except Exception as e:
             print(f"Error building samples for {run_dir}: {e}")
             continue

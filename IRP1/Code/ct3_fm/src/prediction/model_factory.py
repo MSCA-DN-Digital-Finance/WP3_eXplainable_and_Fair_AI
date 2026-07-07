@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import Any, Dict, Callable
 
-from .adapters import chronos_input_adapter, chronos_output_adapter, timesfm_input_adapter, timesfm_output_adapter
+from adapters import chronos_input_adapter, chronos_output_adapter, timesfm_input_adapter, timesfm_output_adapter
 
 
 

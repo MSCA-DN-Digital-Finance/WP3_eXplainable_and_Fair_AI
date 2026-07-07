@@ -1,6 +1,6 @@
 # Global defaults
 global:
-  T: 1024
+  T: 200 # should be the same as input_length and output_length in the prediction section of each experiment
   n_seeds: 10
   seed_offset: 0
 
@@ -18,12 +18,10 @@ experiments:
       sweep:
         mu: [-0.04, -0.02, 0.02, 0.04]
     prediction:
-      task: "single_diff_forecast"
-      window_length: 200
-      forecast_window: 1
-      step: 1
+      input_length: 200
+      output_length: 200
     analysis:
-      param_stat: "mse"
+      param_stat: "prob_positive"
 
   # -----------------------
   # Experiment 2: AR(1) persistence
@@ -39,12 +37,10 @@ experiments:
       sweep:
         phi: [0.2, 0.5, 0.8, 0.95]
     prediction:
-      task: "single_point_forecast"
-      window_length: 200
-      forecast_window: 1
-      step: 1
+      input_length: 200
+      output_length: 200
     analysis:
-      param_stat: "beta_slope"
+      param_stat: "beta_hat"
 
   # -----------------------
   # Experiment 3: HO wavelength
@@ -61,12 +57,10 @@ experiments:
       sweep:
         wavelength: [20, 50, 100, 200]
     prediction:
-      task: "multistep_point_forecast"
-      window_length: 200
-      forecast_window: 200
-      step: 1
+      input_length: 200
+      output_length: 200
     analysis:
-      param_stat: "mse"
+      param_stat: "dominant_frequency"
 
   # -----------------------
   # Experiment 4: AR(1) noise
@@ -82,12 +76,10 @@ experiments:
       sweep:
         sigma: [0.1, 0.3, 1.0, 3.0]
     prediction:
-      task: "single_point_forecast"
-      window_length: 200
-      forecast_window: 1
-      step: 1
+      input_length: 200
+      output_length: 200
     analysis:
-      param_stat: "mse"
+      param_stat: "beta_hat"
 
   # -----------------------
   # Experiment 5: HO amplitude
@@ -104,9 +96,7 @@ experiments:
       sweep:
         A: [0.25, 0.5, 1.0, 2.0]
     prediction:
-      task: "multistep_point_forecast"
-      window_length: 200
-      forecast_window: 200
-      step: 1
+      input_length: 200
+      output_length: 200
     analysis:
-      param_stat: "mse"
+      param_stat: "dominant_frequency"
