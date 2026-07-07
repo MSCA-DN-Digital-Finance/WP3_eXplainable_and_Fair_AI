@@ -95,11 +95,21 @@ def run_prediction(
     for traj_file in trajectory_files:
         # run_dir is the parent folder containing the .npz
         run_dir = traj_file.parent
+
+        # Extract the unique hash name ('0e5f79f3f9895669')
+        run_hash = run_dir.name 
+        
+        # Get the project root folder by climbing up 3 levels out of artifacts/trajectories/ar1/hash
+        # (Or use your existing project root variable if you have one)
+        project_root = run_dir.parents[1]
+    
         
         # 1. Setup Paths
-        pred_dir = run_dir / "predictions" / model_name
+        pred_dir = project_root / "prediction" / run_hash / model_name
         pred_file = pred_dir / "predictions.npz"
         meta_file = pred_dir / "meta.json"
+
+        print("Output will be saved at:", pred_dir)
 
         # 2. Skip if any .npz file exists in the destination folder
         if pred_dir.exists():
@@ -125,7 +135,7 @@ def run_prediction(
             print(f"Error getting prediction parameters for {run_dir}: {e}")
             continue
 
-        # 3.2 Build samples
+        # 3.3 Build samples
         try:
             x = build_samples(trajectory)
         except Exception as e:

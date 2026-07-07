@@ -57,7 +57,7 @@ def run_sweep(
         gen_name = sweep["generator"]
 
         run_id = stable_hash(sweep)  # still hashes full config (incl. seed/task/experiment_id)
-        run_dir = out_root / gen_name / run_id
+        run_dir = out_root / run_id
 
         if (run_dir / "trajectory.npz").exists() and (run_dir / "meta.json").exists():
             print("This sweep already exists...skipping...")
