@@ -2,7 +2,14 @@ import pandas as pd
 import numpy as np
 from typing import Any, Dict, Callable
 
-from adapters import chronos_input_adapter, chronos_output_adapter, timesfm_input_adapter, timesfm_output_adapter
+import sys
+from pathlib import Path
+
+project_root = str(Path(__file__).resolve().parents[2])
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from src.prediction.adapters import chronos_input_adapter, chronos_output_adapter, timesfm_input_adapter, timesfm_output_adapter
 
 
 

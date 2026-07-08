@@ -92,7 +92,7 @@ def test_run_prediction_orchestration(tmp_path):
     """
     Tests discovery, execution, and skipping logic with patched inference.
     """
-    # --- 1. SETUP CONFIG (Same as before) ---
+    # --- 1. SETUP CONFIG ---
     config_path = tmp_path / "experimental_config.yaml"
     config_data = {
         'experiments': [
@@ -114,14 +114,15 @@ def test_run_prediction_orchestration(tmp_path):
         meta_data = {"experiment_id": 1, "seed": 42}
         (r / "meta.json").write_text(json.dumps(meta_data))
 
-    # Pre-fill run_02 to trigger skip logic
-    pred_dir_2 = run_2 / "predictions" / "mock_model"
-    pred_dir_2.mkdir(parents=True)
+    # Pre-fill run_02 to trigger skip logic in new structural directory
+    run_1_hash = run_1.name  # Extracts "run_01"
+    run_2_hash = run_2.name  # Extracts "run_02"
+    
+    pred_dir_2 = tmp_path.parent / "prediction" / run_2_hash / "mock_model"
+    pred_dir_2.mkdir(parents=True, exist_ok=True)
     (pred_dir_2 / "predictions.npz").write_text("already exists")
 
     # --- 3. EXECUTION WITH PATCHES ---
-    # We mock the MODEL_REGISTRY to allow "mock_model"
-    # and mock the inference_pipeline to return a fake array
     fake_preds = np.array([4, 5, 6])
     mock_registry = {"mock_model": {"some": "spec"}}
     
@@ -135,28 +136,18 @@ def test_run_prediction_orchestration(tmp_path):
         )
 
         # --- 4. ASSERTIONS ---
-        
-        # Verify skip logic: run_02 skipped, run_01 processed
         assert mock_pipe.call_count == 1
         
-        # Get the call details
-        # mock_pipe.call_args returns a tuple: (args, kwargs)
         args, kwargs = mock_pipe.call_args
-        
-        # 1. Verify the model_spec (first positional arg)
         assert args[0] == {"some": "spec"}
-        
-        # 2. Verify the data (passed as a keyword arg 'data')
         assert "data" in kwargs
         assert kwargs["data"].ndim >= 2 
-        
-        # 3. Verify the horizon (passed as a keyword arg 'horizon')
         assert kwargs["horizon"] == 24
 
-    # 5. Verify Output Files
-    out_file = run_1 / "predictions" / "mock_model" / "predictions.npz"
+    # --- 5. VERIFY OUTPUT FILES (CRITICAL STRUCTURAL FIX HERE) ---
+    out_file = tmp_path.parent / "prediction" / run_1_hash / "mock_model" / "predictions.npz"
     assert out_file.exists()
     
     with np.load(out_file) as d:
-        np.testing.assert_array_equal(d["yhat"], fake_preds)
+        np.testing.assert_array_equal(d["trajectory"], fake_preds)
 

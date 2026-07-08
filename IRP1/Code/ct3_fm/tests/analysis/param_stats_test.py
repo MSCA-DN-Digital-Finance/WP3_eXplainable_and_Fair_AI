@@ -21,27 +21,27 @@ from analysis.param_stats import prob_positive, beta_hat, dominant_frequency
 prob_positive_testdata = [
     # Case 0: Increasing values
     (
-        {"yhat": np.arange(1, 1000, 1)}, # input run
+        np.arange(1, 1000, 1), # input run
         1.0                            # expected probability
     ),
     # Case 1: Decreasing values
     (
-        {"yhat": np.arange(0,-99,-1)}, # input run
+        np.arange(0,-99,-1), # input run
         0.0                            # expected probability
     ),
     # Case 2: Mixed values sampled from a normal distribution
     (
-        {"yhat": np.random.normal(0, 1, 1000)}, # input run
+        np.random.normal(0, 1, 1000), # input run
         0.5                            # expected probability
     ),
     # Case 3: Empty trajectory
     (
-        {"yhat": np.array([])}, # input run
+        np.array([]), # input run
         ValueError # raises ValueError due to empty input
     ),
     # Case 4: Wrong data type (string instead of numeric)
     (
-        {"yhat": ["a", "b", "c"]}, # input run
+        ["a", "b", "c"], # input run
         ValueError # raises ValueError due to invalid data type
     )
 ]
@@ -85,36 +85,28 @@ def generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0, seed=42):
     for t in range(1, n_steps):
         series[t] = beta * series[t-1] + epsilon[t]
         
-    return series
+    return np.asarray(series)
 
 beta_hat_testdata = [
 
     # Case 0: Positive correlation with beta=0.7
     (
-        {
-            "yhat": generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0),
-        },
+        generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0),
         0.7 # expected beta
     ),
     # Case 1: Positive correlation with beta=1.0
     (
-        {
-            "yhat": generate_ar1_series(n_steps=500, beta=1.0, sigma=1.0),
-        },
+        generate_ar1_series(n_steps=500, beta=1.0, sigma=1.0),
         1.0 # expected beta
     ),
     # Case 2: Empty trajectory (should raise ValueError)
     (
-        {
-            "yhat": np.array([]),
-        },
+        np.array([]),
         ValueError # raises ValueError due to zero denominator
     ),
     # Case 4: Negative correlation with beta=-0.5
     (
-        {
-            "yhat": generate_ar1_series(n_steps=500, beta=-0.5, sigma=1.0),
-        },
+        generate_ar1_series(n_steps=500, beta=-0.5, sigma=1.0),
         -0.5 # expected beta
     )
 ]
@@ -137,29 +129,23 @@ def test_beta_hat(input_run, expected_output):
 n = 1000 # number of samples for the test signals
 dominant_frequency_testdata = [
     # Case 0: Simple sinusoidal signal with frequency of 0.1 Hz
-    ({"x": np.sin(2 * np.pi * 0.1 * np.arange(n)),
-      "yhat": np.sin(2 * np.pi * 0.1 * np.arange(n)),
-      "t_idx": np.arange(n)},
+    (
+        np.sin(2 * np.pi * 0.1 * np.arange(n)),
         0.1 # expected dominant frequency
     ),
     # Case 1: Simple sinusoidal signal with frequency of 0.05 Hz
-    ({"x": np.sin(2 * np.pi * 0.05 * np.arange(n)),
-      "yhat": np.sin(2 * np.pi * 0.05 * np.arange(n)),
-      "t_idx": np.arange(n)},
+    (
+        np.sin(2 * np.pi * 0.05 * np.arange(n)),
         0.05 # expected dominant frequency
     ),
     # Case 2: Constant signal of ones (should return 0.0 as dominant frequency)
     (
-        {"x": np.ones(n),
-         "yhat": np.ones(n),
-         "t_idx": np.arange(n)},
+        np.ones(n),
         0.0 # expected dominant frequency
     ),
     # Case 3: Empty trajectory (should raise ValueError)
     (
-        {"x": np.array([]),
-         "yhat": np.array([]),
-         "t_idx": np.array([])},
+        np.array([]),
         ValueError # raises ValueError due to empty input
     )
 ]

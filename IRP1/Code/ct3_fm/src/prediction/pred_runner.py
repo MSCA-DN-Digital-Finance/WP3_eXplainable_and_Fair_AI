@@ -2,15 +2,18 @@ import numpy as np
 import json
 from pathlib import Path
 from typing import Any
-from sample_builder import build_samples
-from inference_pipeline import inference_pipeline
-from model_factory import MODEL_REGISTRY
+
 import sys
 
-root = Path(__file__).resolve().parent.parent
-sys.path.append(str(root))
+project_root = str(Path(__file__).resolve().parents[2])
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-from utils import load_config
+
+from src.prediction.sample_builder import build_samples
+from src.prediction.inference_pipeline import inference_pipeline
+from src.prediction.model_factory import MODEL_REGISTRY
+from src.utils import load_config, get_exp_id_from_meta
 
 
 def get_prediction_params(exp_config_path: Path, exp_id: str) -> dict:
@@ -40,34 +43,6 @@ def get_prediction_params(exp_config_path: Path, exp_id: str) -> dict:
     raise ValueError(f"Experiment ID '{exp_id}' not found in configuration.")
 
 
-
-def get_exp_id_from_meta(run_dir: Path) -> str:
-    """
-    Extracts the experiment ID from a meta.json file located in the given run directory.
-    
-    Args:
-        run_dir (Path): The directory containing the meta.json file.
-
-    Returns:
-        str: The experiment ID if found, otherwise None.
-    """
-    meta_json = run_dir / "meta.json"
-    if meta_json.exists():
-        try:
-            meta = json.loads(meta_json.read_text())
-            
-            # 1. Try to get it from the nested 'config' block first
-            # 2. Fall back to the top level (for backward compatibility/consistency)
-            config_block = meta.get("sweep_config", {})
-            exp_id = config_block.get("experiment_id") or meta.get("experiment_id")
-            
-            return exp_id
-        except Exception as e:
-            print(f"Error reading meta.json for {run_dir}: {e}")
-            return None
-    else:
-        print(f"No meta.json found in {run_dir}")
-        return None
 
 def run_prediction(
     model_name: str,
@@ -153,7 +128,7 @@ def run_prediction(
 
         # 5. Save Output
         pred_dir.mkdir(parents=True, exist_ok=True)
-        np.savez_compressed(pred_file, yhat=predictions)
+        np.savez_compressed(pred_file, trajectory=predictions)
         
         meta = {
             "model_name": model_name,

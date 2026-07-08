@@ -60,7 +60,7 @@ def test_run_sweep_logic(tmp_path):
     1. Does it correctly iterate through a list of multiple sweep configurations?
     2. Does it resolve the correct generator function from the registry?
     3. Does it pass parameters through to the generator using dictionary unpacking?
-    4. Does it organize files using the path structure: /root/generator_name/hash_id/?
+    4. Does it organize files using the path structure: /root/hash_id/?
     5. Does it skip existing hashes?
     """
     
@@ -82,12 +82,12 @@ def test_run_sweep_logic(tmp_path):
     run_sweep(sweep_list, gen_registry, out_root)
     
     # Assert: Check if folders were created
-    # Note: folders are structured as out_root / gen_name / hash
-    gen_folders = list((out_root / "mock_gen").iterdir())
+    # Note: folders are structured as out_root / hash
+    gen_folders = list(out_root.iterdir())
     assert len(gen_folders) == 2
     
     # Act: Second Run (Testing the "skip" logic)
     # We can check the print output or just ensure it doesn't crash 
     # and files remain intact.
     run_sweep(sweep_list, gen_registry, out_root)
-    assert len(list((out_root / "mock_gen").iterdir())) == 2
+    assert len(list(out_root.iterdir())) == 2
