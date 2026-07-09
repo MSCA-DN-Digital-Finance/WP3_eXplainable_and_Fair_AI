@@ -12,7 +12,11 @@ graph TD
     create_traj --> out_gen[artifacts/trajectories/...]
     out_gen --> create_preds[create_preds_modelname.py]
     exp_conf --> create_preds[create_traj.py]
-    create_preds --> out_pred[artifacts/trajectories/.../preds/...]
+    create_preds --> out_pred[artifacts/prediction/...]
     out_pred --> create_metrics[create_metrics.py]
-    create_metrics --> out_analysis[artifacts/ct3/...]
+    create_metrics --> out_metric[artifacts/analysis/...]
+    out_metric --> create_dataset[create_dataset.py]
+    create_dataset --> out_dataset[artifacts/dataset/...]
+    out_dataset --> create_viz[create_viz.py]
+    create_viz --> out_viz[artifacts/plots/...]
 ```

@@ -8,9 +8,11 @@ The plot below shows the dependencies between the modules in this directory.
 
 ```mermaid
 graph LR
+    utils[utils.py] --> build_sweep[sweep_builder.py]
+    utils[utils.py] --> run_sweep[sweep_runner.py]
     generators[generators.py] --> create_traj[create_traj.py]
-    build_sweep[build_sweep.py] --> create_traj
-    run_sweep[run_sweep.py] --> create_traj
+    build_sweep --> create_traj
+    run_sweep --> create_traj
 ```
 
 ## Data Flow

@@ -43,6 +43,8 @@ Run-Step "Creating trajectories..."       "ct3-core"  "src/generation/create_tra
 Run-Step "Running TimesFM predictions..." "timesfm"   "src/prediction/create_preds_timesfm.py"
 Run-Step "Running Chronos predictions..." "chronos"   "src/prediction/create_preds_chronos.py"
 Run-Step "Computing CT3 metrics..."       "ct3-core"  "src/analysis/create_metrics.py" 
+Run-Step "Aggregating data..."            "ct3-core"  "src/analysis/create_dataset.py"
+Run-Step "Creating plots..."              "ct3-core"   "src/analysis/create_viz.py"
 
 
 Write-Host "Done."
