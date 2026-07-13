@@ -77,7 +77,7 @@ def dominant_frequency(trajectory: np.array) -> float:
         - float: The dominant frequency of the trajectory.
     """
     # Squeeze array to 1D
-    tra = np.asarray(trajectory, dtype=float).squeeze()
+    trajectory = np.asarray(trajectory, dtype=float).squeeze()
 
     if len(trajectory) < 1:
         raise ValueError("Input arrays must not be empty.")

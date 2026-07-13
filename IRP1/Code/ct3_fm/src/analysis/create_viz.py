@@ -118,7 +118,6 @@ def save_individual_scatter_plots(csv_path: str, output_dir: str):
         df_exp = df[df['experiment_id'] == exp_id].copy()
         
         # Extract metadata attributes for labels
-        intervention_param = df_exp['intervention_param'].iloc[0] if len(df_exp) > 0 else "parameter"
         param_stat_name = df_exp['param_stat_name'].iloc[0] if len(df_exp) > 0 else "value"
         generator_name = df_exp['generator_name'].iloc[0] if len(df_exp) > 0 else ""
         
@@ -202,9 +201,142 @@ def save_individual_scatter_plots(csv_path: str, output_dir: str):
         
         print(f" -> Saved consistency scatter plot to: {file_name}")
 
+
+import numpy as np
+
+def plot_experiment_trajectories(csv_path: str, output_dir: str):
+    """
+    Generates a dynamically stacked plot (N+1 x 1 grid) per experiment.
+    - Top Plot: The FIRST ground-truth trajectory per parameter_value.
+    - Subsequent Plots: Corresponding predicted trajectories found inside 
+      prediction/{run_id}/{model_name}/predictions.npz.
+    """
+    df = pd.read_csv(csv_path)
+    
+    # Establish root path relative to the CSV file location
+    artifacts_dir = Path(csv_path).parent.parent
+    out_path = Path(output_dir)
+    out_path.mkdir(parents=True, exist_ok=True)
+    
+    unique_exps = sorted(df['experiment_id'].unique())
+    if not unique_exps:
+        print("No experiment data found.")
+        return
+
+    print(f"Generating dynamically stacked trajectory plots for experiments: {unique_exps}...")
+    sns.set_theme(style="whitegrid")
+    
+    for exp_id in unique_exps:
+        df_exp = df[df['experiment_id'] == exp_id].copy()
+        
+        # Metadata recovery fallback strings
+        intervention_param = df_exp['intervention_param'].iloc[0] if len(df_exp) > 0 else "Parameter"
+        generator_name = df_exp['generator_name'].iloc[0] if len(df_exp) > 0 else ""
+        param_values = sorted(df_exp['parameter_value'].unique())
+        
+        # Step 1: Collect first run_ids and inspect prediction subdirectories to locate models
+        model_paths = {}  # Format: { model_name: { param_value: file_path } }
+        gt_paths = {}     # Format: { param_value: file_path }
+        
+        for val in param_values:
+            df_val = df_exp[df_exp['parameter_value'] == val]
+            run_id = df_val['run_id'].iloc[0] if len(df_val) > 0 else None
+            if not run_id:
+                continue
+                
+            # Track ground-truth file
+            gt_file = artifacts_dir / "generation" / str(run_id) / "trajectory.npz"
+            if gt_file.exists():
+                gt_paths[val] = gt_file
+                
+            # Scan prediction/{run_id} subfolders dynamically
+            pred_base_dir = artifacts_dir / "prediction" / str(run_id)
+            if pred_base_dir.exists():
+                for model_dir in pred_base_dir.iterdir():
+                    if model_dir.is_dir():
+                        pred_file = model_dir / "predictions.npz"
+                        if pred_file.exists():
+                            model_name = model_dir.name
+                            if model_name not in model_paths:
+                                model_paths[model_name] = {}
+                            model_paths[model_name][val] = pred_file
+
+        # Identify all unique models discovered across this experiment
+        discovered_models = sorted(list(model_paths.keys()))
+        num_subplots = 1 + len(discovered_models)  # 1 (Ground Truth) + N models
+        
+        if not gt_paths and not model_paths:
+            print(f"Skipping Exp {exp_id}: No array (.npz) files found on disk.")
+            continue
+
+        # Step 2: Initialize an (N+1) x 1 grid layout
+        fig, axes = plt.subplots(num_subplots, 1, figsize=(10, 3.5 * num_subplots), sharex=True, sharey=True)
+        
+        # Force axes into a sequence list even if it's a single subplot layout
+        if num_subplots == 1:
+            axes = [axes]
+            
+        # Helper sequence to safely read multi-dimensional npz structures
+        def load_npz_sequence(path):
+            with np.load(path) as data:
+                # If 'x' is in the npz file (ground truth target), use it. 
+                # Otherwise, fall back to the first available array key (like 'predictions').
+                key = "x" if "x" in data.files else data.files[0]
+                arr = data[key]
+                return arr.flatten() if arr.ndim > 1 else arr
+
+        # Step 3: Draw Ground Truth on the Top Subplot (Index 0)
+        ax_top = axes[0]
+        for val, path in gt_paths.items():
+            try:
+                y_vals = load_npz_sequence(path)
+                ax_top.plot(y_vals, label=f"{intervention_param} = {val}", linewidth=2, marker='o', markersize=3)
+            except Exception as e:
+                print(f"Error reading GT array for param {val}: {e}")
+        ax_top.set_title("Generator Trajectory", fontsize=11, weight='bold')
+        ax_top.legend(loc='upper right', frameon=True, fontsize=9)
+        ax_top.set_ylabel("Value Magnitude")
+
+        # Step 4: Iteratively build subplots for each dynamically discovered model
+        for idx, model_name in enumerate(discovered_models, start=1):
+            ax_model = axes[idx]
+            model_configs = model_paths[model_name]
+            
+            for val, path in model_configs.items():
+                try:
+                    y_vals = load_npz_sequence(path)
+                    ax_model.plot(y_vals, label=f"{intervention_param} = {val}", linewidth=2, linestyle='--')
+                except Exception as e:
+                    print(f"Error reading {model_name} array for param {val}: {e}")
+            
+            ax_model.set_title(f"Model Prediction: {model_name}", fontsize=11, weight='bold')
+            ax_model.legend(loc='upper right', frameon=True, fontsize=9)
+            ax_model.set_ylabel("Value Magnitude")
+            
+        # Add shared X labels on the very bottom axis frame
+        axes[-1].set_xlabel("Timestep", fontsize=11)
+
+        # Global layout styling
+        fig.suptitle(
+            f"Experiment {exp_id} ({generator_name})", 
+            fontsize=13, 
+            weight='bold', 
+            y=0.99
+        )
+        
+        plt.tight_layout()
+        
+        # Save structural visualization image
+        file_name = out_path / f"experiment_{exp_id}_trajectory_cascade.png"
+        plt.savefig(file_name, dpi=300, bbox_inches='tight')
+        plt.close(fig)
+        
+        print(f" -> Saved stacked trajectory cascade to: {file_name}")
+
 if __name__ == "__main__":
     # Adjust file paths to match your directory structure
 
     
     create_experiment_boxplots(CSV_DATASET, PLOT_OUTPUT_DIR)
     save_individual_scatter_plots(CSV_DATASET, PLOT_OUTPUT_DIR)
+    plot_experiment_trajectories(CSV_DATASET, PLOT_OUTPUT_DIR )

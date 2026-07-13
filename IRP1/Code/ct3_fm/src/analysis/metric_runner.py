@@ -81,9 +81,20 @@ def run_metric(INPUT_ROOT:str, OUTPUT_ROOT:str, param_registry:dict, exp_config:
         # 4. select parameter statistic function from param_registry
         param_stat_func = param_registry.get(param_stat_name)
 
-        # 5. load predictions.npz file and extract the 'trajectory' array
+        # 5. load predictions.npz file and extract the 'trajectory' array safely
         with np.load(pred_file_path) as data:
-            trajectory = data['trajectory']  # Assuming the predictions are stored under the key 'trajectory'
+            # Fallback to the first available key if 'trajectory' isn't explicitly defined
+            key = 'trajectory' if 'trajectory' in data.files else data.files[0]
+            trajectory = data[key]
+            
+            # CRITICAL: If the foundation model outputs multiple paths/samples (2D array),
+            # convert it to a 1D point forecast by taking the mean across samples.
+            if trajectory.ndim > 1:
+                # Assuming shape is (num_samples, sequence_length) -> reduces to (sequence_length,)
+                trajectory = np.mean(trajectory, axis=0)
+        
+        print(f"Using key {key} to retrieve trajectory from {pred_file_path}.")
+
 
         # 6. run the parameter statistic function on the loaded data
         try:
