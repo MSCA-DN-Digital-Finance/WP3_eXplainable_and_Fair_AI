@@ -1,7 +1,7 @@
 # Global defaults
 global:
   T: 200 # should be the same as input_length and output_length in the prediction section of each experiment
-  n_seeds: 10
+  n_seeds: 1
   seed_offset: 0
 
 experiments:
@@ -55,7 +55,7 @@ experiments:
         offset: 0.0
         sigma: 0.05
       sweep:
-        wavelength: [20, 50, 100, 200]
+        wavelength: [5, 10, 20, 50]
     prediction:
       input_length: 200
       output_length: 200
@@ -89,7 +89,7 @@ experiments:
     generator:
       type: "harmonic"
       params:
-        wavelength: 20
+        wavelength: 10
         phase: 0.0
         offset: 0.0
         sigma: 0.05
@@ -100,3 +100,21 @@ experiments:
       output_length: 200
     analysis:
       param_stat: "dominant_frequency"
+
+  # -----------------------
+  # Experiment 6: Regime Switch
+  # -----------------------
+  - id: 6
+    name: "RS dwell time"
+    generator:
+      type: "regime"
+      params:
+        slopes: [1.0, -1.0]
+        sigma: 0.05
+      sweep:
+        dwell_time: [5, 10, 20, 50]
+    prediction:
+      input_length: 200
+      output_length: 200
+    analysis:
+      param_stat: "estimated_dwell_time"

@@ -5,7 +5,7 @@ This file contains functions used to compute the parameter statistics for each g
 import numpy as np
 from scipy import signal
 from statsmodels.tsa.ar_model import AutoReg
-
+import ruptures as rpt
 
 
 def prob_positive(trajectory: np.array) -> float:
@@ -89,9 +89,52 @@ def dominant_frequency(trajectory: np.array) -> float:
     return dominant_freq
 
 
+def estimated_dwell_time(trajectory: np.array, penalty: float = 1.5) -> float:
+    """
+    Detects change points in a noisy trend using PELT and 
+    calculates the average dwell time.
+
+    Args:
+      - trajectory : sequence of time series values (1D array)
+      - penalty    : PELT penalty complexity parameter (sensitivity)
+
+    Returns:
+      - float: The average dwell time.
+    """
+    # Squeeze to 1D array & validate
+    trajectory = np.asarray(trajectory, dtype=float).squeeze()
+
+    if trajectory.ndim > 1:
+        raise ValueError(f"Expected 1D trajectory array, got shape {trajectory.shape}")
+    if len(trajectory) <= 2:
+        raise ValueError("Input arrays must contain more than 2 observations to calculate differences and dwell times.")
+    # 1. Convert trend to differences (slopes)
+    # This turns 'slope changes' into 'mean changes'
+    signal_diff = np.diff(trajectory)
+    
+    # 2. Configure PELT
+    # 'l2' (Least Squares) is best for shifts in the mean
+    algo = rpt.Pelt(model="l2", jump=1).fit(signal_diff)
+    
+    # 3. Predict change points
+    # The 'pen' value is the sensitivity. 
+    # High penalty = fewer change points; Low penalty = more sensitive to noise.
+    result = algo.predict(pen=penalty)
+    
+    # 4. Calculate Dwell Times
+    # PELT returns the indices of the ends of segments (including the last index)
+    # We add 0 at the start to get the first segment length correctly
+    change_points = [0] + result
+    dwell_times = np.diff(change_points)
+    
+    avg_dwell = float(np.mean(dwell_times))
+        
+    return avg_dwell
+
 # Set up parameter statistics registry
 PARAM_STATS_REGISTRY = {
     "prob_positive": prob_positive,
     "beta_hat": beta_hat,
-    "dominant_frequency": dominant_frequency    
+    "dominant_frequency": dominant_frequency,
+    "estimated_dwell_time": estimated_dwell_time    
 }

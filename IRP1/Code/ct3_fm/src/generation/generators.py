@@ -36,7 +36,6 @@ def random_walk_with_drift(
     x0: float = 0.0,
     mu: float = 0.0,
     sigma: float = 1.0,
-    seed_signal: int = 0,
     seed_noise: int = 1,
     return_x: bool = True,
 ) -> Dict[str, Any]:
@@ -62,7 +61,7 @@ def random_walk_with_drift(
         "name": "rw_drift",
         "T": int(T),
         "params": {"x0": float(x0), "mu": float(mu), "sigma": float(sigma)},
-        "seeds": {"signal": int(seed_signal), "noise": int(seed_noise)},
+        "seeds": { "noise": int(seed_noise)},
         "signal": signal.astype(float),
         "noise": noise.astype(float),
     }
@@ -164,12 +163,75 @@ def harmonic_oscillator_with_noise(
         out["x"] = (out["signal"] + out["noise"]).astype(float)
     return out
 
+import numpy as np
+from typing import Dict, Any
+
+def regime_switch_with_noise(
+    T: int,
+    *,
+    x0: float = 0.0,
+    dwell_time: int = 10,
+    slopes: list[float] = [1.0, -1.0],
+    sigma: float = 1.0, 
+    seed_noise: int = 1,
+    return_x: bool = True,
+) -> Dict[str, Any]:
+    """
+    Regime-switching trend (signal) + independent noise:
+        signal: s_t = s_{t-1} + slope_t  (cycling through slopes every dwell_time)
+        noise:  eps_t ~ N(0, sigma^2)
+        x_t = s_t + eps_t
+
+    Note: All randomness is kept in the noise trajectory to allow counterfactual swaps.
+    """
+    if T <= 0:
+        raise ValueError("T must be positive.")
+    if sigma < 0:
+        raise ValueError("sigma must be >= 0.")
+    if len(slopes) == 0:
+        raise ValueError("slopes list cannot be empty.")
+
+    # 1. Generate the deterministic signal
+    indices = np.arange(T)
+    num_regimes = len(slopes)
+    regimes = (indices // dwell_time) % num_regimes
+    
+    slopes_arr = np.array(slopes, dtype=float)
+    slope_array = slopes_arr[regimes]
+    
+    # Cumulative sum of slopes starting from x0
+    # Note: we shift the cumsum so s_0 starts near x0 (or incorporates the first slope)
+    signal = float(x0) + np.cumsum(slope_array)
+
+    # 2. Generate the noise trajectory
+    noise = gaussian_noise(T=T, sigma=sigma, seed=seed_noise)
+
+    # 3. Build identical output dictionary structure
+    out = {
+        "name": "regime_switch",
+        "T": int(T),
+        "params": {
+            "dwell_time": int(dwell_time),
+            "slopes": [float(s) for s in slopes],
+            "sigma": float(sigma),
+        },
+        "seeds": {"noise": int(seed_noise)},
+        "signal": signal.astype(float),
+        "noise": noise.astype(float),
+    }
+
+    if return_x:
+        out["x"] = (out["signal"] + out["noise"]).astype(float)
+
+    return out
+
 
 
 GENERATOR_REGISTRY = {
     "rw_drift": random_walk_with_drift,
     "ar1": ar1_with_noise,
     "harmonic": harmonic_oscillator_with_noise,
+    "regime": regime_switch_with_noise
 }
 
 

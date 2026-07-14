@@ -1,5 +1,5 @@
 import pytest
-
+import numpy as np
 import sys
 import os
 
@@ -11,15 +11,14 @@ sys.path.append(src_path)
 # Now Python can see the generation folder
 from generation.generators import GENERATOR_REGISTRY
 
-import pytest
-import numpy as np
-from generation.generators import GENERATOR_REGISTRY
+
 
 # Sample parameters for testing
 TEST_CONFIGS = [
     ("rw_drift", {"T": 100, "mu": 0.1, "sigma": 1.0, "seed_noise": 42}),
     ("ar1", {"T": 50, "phi": 0.9, "sigma": 0.5, "seed_noise": 42}),
     ("harmonic", {"T": 200, "A": 2.0, "sigma": 0.1, "seed_noise": 42}),
+    ("regime", {"T":200, "dwell_time": 10, "slopes": [1.0, -1.0], "seed_noise": 42})
 ]
 
 @pytest.mark.parametrize("gen_name, params", TEST_CONFIGS)
