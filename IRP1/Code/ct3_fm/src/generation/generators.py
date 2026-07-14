@@ -225,14 +225,93 @@ def regime_switch_with_noise(
 
     return out
 
+def energy_release_with_noise(
+    T: int,
+    *,
+    threshold: float = 10.0,
+    mu: float = 0.2,
+    sigma: float = 0.05,
+    seed_noise: int = 1,
+    return_x: bool = True,
+) -> Dict[str, Any]:
+    """
+    Integrate-and-Fire / Energy-Release trajectory:
+        signal: s_t = s_{t-1} + mu, resetting to 0.0 when s_t >= threshold
+        noise:  eps_t ~ N(0, sigma^2)
+        x_t:    x_t = x_{t-1} + mu + |eps_t|, resetting to 0.0 when x_t >= threshold
+
+    Note: The absolute value of the noise is used to ensure strictly non-negative 
+    tension increments, matching the build-up process.
+    """
+    if T <= 0:
+        raise ValueError("T must be positive.")
+    if threshold <= 0:
+        raise ValueError("threshold must be > 0.")
+    if mu <= 0:
+        raise ValueError("mu must be > 0 to guarantee accumulation and resets.")
+    if sigma < 0:
+        raise ValueError("sigma must be >= 0.")
+
+    # 1. Generate the deterministic signal (pure build-up and reset)
+    signal = np.zeros(T, dtype=float)
+    current_signal_energy = 0.0
+    for t in range(T):
+        current_signal_energy += float(mu)
+        if current_signal_energy >= float(threshold):
+            signal[t] = current_signal_energy
+            current_signal_energy = 0.0
+        else:
+            signal[t] = current_signal_energy
+
+    # 2. Generate the independent noise trajectory
+    noise = gaussian_noise(T=T, sigma=sigma, seed=seed_noise)
+
+    # 3. Build identical output dictionary structure
+    out = {
+        "name": "energy_release",
+        "T": int(T),
+        "params": {
+            "threshold": float(threshold),
+            "mu": float(mu),
+            "sigma": float(sigma),
+        },
+        "seeds": {"noise": int(seed_noise)},
+        "signal": signal,
+        "noise": noise,
+    }
+
+    # 4. Generate the combined noisy trajectory (x) and record event indices
+    if return_x:
+        x = np.zeros(T, dtype=float)
+        events = []
+        current_energy = 0.0
+        
+        for t in range(T):
+            # Stochastic accumulation using absolute noise to guarantee non-negative increments
+            increment = float(mu) + np.abs(noise[t])
+            current_energy += increment
+            
+            if current_energy >= float(threshold):
+                x[t] = current_energy
+                events.append(t)
+                current_energy = 0.0
+            else:
+                x[t] = current_energy
+                
+        out["x"] = x
+        out["events"] = np.array(events, dtype=int)
+
+    return out
 
 
 GENERATOR_REGISTRY = {
     "rw_drift": random_walk_with_drift,
     "ar1": ar1_with_noise,
     "harmonic": harmonic_oscillator_with_noise,
-    "regime": regime_switch_with_noise
+    "regime": regime_switch_with_noise,
+    "energy": energy_release_with_noise,
 }
+
 
 
 

@@ -1,57 +1,70 @@
 """
 This file contains unit tests for the param_stats functions in the `analysis.param_stats` module.
-
 """
 
-
-import pytest
-import numpy as np
-import sys
 import os
-
+import sys
+import numpy as np
+import pytest
 
 # Get the absolute path to the 'src' directory
 # This looks up two levels from the current test file
 src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 sys.path.append(src_path)
 
-from analysis.param_stats import prob_positive, beta_hat, dominant_frequency, estimated_dwell_time
+from analysis.param_stats import (
+    prob_positive,
+    beta_hat,
+    dominant_frequency,
+    estimated_dwell_time,
+    estimated_threshold,
+)
 
 ################### Tests for prob_positive function ###################
 prob_positive_testdata = [
     # Case 0: Increasing values
     (
         np.arange(1, 1000, 1), # input run
-        1.0                            # expected probability
+        1.0                    # expected probability
     ),
     # Case 1: Decreasing values
     (
-        np.arange(0,-99,-1), # input run
-        0.0                            # expected probability
+        np.arange(0, -99, -1), # input run
+        0.0                    # expected probability
     ),
     # Case 2: Mixed values sampled from a normal distribution
     (
         np.random.normal(0, 1, 1000), # input run
-        0.5                            # expected probability
+        0.5                           # expected probability
     ),
     # Case 3: Empty trajectory
     (
         np.array([]), # input run
-        ValueError # raises ValueError due to empty input
+        ValueError    # raises ValueError due to empty input
     ),
     # Case 4: Wrong data type (string instead of numeric)
     (
         ["a", "b", "c"], # input run
-        ValueError # raises ValueError due to invalid data type
+        ValueError       # raises ValueError due to invalid data type
+    ),
+    # Case 5: Single-value input (cannot compute changes)
+    (
+        np.array([42.0]),
+        ValueError       # raises ValueError (results in NaN mean of empty slice)
+    ),
+    # Case 6: Single-value nested input (proves dimension handling)
+    (
+        np.array([[42.0]]),
+        ValueError       # raises ValueError
     )
 ]
+
 @pytest.mark.parametrize("input_run,expected_output", prob_positive_testdata)
 def test_prob_positive(input_run, expected_output):
     """
     Tests the `prob_positive` function to ensure it correctly computes 
     the probability of positive values.
     """
-    # Check if we expect a ValueError class or instance
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
             prob_positive(input_run)
@@ -64,31 +77,16 @@ def test_prob_positive(input_run, expected_output):
 def generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0, seed=42):
     """
     Generates an AR(1) time series: x_{t+1} = beta * x_t + epsilon_t
-    
-    Parameters:
-    - n_steps: Total number of points to generate.
-    - beta: The AR(1) coefficient (controls memory/momentum).
-    - sigma: Standard deviation of the random noise (epsilon).
     """
     rng = np.random.default_rng(seed)
-    
-    # Pre-allocate array for speed
     series = np.zeros(n_steps)
-    
-    # Generate all random noise shocks upfront
     epsilon = rng.normal(loc=0.0, scale=sigma, size=n_steps)
-    
-    # Initialize the first point with a noise shock
     series[0] = epsilon[0]
-    
-    # Iteratively calculate the rest of the steps
     for t in range(1, n_steps):
         series[t] = beta * series[t-1] + epsilon[t]
-        
     return np.asarray(series)
 
 beta_hat_testdata = [
-
     # Case 0: Positive correlation with beta=0.7
     (
         generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0),
@@ -99,29 +97,38 @@ beta_hat_testdata = [
         generate_ar1_series(n_steps=500, beta=1.0, sigma=1.0),
         1.0 # expected beta
     ),
-    # Case 2: Empty trajectory (should raise ValueError)
+    # Case 2: Empty trajectory
     (
         np.array([]),
-        ValueError # raises ValueError due to zero denominator
+        ValueError
     ),
-    # Case 4: Negative correlation with beta=-0.5
+    # Case 3: Negative correlation with beta=-0.5
     (
         generate_ar1_series(n_steps=500, beta=-0.5, sigma=1.0),
         -0.5 # expected beta
+    ),
+    # Case 4: Single-value input (needs > 1 observation for autoregression)
+    (
+        np.array([42.0]),
+        ValueError
+    ),
+    # Case 5: Single-value nested input (proves dimension handling)
+    (
+        np.array([[42.0]]),
+        ValueError
     )
 ]
+
 @pytest.mark.parametrize("input_run,expected_output", beta_hat_testdata)
 def test_beta_hat(input_run, expected_output):
     """
     Tests the `beta_hat` function to ensure it correctly computes 
     the model-implied AR(1) beta.
     """
-    # Check if we expect a ValueError class or instance
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
             beta_hat(input_run)
     else:
-        # only assert same sign as estimated beta is likely not exactly equal to the true beta
         assert np.sign(beta_hat(input_run)) == np.sign(expected_output), f"Expected sign {np.sign(expected_output)}, got {np.sign(beta_hat(input_run))}"
 
 
@@ -143,19 +150,29 @@ dominant_frequency_testdata = [
         np.ones(n),
         0.0 # expected dominant frequency
     ),
-    # Case 3: Empty trajectory (should raise ValueError)
+    # Case 3: Empty trajectory
     (
         np.array([]),
-        ValueError # raises ValueError due to empty input
+        ValueError
+    ),
+    # Case 4: Single-value input (fails signal.welch length requirements)
+    (
+        np.array([42.0]),
+        ValueError
+    ),
+    # Case 5: Single-value nested input (proves dimension handling)
+    (
+        np.array([[42.0]]),
+        ValueError
     )
 ]
+
 @pytest.mark.parametrize("input_run,expected_output", dominant_frequency_testdata)
 def test_dominant_frequency(input_run, expected_output):
     """
     Tests the `dominant_frequency` function to ensure it correctly computes 
     the dominant frequency of the trajectory.
     """
-    # Check if we expect a ValueError class or instance
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
             dominant_frequency(input_run)
@@ -164,20 +181,18 @@ def test_dominant_frequency(input_run, expected_output):
         assert np.isclose(freq, expected_output, atol=1e-2), f"Expected {expected_output}, got {freq}"
 
 
-##################### Tests for infer_dwell_pelt function ###################
+##################### Tests for estimated_dwell_time function ###################
 
 def generate_regime_series(dwell_time=20, num_regimes=4, slopes=[2.0, -2.0], sigma=0.01, seed=42):
     """
     Generates a realistic multi-regime cumulative trend path with a known uniform 
-    dwell time and a small amount of noise to stabilize change-point detection.
+    dwell time and a small amount of noise.
     """
     rng = np.random.default_rng(seed)
     T = dwell_time * num_regimes
     indices = np.arange(T)
     regimes = (indices // dwell_time) % len(slopes)
     slope_array = np.array(slopes)[regimes]
-    
-    # Add a tiny bit of noise so the L2 model has a non-zero variance baseline
     noise = rng.normal(loc=0.0, scale=sigma, size=T)
     return np.cumsum(slope_array + noise)
 
@@ -195,19 +210,30 @@ estimated_dwell_time_testdata = [
     # Case 2: Insufficient observation sequence length (length <= 2)
     (
         np.array([1.0, 2.0]),
-        ValueError # raises ValueError due to tiny array size
+        ValueError
     ),
     # Case 3: Empty trajectory
     (
         np.array([]),
-        ValueError # raises ValueError due to empty array
+        ValueError
     ),
     # Case 4: High dimensional matrix instead of 1D array
     (
         np.ones((2, 50)),
-        ValueError # raises ValueError due to incorrect structure dimension
+        ValueError
+    ),
+    # Case 5: Single element array (should raise ValueError due to length <= 2)
+    (
+        np.array([42.0]),
+        ValueError
+    ),
+    # Case 6: Single-value nested input (proves dimension handling)
+    (
+        np.array([[42.0]]),
+        ValueError
     )
 ]
+
 @pytest.mark.parametrize("input_run,expected_output", estimated_dwell_time_testdata)
 def test_estimated_dwell_time(input_run, expected_output):
     """
@@ -219,5 +245,79 @@ def test_estimated_dwell_time(input_run, expected_output):
             estimated_dwell_time(input_run)
     else:
         estimated_dwell = estimated_dwell_time(input_run, penalty=1.5)
-        # Using a slight tolerance buffer for exact changepoint indexing borders
         assert np.isclose(estimated_dwell, expected_output, atol=1e-1), f"Expected average dwell time {expected_output}, got {estimated_dwell}"
+
+
+##################### Tests for estimated_threshold function ###################
+
+def generate_energy_release_series(T=100, threshold=10.0, mu=2.0, sigma=0.01, seed=42):
+    """
+    Generates a realistic energy-release trajectory with a deterministic build-up 
+    and crisp resets when crossing the specified threshold.
+    """
+    rng = np.random.default_rng(seed)
+    series = np.zeros(T, dtype=float)
+    current_energy = 0.0
+    noise = rng.normal(0, sigma, T)
+    for t in range(T):
+        increment = mu + np.abs(noise[t])
+        current_energy += increment
+        if current_energy >= threshold:
+            series[t] = current_energy
+            current_energy = 0.0
+        else:
+            series[t] = current_energy
+    return series
+
+estimated_threshold_testdata = [
+    # Case 0: Clean sawtooth resets with a deterministic threshold of 10.0
+    (
+        generate_energy_release_series(T=100, threshold=10.0, mu=2.0),
+        10.0  # expected average peak height near threshold
+    ),
+    # Case 1: Clean sawtooth resets with a deterministic threshold of 25.0
+    (
+        generate_energy_release_series(T=100, threshold=25.0, mu=5.0),
+        25.0  # expected average peak height near threshold
+    ),
+    # Case 2: No reset points. Should fallback to global max.
+    (
+        np.array([1.0, 2.0, 3.0, 4.0, 5.0]),
+        5.0  # expected fallback value (np.max)
+    ),
+    # Case 3: Single element array (returns the single value)
+    (
+        np.array([42.0]),
+        42.0
+    ),
+    # Case 4: Single element nested array (proves dimension handling and returns value)
+    (
+        np.array([[42.0]]),
+        42.0
+    ),
+    # Case 5: Empty trajectory
+    (
+        np.array([]),
+        ValueError
+    ),
+    # Case 6: High dimensional matrix instead of 1D array
+    (
+        np.ones((2, 50)),
+        ValueError
+    )
+]
+
+@pytest.mark.parametrize("input_run,expected_output", estimated_threshold_testdata)
+def test_estimated_threshold(input_run, expected_output):
+    """
+    Tests the `estimated_threshold` function to ensure it correctly identifies
+    reset peaks and computes their average height, with correct fallbacks and exceptions.
+    """
+    if expected_output == ValueError or isinstance(expected_output, ValueError):
+        with pytest.raises(ValueError):
+            estimated_threshold(input_run)
+    else:
+        est_threshold = estimated_threshold(input_run)
+        assert np.isclose(est_threshold, expected_output, atol=0.5), (
+            f"Expected threshold estimation near {expected_output}, got {est_threshold}"
+        )

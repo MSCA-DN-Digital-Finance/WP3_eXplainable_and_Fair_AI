@@ -118,3 +118,21 @@ experiments:
       output_length: 200
     analysis:
       param_stat: "estimated_dwell_time"
+
+  # -----------------------
+  # Experiment 7: Energy Release
+  # -----------------------
+  - id: 7
+    name: "ER threshold"
+    generator:
+      type: "energy"
+      params:
+        mu: 1.0
+        sigma: 0.05
+      sweep:
+        threshold: [5, 10, 20, 50]
+    prediction:
+      input_length: 200
+      output_length: 200
+    analysis:
+      param_stat: "estimated_threshold"
