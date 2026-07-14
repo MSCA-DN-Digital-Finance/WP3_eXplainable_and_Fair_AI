@@ -7,6 +7,7 @@ import numpy as np
 from scipy import signal
 from statsmodels.tsa.ar_model import AutoReg
 import ruptures as rpt
+from hurst import compute_Hc
 
 
 def _ensure_1d_trajectory(trajectory: Any) -> np.ndarray:
@@ -171,6 +172,39 @@ def estimated_threshold(trajectory: np.ndarray) -> float:
     return float(np.mean(peaks))
 
 
+
+
+
+def estimated_hurst_exponent(trajectory: np.ndarray) -> float:
+    """
+    Estimates the Hurst exponent (H) of a trajectory using the 'hurst' library.
+    H close to 0.5 is a standard random walk.
+    H > 0.5 indicates persistent (trending) behavior.
+    H < 0.5 indicates anti-persistent (mean-reverting) behavior.
+
+    Args:
+      - trajectory: sequence of time series values (1D array)
+
+    Returns:
+      - float: The estimated Hurst exponent clamped between 0 and 1.
+    """
+    arr = _ensure_1d_trajectory(trajectory)
+    
+    # The hurst package requires a minimum number of points to perform 
+    # linear regression across sub-intervals. 
+    if len(arr) < 100:
+        raise ValueError("Trajectory is too short to accurately estimate the Hurst exponent (need N >= 100).")
+
+    try:
+        # kind='random_walk' expects a series representing a cumulative sum / integrated path
+        H, _, _ = compute_Hc(arr, kind='random_walk', simplified=True)
+    except Exception as e:
+        raise ValueError(f"Could not compute Hurst exponent: {str(e)}")
+
+    # Safety clamp to keep it within mathematical bounds [0, 1]
+    return float(np.clip(H, 0.0, 1.0))
+
+
 # Set up parameter statistics registry
 PARAM_STATS_REGISTRY = {
     "prob_positive": prob_positive,
@@ -178,4 +212,5 @@ PARAM_STATS_REGISTRY = {
     "dominant_frequency": dominant_frequency,
     "estimated_dwell_time": estimated_dwell_time,
     "estimated_threshold": estimated_threshold,
+    "estimated_hurst_exponent": estimated_hurst_exponent
 }

@@ -136,3 +136,21 @@ experiments:
       output_length: 200
     analysis:
       param_stat: "estimated_threshold"
+
+
+
+  # -----------------------
+  # Experiment 8: Fractal Brownian Motion
+  # -----------------------
+  - id: 8
+    name: "FBM hurst"
+    generator:
+      type: "fbm"
+      params: {} # placeholder dummy as there are no other parameters besides hurst exponent
+      sweep:
+        hurst: [0.2, 0.3, 0.6, 0.7]
+    prediction:
+      input_length: 200
+      output_length: 200
+    analysis:
+      param_stat: "estimated_hurst_exponent"

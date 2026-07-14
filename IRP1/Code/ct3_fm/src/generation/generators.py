@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Dict
 import numpy as np
-
+from fbm import FBM
 
 Array = np.ndarray
 
@@ -303,6 +303,54 @@ def energy_release_with_noise(
 
     return out
 
+def fractal_brownian_motion(
+    T: int,
+    *,
+    hurst: float = 0.5,
+    seed_noise: int = 1,
+    return_x: bool = True,
+) -> Dict[str, Any]:
+    """
+    Generates a pure Fractional Brownian Motion (fBm) trajectory:
+        signal: s_t = 0.0 (No trend/drift)
+        noise:  eps_t ~ fBm(Hurst=hurst, scale=sigma)
+        x_t:    x_t = fBm_t (Identical to noise)
+    """
+    if T <= 0:
+        raise ValueError("T must be positive.")
+    if not (0.0 < hurst < 1.0):
+        raise ValueError("hurst exponent must be in the open interval (0, 1).")
+
+
+    # 1. No drift means signal is flat zero
+    signal = np.zeros(T, dtype=float)
+
+    # 2. Seed and generate the exact fBm path directly
+    if seed_noise is not None:
+        np.random.seed(seed_noise)
+
+    # fbm(n=T-1) returns an array of length T (including the starting 0)
+    noise = FBM(n=T-1, hurst=hurst, length=1, method='daviesharte').fbm()
+
+    # 3. Build the standardized output dictionary
+    out = {
+        "name": "pure_fbm",
+        "T": int(T),
+        "params": {
+            "hurst": float(hurst)
+        },
+        "seeds": {"noise": int(seed_noise) if seed_noise is not None else None},
+        "signal": signal,
+        "noise": noise,
+    }
+
+    # 4. Since there is no drift, x is just a copy of the direct fBm path
+    if return_x:
+        out["x"] = np.copy(noise)
+        out["events"] = np.array([], dtype=int)
+
+    return out
+
 
 GENERATOR_REGISTRY = {
     "rw_drift": random_walk_with_drift,
@@ -310,6 +358,7 @@ GENERATOR_REGISTRY = {
     "harmonic": harmonic_oscillator_with_noise,
     "regime": regime_switch_with_noise,
     "energy": energy_release_with_noise,
+    "fbm": fractal_brownian_motion
 }
 
 

@@ -6,6 +6,7 @@ import os
 import sys
 import numpy as np
 import pytest
+from fbm import fbm
 
 # Get the absolute path to the 'src' directory
 # This looks up two levels from the current test file
@@ -18,6 +19,7 @@ from analysis.param_stats import (
     dominant_frequency,
     estimated_dwell_time,
     estimated_threshold,
+    estimated_hurst_exponent
 )
 
 ################### Tests for prob_positive function ###################
@@ -320,4 +322,86 @@ def test_estimated_threshold(input_run, expected_output):
         est_threshold = estimated_threshold(input_run)
         assert np.isclose(est_threshold, expected_output, atol=0.5), (
             f"Expected threshold estimation near {expected_output}, got {est_threshold}"
+        )
+
+##################### Tests for estimated_hurst_exponent function ###################
+
+def generate_fractal_series(N=500, target_h=0.5, seed=42):
+    """
+    Generates an exact fractional Brownian motion trajectory using the 'fbm' library.
+    - target_h = 0.5 generates standard Brownian motion
+    - target_h > 0.5 generates persistent, trending paths
+    - target_h < 0.5 generates anti-persistent, mean-reverting paths
+    """
+    # Fix: Set the numpy seed so the underlying random state is reproducible
+    if seed is not None:
+        np.random.seed(seed)
+        
+    # Setting n=N-1 makes the output array length exactly N (due to 0-index inclusion)
+    return fbm(n=N-1, hurst=target_h, length=1, method='daviesharte')
+
+
+estimated_hurst_exponent_testdata = [
+    # Case 0: Persistent series (Target H = 0.75)
+    (
+        generate_fractal_series(N=500, target_h=0.75),
+        0.75
+    ),
+    # Case 1: Standard random walk (Target H = 0.50)
+    (
+        generate_fractal_series(N=500, target_h=0.50),
+        0.50
+    ),
+    # Case 2: Anti-persistent series (Target H = 0.25)
+    (
+        generate_fractal_series(N=500, target_h=0.25),
+        0.25
+    ),
+    # Case 3: Too short array (below our estimator limit of 100 observations)
+    (
+        np.arange(50, dtype=float),
+        ValueError
+    ),
+    # Case 4: Single element array
+    (
+        np.array([42.0]),
+        ValueError
+    ),
+    # Case 5: Single element nested array
+    (
+        np.array([[42.0]]),
+        ValueError
+    ),
+    # Case 6: Empty trajectory
+    (
+        np.array([]),
+        ValueError
+    ),
+    # Case 7: High dimensional matrix instead of 1D array
+    (
+        np.ones((2, 100)),
+        ValueError
+    )
+]
+
+
+@pytest.mark.parametrize("input_run,expected_output", estimated_hurst_exponent_testdata)
+def test_estimated_hurst_exponent(input_run, expected_output):
+    """
+    Tests the `estimated_hurst_exponent` function to ensure it correctly identifies
+    exact fractional scaling behavior using true fBm trajectories.
+    """
+    if expected_output == ValueError or isinstance(expected_output, ValueError):
+        with pytest.raises(ValueError):
+            estimated_hurst_exponent(input_run)
+    else:
+        est_hurst = estimated_hurst_exponent(input_run)
+
+        # Verify H stays within mathematical bounds [0.0, 1.0]
+        assert 0.0 <= est_hurst <= 1.0, f"Hurst exponent {est_hurst} is outside valid bounds [0, 1]"
+
+        # A tolerance of 0.15 accommodates statistical variance of the R/S 
+        # algorithm on finite sample sizes (N=500).
+        assert np.isclose(est_hurst, expected_output, atol=0.15), (
+            f"Expected Hurst exponent near {expected_output}, got {est_hurst}"
         )
