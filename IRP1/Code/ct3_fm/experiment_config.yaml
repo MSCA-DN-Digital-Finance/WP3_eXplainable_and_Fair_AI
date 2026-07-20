@@ -1,7 +1,7 @@
 # Global defaults
 global:
   T: 200 # should be the same as input_length and output_length in the prediction section of each experiment
-  n_seeds: 1
+  n_seeds: 50
   seed_offset: 0
 
 experiments:
@@ -21,7 +21,7 @@ experiments:
       input_length: 200
       output_length: 200
     analysis:
-      param_stat: "prob_positive"
+      param_stat: "estimated_mean_change"
 
   # -----------------------
   # Experiment 2: AR(1) persistence

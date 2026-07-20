@@ -30,15 +30,16 @@ def _ensure_1d_trajectory(trajectory: Any) -> np.ndarray:
     return arr
 
 
-def prob_positive(trajectory: np.ndarray) -> float:
+def estimated_mean_change(trajectory: np.ndarray) -> float:
     """
-    Computes the probability of positive changes between time step values in the trajectory.
+    Computes the estimated mean change between consecutive time step values 
+    in the trajectory to be used as an intervention parameter.
 
     Args:
       - trajectory: sequence of time series values (1D array)
 
     Returns:
-      - float: The probability of positive change in values in the trajectory.
+      - float: The average magnitude and direction of changes in the trajectory.
     """
     try:
         arr = _ensure_1d_trajectory(trajectory)
@@ -48,12 +49,16 @@ def prob_positive(trajectory: np.ndarray) -> float:
     if len(arr) <= 1:
         raise ValueError("Invalid input data type for 'trajectory' or empty array")
 
-    prob_pos = float(np.mean(arr[1:] > arr[:-1])) # Probability of positive change
+    # Calculate the actual differences between consecutive steps
+    differences = arr[1:] - arr[:-1]
     
-    if np.isnan(prob_pos):
+    # Compute the mean of those differences
+    mean_change = float(np.mean(differences))
+    
+    if np.isnan(mean_change):
         raise ValueError("Invalid input data type for 'trajectory'")
 
-    return prob_pos
+    return mean_change
 
 
 def beta_hat(trajectory: np.ndarray) -> float:
@@ -207,7 +212,7 @@ def estimated_hurst_exponent(trajectory: np.ndarray) -> float:
 
 # Set up parameter statistics registry
 PARAM_STATS_REGISTRY = {
-    "prob_positive": prob_positive,
+    "estimated_mean_change": estimated_mean_change,
     "beta_hat": beta_hat,
     "dominant_frequency": dominant_frequency,
     "estimated_dwell_time": estimated_dwell_time,

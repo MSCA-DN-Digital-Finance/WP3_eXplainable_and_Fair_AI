@@ -14,7 +14,7 @@ src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "
 sys.path.append(src_path)
 
 from analysis.param_stats import (
-    prob_positive,
+    estimated_mean_change,
     beta_hat,
     dominant_frequency,
     estimated_dwell_time,
@@ -22,8 +22,8 @@ from analysis.param_stats import (
     estimated_hurst_exponent
 )
 
-################### Tests for prob_positive function ###################
-prob_positive_testdata = [
+################### Tests for estimated_mean_change function ###################
+estimated_mean_change_testdata = [
     # Case 0: Increasing values
     (
         np.arange(1, 1000, 1), # input run
@@ -32,12 +32,12 @@ prob_positive_testdata = [
     # Case 1: Decreasing values
     (
         np.arange(0, -99, -1), # input run
-        0.0                    # expected probability
+        -1.0                    # expected probability
     ),
     # Case 2: Mixed values sampled from a normal distribution
     (
         np.random.normal(0, 1, 1000), # input run
-        0.5                           # expected probability
+        0.0                           # expected probability
     ),
     # Case 3: Empty trajectory
     (
@@ -61,17 +61,17 @@ prob_positive_testdata = [
     )
 ]
 
-@pytest.mark.parametrize("input_run,expected_output", prob_positive_testdata)
-def test_prob_positive(input_run, expected_output):
+@pytest.mark.parametrize("input_run,expected_output", estimated_mean_change_testdata)
+def test_estimated_mean_change(input_run, expected_output):
     """
-    Tests the `prob_positive` function to ensure it correctly computes 
+    Tests the `estimated_mean_change` function to ensure it correctly computes 
     the probability of positive values.
     """
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
-            prob_positive(input_run)
+            estimated_mean_change(input_run)
     else:
-        assert np.isclose(prob_positive(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {prob_positive(input_run)}"
+        assert np.isclose(estimated_mean_change(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {estimated_mean_change(input_run)}"
 
 
 #################### Tests for beta_hat function ###################
