@@ -85,26 +85,29 @@ def beta_hat(trajectory: np.ndarray) -> float:
     return beta
 
 
-def dominant_frequency(trajectory: np.ndarray) -> float:
+def estimated_wavelength(trajectory: np.ndarray) -> float:
     """
-    Computes the dominant frequency of the trajectory.
+    Computes the dominant wavelength of the trajectory.
 
     Args:
       - trajectory  : forecasted trajectory
 
     Returns:
-        - float: The dominant frequency of the trajectory.
+        - float: The estimated wavelength of the trajectory.
     """
     arr = _ensure_1d_trajectory(trajectory)
 
     if len(arr) <= 1:
-        raise ValueError("Input arrays must contain more than 1 observation to calculate frequency.")
+        raise ValueError("Input arrays must contain more than 1 observation to calculate wavelength.")
 
     # Compute power spectrum density using Welch's method
     frequencies, power = signal.welch(arr, fs=1)
     dominant_freq = float(frequencies[np.argmax(power)])
 
-    return dominant_freq
+    # Convert frequency to wavelength (assuming unitary sampling rate)
+    estimated_wavelength = 1.0 / dominant_freq if dominant_freq != 0 else float('inf')
+
+    return estimated_wavelength
 
 
 def estimated_dwell_time(trajectory: np.ndarray, penalty: float = 1.5) -> float:
@@ -214,7 +217,7 @@ def estimated_hurst_exponent(trajectory: np.ndarray) -> float:
 PARAM_STATS_REGISTRY = {
     "estimated_mean_change": estimated_mean_change,
     "beta_hat": beta_hat,
-    "dominant_frequency": dominant_frequency,
+    "estimated_wavelength": estimated_wavelength,
     "estimated_dwell_time": estimated_dwell_time,
     "estimated_threshold": estimated_threshold,
     "estimated_hurst_exponent": estimated_hurst_exponent

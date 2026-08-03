@@ -11,6 +11,8 @@ from typing import Any, Dict
 import numpy as np
 from fbm import FBM
 
+
+
 Array = np.ndarray
 
 
@@ -74,7 +76,7 @@ def ar1_with_noise(
     T: int,
     *,
     x0: float = 0.0,
-    phi: float = 0.9,
+    beta: float = 0.9,
     c: float = 0.0,
     sigma: float = 1.0,
     seed_noise: int = 1,
@@ -83,15 +85,15 @@ def ar1_with_noise(
     """
     AR(1) (deterministic recursion) + independent noise:
         noise:  eps_t ~ N(0, sigma^2)
-        x_t = c + phi * x_t + eps_t
+        x_t = c + beta * x_t + eps_t
 
     Again: all randomness is in the separate noise trajectory.
     """
     if T <= 0:
         raise ValueError("T must be positive.")
-    if not (-1.0 <= phi <= 1.0):
+    if not (-1.0 <= beta <= 1.0):
         # you may allow outside [-1,1], but it's usually unstable
-        raise ValueError("phi should be within [-1, 1] for a stable AR(1).")
+        raise ValueError("beta should be within [-1, 1] for a stable AR(1).")
     if sigma < 0:
         raise ValueError("sigma must be >= 0.")
 
@@ -102,7 +104,7 @@ def ar1_with_noise(
     out = {
         "name": "ar1",
         "T": int(T),
-        "params": {"x0": float(x0), "phi": float(phi), "c": float(c), "sigma": float(sigma)},
+        "params": {"x0": float(x0), "beta": float(beta), "c": float(c), "sigma": float(sigma)},
         "seeds": {"noise": int(seed_noise)},
         "noise": noise,
     }
@@ -110,7 +112,7 @@ def ar1_with_noise(
         x = np.empty(T, dtype=float)
         x[0] = float(x0)
         for t in range(T - 1):
-            x[t + 1] = float(c) + float(phi) * x[t] + noise[t]
+            x[t + 1] = float(c) + float(beta) * x[t] + noise[t]
         out["x"] = x.astype(float)
     return out
 
@@ -163,8 +165,7 @@ def harmonic_oscillator_with_noise(
         out["x"] = (out["signal"] + out["noise"]).astype(float)
     return out
 
-import numpy as np
-from typing import Dict, Any
+
 
 def regime_switch_with_noise(
     T: int,

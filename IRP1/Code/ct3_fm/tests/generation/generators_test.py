@@ -16,7 +16,7 @@ from generation.generators import GENERATOR_REGISTRY
 # Sample parameters for testing
 TEST_CONFIGS = [
     ("rw_drift", {"T": 100, "mu": 0.1, "sigma": 1.0, "seed_noise": 42}),
-    ("ar1", {"T": 50, "phi": 0.9, "sigma": 0.5, "seed_noise": 42}),
+    ("ar1", {"T": 50, "beta": 0.9, "sigma": 0.5, "seed_noise": 42}),
     ("harmonic", {"T": 200, "A": 2.0, "sigma": 0.1, "seed_noise": 42}),
     ("regime", {"T":200, "dwell_time": 10, "slopes": [1.0, -1.0], "seed_noise": 42})
 ]
@@ -58,9 +58,9 @@ def test_rw_drift_logic():
     np.testing.assert_array_almost_equal(res["x"], expected_signal)
 
 def test_ar1_stability_check():
-    """Ensure AR(1) raises error on unstable phi if we chose to enforce it."""
-    with pytest.raises(ValueError, match="phi should be within"):
-        GENERATOR_REGISTRY["ar1"](T=10, phi=2.0)
+    """Ensure AR(1) raises error on unstable beta if we chose to enforce it."""
+    with pytest.raises(ValueError, match="beta should be within"):
+        GENERATOR_REGISTRY["ar1"](T=10, beta=2.0)
 
 def test_negative_t_error():
     """Ensure all generators fail gracefully with non-positive T."""

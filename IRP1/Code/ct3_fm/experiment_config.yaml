@@ -35,7 +35,7 @@ experiments:
         c: 0.0
         sigma: 1.0
       sweep:
-        phi: [-0.5, 0.0, 0.3, 0.6, 0.85, 0.98]
+        beta: [-0.5, 0.0, 0.3, 0.6, 0.85, 0.98]
     prediction:
       input_length: 200
       output_length: 200

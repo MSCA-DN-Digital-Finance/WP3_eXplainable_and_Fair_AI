@@ -16,7 +16,7 @@ sys.path.append(src_path)
 from analysis.param_stats import (
     estimated_mean_change,
     beta_hat,
-    dominant_frequency,
+    estimated_wavelength,
     estimated_dwell_time,
     estimated_threshold,
     estimated_hurst_exponent
@@ -134,23 +134,24 @@ def test_beta_hat(input_run, expected_output):
         assert np.sign(beta_hat(input_run)) == np.sign(expected_output), f"Expected sign {np.sign(expected_output)}, got {np.sign(beta_hat(input_run))}"
 
 
-##################### Tests for dominant_frequency function ###################
+##################### Tests for estimated_wavelength function ###################
+
 n = 1000 # number of samples for the test signals
-dominant_frequency_testdata = [
-    # Case 0: Simple sinusoidal signal with frequency of 0.1 Hz
+estimated_wavelength_testdata = [
+    # Case 0: Simple sinusoidal signal with  frequency of 0.1 Hz
     (
         np.sin(2 * np.pi * 0.1 * np.arange(n)),
-        0.1 # expected dominant frequency
+        10.0 # expected wavelength (1/frequency)
     ),
     # Case 1: Simple sinusoidal signal with frequency of 0.05 Hz
     (
         np.sin(2 * np.pi * 0.05 * np.arange(n)),
-        0.05 # expected dominant frequency
+        20.0 # expected wavelength (1/frequency)
     ),
     # Case 2: Constant signal of ones (should return 0.0 as dominant frequency)
     (
         np.ones(n),
-        0.0 # expected dominant frequency
+        float('inf') # expected wavelength (1/frequency)
     ),
     # Case 3: Empty trajectory
     (
@@ -169,18 +170,18 @@ dominant_frequency_testdata = [
     )
 ]
 
-@pytest.mark.parametrize("input_run,expected_output", dominant_frequency_testdata)
-def test_dominant_frequency(input_run, expected_output):
+@pytest.mark.parametrize("input_run,expected_output", estimated_wavelength_testdata)
+def test_estimated_wavelength(input_run, expected_output):
     """
-    Tests the `dominant_frequency` function to ensure it correctly computes 
-    the dominant frequency of the trajectory.
+    Tests the `estimated_wavelength` function to ensure it correctly computes 
+    the estimated wavelength of the trajectory.
     """
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
-            dominant_frequency(input_run)
+            estimated_wavelength(input_run)
     else:
-        freq = dominant_frequency(input_run)
-        assert np.isclose(freq, expected_output, atol=1e-2), f"Expected {expected_output}, got {freq}"
+        wavelength = estimated_wavelength(input_run)
+        assert np.isclose(wavelength, expected_output, atol=0.5), f"Expected {expected_output}, got {wavelength}"
 
 
 ##################### Tests for estimated_dwell_time function ###################
