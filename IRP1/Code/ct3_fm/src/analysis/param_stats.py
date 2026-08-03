@@ -61,7 +61,7 @@ def estimated_mean_change(trajectory: np.ndarray) -> float:
     return mean_change
 
 
-def beta_hat(trajectory: np.ndarray) -> float:
+def estimated_beta(trajectory: np.ndarray) -> float:
     """
     Computes the model-implied AR(1) beta for a given run.
     
@@ -216,7 +216,7 @@ def estimated_hurst_exponent(trajectory: np.ndarray) -> float:
 # Set up parameter statistics registry
 PARAM_STATS_REGISTRY = {
     "estimated_mean_change": estimated_mean_change,
-    "beta_hat": beta_hat,
+    "estimated_beta": estimated_beta,
     "estimated_wavelength": estimated_wavelength,
     "estimated_dwell_time": estimated_dwell_time,
     "estimated_threshold": estimated_threshold,

@@ -15,7 +15,7 @@ sys.path.append(src_path)
 
 from analysis.param_stats import (
     estimated_mean_change,
-    beta_hat,
+    estimated_beta,
     estimated_wavelength,
     estimated_dwell_time,
     estimated_threshold,
@@ -74,7 +74,7 @@ def test_estimated_mean_change(input_run, expected_output):
         assert np.isclose(estimated_mean_change(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {estimated_mean_change(input_run)}"
 
 
-#################### Tests for beta_hat function ###################
+#################### Tests for estimated_beta function ###################
 
 def generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0, seed=42):
     """
@@ -88,7 +88,7 @@ def generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0, seed=42):
         series[t] = beta * series[t-1] + epsilon[t]
     return np.asarray(series)
 
-beta_hat_testdata = [
+estimated_beta_testdata = [
     # Case 0: Positive correlation with beta=0.7
     (
         generate_ar1_series(n_steps=500, beta=0.7, sigma=1.0),
@@ -121,17 +121,17 @@ beta_hat_testdata = [
     )
 ]
 
-@pytest.mark.parametrize("input_run,expected_output", beta_hat_testdata)
-def test_beta_hat(input_run, expected_output):
+@pytest.mark.parametrize("input_run,expected_output", estimated_beta_testdata)
+def test_estimated_beta(input_run, expected_output):
     """
-    Tests the `beta_hat` function to ensure it correctly computes 
+    Tests the `estimated_beta` function to ensure it correctly computes 
     the model-implied AR(1) beta.
     """
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
-            beta_hat(input_run)
+            estimated_beta(input_run)
     else:
-        assert np.sign(beta_hat(input_run)) == np.sign(expected_output), f"Expected sign {np.sign(expected_output)}, got {np.sign(beta_hat(input_run))}"
+        assert np.sign(estimated_beta(input_run)) == np.sign(expected_output), f"Expected sign {np.sign(expected_output)}, got {np.sign(estimated_beta(input_run))}"
 
 
 ##################### Tests for estimated_wavelength function ###################
