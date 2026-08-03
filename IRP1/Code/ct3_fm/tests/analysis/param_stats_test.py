@@ -14,7 +14,7 @@ src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "
 sys.path.append(src_path)
 
 from analysis.param_stats import (
-    estimated_mean_change,
+    estimated_mean,
     estimated_beta,
     estimated_wavelength,
     estimated_dwell_time,
@@ -22,8 +22,8 @@ from analysis.param_stats import (
     estimated_hurst_exponent
 )
 
-################### Tests for estimated_mean_change function ###################
-estimated_mean_change_testdata = [
+################### Tests for estimated_mean function ###################
+estimated_mean_testdata = [
     # Case 0: Increasing values
     (
         np.arange(1, 1000, 1), # input run
@@ -61,17 +61,17 @@ estimated_mean_change_testdata = [
     )
 ]
 
-@pytest.mark.parametrize("input_run,expected_output", estimated_mean_change_testdata)
-def test_estimated_mean_change(input_run, expected_output):
+@pytest.mark.parametrize("input_run,expected_output", estimated_mean_testdata)
+def test_estimated_mean(input_run, expected_output):
     """
-    Tests the `estimated_mean_change` function to ensure it correctly computes 
-    the probability of positive values.
+    Tests the `estimated_mean` function to ensure it correctly computes 
+    the mean of the trajectory.
     """
     if expected_output == ValueError or isinstance(expected_output, ValueError):
         with pytest.raises(ValueError):
-            estimated_mean_change(input_run)
+            estimated_mean(input_run)
     else:
-        assert np.isclose(estimated_mean_change(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {estimated_mean_change(input_run)}"
+        assert np.isclose(estimated_mean(input_run), expected_output, atol=1e-1), f"Expected {expected_output}, got {estimated_mean(input_run)}"
 
 
 #################### Tests for estimated_beta function ###################

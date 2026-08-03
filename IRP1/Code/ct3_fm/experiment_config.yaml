@@ -21,7 +21,7 @@ experiments:
       input_length: 200
       output_length: 200
     analysis:
-      param_stat: "estimated_mean_change"
+      param_stat: "estimated_mean"
 
   # -----------------------
   # Experiment 2: AR(1) persistence
@@ -40,7 +40,7 @@ experiments:
       input_length: 200
       output_length: 200
     analysis:
-      param_stat: "beta_hat"
+      param_stat: "estimated_beta"
 
   # -----------------------
   # Experiment 3: HO wavelength
@@ -60,7 +60,7 @@ experiments:
       input_length: 200
       output_length: 200
     analysis:
-      param_stat: "dominant_frequency"
+      param_stat: "estimated_wavelength"
 
 
   # -----------------------

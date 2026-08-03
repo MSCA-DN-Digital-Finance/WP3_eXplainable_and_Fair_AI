@@ -30,7 +30,7 @@ def _ensure_1d_trajectory(trajectory: Any) -> np.ndarray:
     return arr
 
 
-def estimated_mean_change(trajectory: np.ndarray) -> float:
+def estimated_mean(trajectory: np.ndarray) -> float:
     """
     Computes the estimated mean change between consecutive time step values 
     in the trajectory to be used as an intervention parameter.
@@ -215,7 +215,7 @@ def estimated_hurst_exponent(trajectory: np.ndarray) -> float:
 
 # Set up parameter statistics registry
 PARAM_STATS_REGISTRY = {
-    "estimated_mean_change": estimated_mean_change,
+    "estimated_mean": estimated_mean,
     "estimated_beta": estimated_beta,
     "estimated_wavelength": estimated_wavelength,
     "estimated_dwell_time": estimated_dwell_time,
