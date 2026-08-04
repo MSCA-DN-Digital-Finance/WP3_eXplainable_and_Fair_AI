@@ -51,11 +51,19 @@ LABEL_MAPPINGS = {
     "hurst_exponent": r"$H$"
 }
 
+# Define explicit color palette so models always retain the exact same color
+COLOR_PALETTE = {
+    "Trajectory": "#7FC97F",  # Green/Teal (e.g., Trajectory)
+    "TimesFM-2.5": "#FDC086",  # Orange/Salmon
+    "Chronos-2": "#beaed4",  # Purple/Blue
+}
 
-def create_experiment_boxplots(csv_path: str, output_dir: str):
-    """Generates structured boxplots grouped by experiment_id, with parameter
-    values on the x-axis, metrics on the y-axis, and separated by the
-    model/trajectory source.
+def create_experiment_boxplots(
+    csv_path: str, output_dir: str, include_table: bool = False
+):
+    """Generates structured boxplots grouped by experiment_id with consistent
+
+    model colors, explicit legend, and an optional clean summary table underneath.
     """
     df = pd.read_csv(csv_path)
 
@@ -63,20 +71,16 @@ def create_experiment_boxplots(csv_path: str, output_dir: str):
     out_path.mkdir(parents=True, exist_ok=True)
 
     unique_exps = sorted(df["experiment_id"].dropna().unique())
-    num_experiments = len(unique_exps)
-
-    if num_experiments == 0:
+    if not unique_exps:
         print("No experiment data found to plot.")
         return
 
-    print(f"Found experiments: {unique_exps}. Generating box plots...")
-
     for exp_id in unique_exps:
         df_exp = df[df["experiment_id"] == exp_id].copy()
-
         if df_exp.empty:
             continue
 
+        # Map labels if mapping dict is present
         df_exp["param_stat_of"] = df_exp["param_stat_of"].map(
             lambda x: LABEL_MAPPINGS.get(x, x)
         )
@@ -88,28 +92,78 @@ def create_experiment_boxplots(csv_path: str, output_dir: str):
         x_symbol = LABEL_MAPPINGS.get(intervention_param, intervention_param)
         y_symbol = LABEL_MAPPINGS.get(param_stat_name, param_stat_name)
 
-        fig, ax = plt.subplots(figsize=(8, 5.5))
+        # Set layout based on whether table is attached
+        if include_table:
+            fig, (ax, ax_table) = plt.subplots(
+                2,
+                1,
+                figsize=(9, 7.5),
+                gridspec_kw={"height_ratios": [3, 1]},
+            )
+        else:
+            fig, ax = plt.subplots(figsize=(8, 5))
 
-        # Disabling automatic legend inside boxplot prevents the Seaborn 0.13 UnboundLocalError bug
+        # 1. Boxplot generation
         sns.boxplot(
             data=df_exp,
             x="parameter_value",
             y="param_stat_value",
             hue="param_stat_of",
             ax=ax,
-            palette="Set2",
-            linewidth=1.5,
-            boxprops=dict(alpha=0.8),
-            legend=False
+            palette=COLOR_PALETTE,
+            linewidth=1.2,
+            boxprops=dict(alpha=0.85),
         )
 
-        ax.set_xlabel(f"Intervention Parameter ({x_symbol})", fontsize=11, labelpad=8)
-        ax.set_ylabel(f"Parameter Statistic ({y_symbol})", fontsize=11, labelpad=8)
+        # Optional: Add ground truth reference line y = x if intervention matches metric
+        # ax.plot(ax.get_xticks(), ax.get_xticks(), color="gray", linestyle="--", alpha=0.6, label="Ideal")
 
-        # Manually reconstruct the legend cleanly
-        handles, labels = ax.get_legend_handles_labels()
-        if handles:
-            ax.legend(handles=handles, labels=labels, title=None, loc="best", frameon=True)
+        ax.set_xlabel(
+            f"Intervention Parameter ({x_symbol})", fontsize=11, labelpad=8
+        )
+        ax.set_ylabel(
+            f"Parameter Statistic ({y_symbol})", fontsize=11, labelpad=8
+        )
+        ax.grid(True, axis="y", linestyle=":", alpha=0.6)
+
+        # 2. Fixed Legend Placement (Top-Left inside plot)
+        ax.legend(
+            loc="upper left",
+            frameon=True,
+            facecolor="white",
+            edgecolor="none",
+            fontsize=9.5,
+        )
+
+        # 3. Optional Empirical Table Underneath
+        if include_table:
+            # Group stats across entire experiment for each model/source
+            stats = (
+                df_exp.groupby("param_stat_of")["param_stat_value"]
+                .agg(
+                    Min="min",
+                    Q25=lambda x: x.quantile(0.25),
+                    Median="median",
+                    Mean="mean",
+                    Q75=lambda x: x.quantile(0.75),
+                    Max="max",
+                )
+                .round(4)
+            )
+
+            ax_table.axis("off")
+            table_data = stats.reset_index().values
+            col_labels = ["Source", "Min", "25%", "Median", "Mean", "75%", "Max"]
+
+            tab = ax_table.table(
+                cellText=table_data,
+                colLabels=col_labels,
+                cellLoc="center",
+                loc="center",
+            )
+            tab.auto_set_font_size(False)
+            tab.set_fontsize(9)
+            tab.scale(1.0, 1.3)
 
         plt.tight_layout()
 
@@ -117,8 +171,7 @@ def create_experiment_boxplots(csv_path: str, output_dir: str):
         plt.savefig(file_name, dpi=300, bbox_inches="tight")
         plt.close(fig)
 
-        print(f" -> Saved standalone plot to: {file_name}")
-
+        print(f" -> Saved plot to: {file_name}")
 
 
 def save_individual_scatter_plots(csv_path: str, output_dir: str):
