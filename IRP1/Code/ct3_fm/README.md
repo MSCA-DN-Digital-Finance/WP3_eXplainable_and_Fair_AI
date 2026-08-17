@@ -1,3 +1,7 @@
+# Note
+
+This repo has been abandoned in favor of a standalone repo at: https://github.com/MSCA-DN-Digital-Finance/tsfm_causal_analysis
+
 # CT3 Experimental Codebase – Workflow Overview
 
 This repository implements **CT3 (Counterfactual Twin-Trajectory Test)** experiments for probing **parameter sensitivity** of time-series foundation models under controlled generator interventions.
